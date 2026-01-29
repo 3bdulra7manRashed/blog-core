@@ -12,6 +12,16 @@ class ViewComposerServiceProvider extends ServiceProvider
     {
         // Share trending posts data with all views
         View::composer('*', function ($view) {
+            // Guard against running queries if the database is not set up (e.g. during fresh install)
+            if (! \Illuminate\Support\Facades\Schema::hasTable('posts')) {
+                $view->with([
+                    'trendingRecentPosts' => collect(),
+                    'trendingMostLikedPosts' => collect(),
+                    'trendingMostReadPosts' => collect(),
+                ]);
+                return;
+            }
+
             $recentPosts = Post::published()
                 ->latest('published_at')
                 ->limit(5)

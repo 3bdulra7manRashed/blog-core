@@ -23,6 +23,15 @@ class AppServiceProvider extends ServiceProvider
     {
         // Share sidebar data with both sidebar partial and blog layout (for mobile menu)
         View::composer(['partials.sidebar', 'layouts.blog'], function ($view) {
+            // Guard against running queries if the database is not set up
+            if (! \Illuminate\Support\Facades\Schema::hasTable('posts')) {
+                $view->with([
+                    'mostLikedPosts' => collect(),
+                    'mostReadPosts' => collect(),
+                ]);
+                return;
+            }
+
             $view->with([
                 'mostLikedPosts' => Post::published()
                     ->orderByDesc('likes_count')
