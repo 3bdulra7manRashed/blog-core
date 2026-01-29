@@ -1,11 +1,11 @@
 @extends('layouts.blog')
 
 {{-- About Page SEO --}}
-@section('title', 'عن صالح الشهري - خبير ريادة الأعمال ومستشار منشآت')
+@section('title', 'عني - ' . config('branding.site_name'))
 
-@section('description', 'تعرف على صالح الشهري - CEO وخبير ريادة الأعمال، حاصل على ماجستير ريادة الأعمال، مستشار معتمد في منشآت. متخصص في تأسيس المشاريع الناشئة، التدريب والتطوير، وتحويل الأفكار إلى مشاريع ناجحة.')
+@section('description', config('branding.author.bio'))
 
-@section('keywords', 'صالح الشهري, من هو صالح الشهري, خبير ريادة الأعمال, مستشار منشآت, ماجستير ريادة الأعمال, تأسيس المشاريع, جدة')
+@section('keywords', config('branding.default_keywords'))
 
 @section('og_type', 'profile')
 

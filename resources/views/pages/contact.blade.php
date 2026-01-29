@@ -1,9 +1,9 @@
 @extends('layouts.blog')
 
 {{-- Contact Page SEO --}}
-@section('title', 'تواصل مع صالح الشهري - استشارات ريادة الأعمال')
-@section('description', 'تواصل مع صالح الشهري للاستشارات في ريادة الأعمال، تأسيس المشاريع، التدريب والتطوير.')
-@section('keywords', 'تواصل صالح الشهري, استشارات ريادة الأعمال, استشارات أعمال جدة')
+@section('title', 'تواصل معي - ' . config('branding.site_name'))
+@section('description', config('branding.site_description'))
+@section('keywords', config('branding.default_keywords'))
 
 {{-- ============================================================ --}}
 {{-- 🎨 intl-tel-input v17.0.8 CSS                                --}}

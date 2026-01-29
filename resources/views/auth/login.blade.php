@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>تسجيل الدخول - {{ config('app.name', 'المدونة') }}</title>
+    <title>تسجيل الدخول - {{ config('branding.site_name') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -304,7 +304,7 @@
     <div class="page-wrapper">
         <div class="logo animate-in">
             <a href="{{ url('/') }}">
-                <span>{{ config('app.name', 'المدونة') }}</span>
+                <span>{{ config('branding.site_name') }}</span>
                 <span class="logo-dot"></span>
             </a>
         </div>

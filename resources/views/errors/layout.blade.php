@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title') - {{ config('app.name', 'المدونة') }}</title>
+    <title>@yield('title') - {{ config('branding.site_name') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -376,7 +376,7 @@
         <!-- Logo -->
         <div class="logo animate-in delay-1">
             <a href="{{ url('/') }}">
-                <span>{{ config('app.name', 'المدونة') }}</span>
+                <span>{{ config('branding.site_name') }}</span>
                 <span class="logo-dot"></span>
             </a>
         </div>

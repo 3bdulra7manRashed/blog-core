@@ -42,8 +42,8 @@ class NewCampaignMail extends Mailable implements ShouldQueue
     {
         return new Envelope(
             from: new Address(
-                env('NEWSLETTER_MAIL_FROM_ADDRESS', 'newsletter@alshehrysaleh.com'),
-                env('NEWSLETTER_MAIL_FROM_NAME', 'مدونة صالح الشهري')
+                config('branding.newsletter.from_address'),
+                config('branding.newsletter.from_name')
             ),
             subject: $this->campaign->subject,
         );

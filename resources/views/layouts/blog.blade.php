@@ -17,19 +17,19 @@
         use Illuminate\Support\Str;
         
         // ============================================================
-        // HARDCODED DOMAIN FIX - Bypasses all proxy/asset helper issues
+        // BRANDING CONFIG - All values from config/branding.php
         // ============================================================
-        $siteDomain = 'https://alshehrysaleh.com';
+        $siteDomain = config('branding.site_domain');
         
         // Detect if we're on a single post page (error-proof check)
         $isPostPage = isset($post) && Route::currentRouteName() === 'post.show';
         
-        // Site defaults
-        $siteName = 'صالح الشهري | Saleh Alshehry';
-        $defaultImage = $siteDomain . '/images/saleh-alshehry-og.jpg';
-        $defaultTitle = 'صالح الشهري | مدونة في ريادة الأعمال';
-        $defaultDescription = 'حوّل فكرتك إلى مشروع ريادي ناجح. مدونة صالح الشهري تقدم تحليلات عملية، استشارات للمنشآت الصغيرة، ونماذج عمل مبتكرة للنمو والاستدامة وفق رؤية المملكة 2030.';
-        $defaultKeywords = 'ريادة الأعمال, صالح الشهري, استشارات مشاريع, المنشآت الصغيرة والمتوسطة, نموذج العمل التجاري, دراسة جدوى, تأسيس شركات, رؤية 2030, جدة, مركز النخبة للتدريب, نمو الأعمال';
+        // Site defaults from branding config
+        $siteName = config('branding.site_name');
+        $defaultImage = $siteDomain . '/' . config('branding.default_og_image');
+        $defaultTitle = config('branding.site_name') . ' | ' . config('branding.tagline');
+        $defaultDescription = config('branding.site_description');
+        $defaultKeywords = config('branding.default_keywords');
         
         // Dynamic SEO values based on page type
         if ($isPostPage) {
@@ -60,7 +60,7 @@
             $ogType = 'article';
             $ogTitle = $post->title;
             $ogDescription = $post->excerpt ?? Str::limit(strip_tags($post->content), 200);
-            $twitterTitle = $post->title . ' | صالح الشهري';
+            $twitterTitle = $post->title . ' | ' . config('branding.site_name');
             $twitterDescription = $post->excerpt ?? Str::limit(strip_tags($post->content), 200);
         } else {
             // Non-Post Pages - Use defaults (can be overridden via @section)
@@ -70,10 +70,10 @@
             $seoImage = $defaultImage;
             $mimeType = 'image/jpeg';
             $ogType = 'website';
-            $ogTitle = 'صالح الشهري - دليلك العملي لتحويل الأفكار إلى مشاريع';
-            $ogDescription = 'كيف تبني مشروعاً يزدهر ويصنع قيمة؟ أشاركك هنا خلاصة خبرتي في تحويل الأفكار إلى مشاريع ريادية قابلة للنمو، مع استشارات متخصصة لدعم المحتوى المحلي والاقتصاد الوطني.';
-            $twitterTitle = 'صالح الشهري | خبير ريادة الأعمال ونمو المنشآت';
-            $twitterDescription = 'آراء وتحليلات عملية حول بناء المشاريع وازدهارها. اكتشف كيف تصنع قيمة حقيقية لعميلك وتتخذ قرارات تُحدث فرقاً في رحلة التأسيس.';
+            $ogTitle = config('branding.site_name') . ' - ' . config('branding.tagline');
+            $ogDescription = config('branding.site_description');
+            $twitterTitle = config('branding.site_name') . ' | ' . config('branding.author.title');
+            $twitterDescription = config('branding.site_description');
         }
         
         // Current URL - also hardcoded domain
@@ -84,15 +84,15 @@
     
     <title>
     @hasSection('title')
-        @yield('title') | صالح الشهري
+        @yield('title') | {{ config('branding.site_name') }}
     @else
-        صالح الشهري | مدونة في ريادة الأعمال
+        {{ config('branding.site_name') }} | {{ config('branding.tagline') }}
     @endif
 </title>
     <meta name="title" content="@yield('title', $seoTitle)">
     <meta name="description" content="@yield('description', $seoDescription)">
     <meta name="keywords" content="@yield('keywords', $seoKeywords)">
-    <meta name="author" content="صالح حمدان الشهري">
+    <meta name="author" content="{{ config('branding.author.name') }}">
 
     {{-- Canonical URL (Prevents Duplicate Content) --}}
     <link rel="canonical" href="{{ $currentUrl }}">
@@ -107,20 +107,20 @@
     <meta property="og:image:type" content="@yield('og_image_type', $mimeType)">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="{{ $isPostPage ? $post->title : 'صالح الشهري - خبير ريادة الأعمال ونمو المنشآت' }}">
+    <meta property="og:image:alt" content="{{ $isPostPage ? $post->title : config('branding.site_name') . ' - ' . config('branding.author.title') }}">
     <meta property="og:site_name" content="{{ $siteName }}">
     <meta property="og:locale" content="ar_SA">
     <meta property="og:locale:alternate" content="ar_AR">
 
     {{-- Twitter Card --}}
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@alshehrysaleh">
-    <meta name="twitter:creator" content="@alshehrysaleh">
+    <meta name="twitter:site" content="{{ config('branding.social.twitter_handle') }}">
+    <meta name="twitter:creator" content="{{ config('branding.social.twitter_handle') }}">
     <meta name="twitter:url" content="{{ $currentUrl }}">
     <meta name="twitter:title" content="@yield('twitter_title', $twitterTitle)">
     <meta name="twitter:description" content="@yield('twitter_description', $twitterDescription)">
     <meta name="twitter:image" content="@yield('og_image', $seoImage)">
-    <meta name="twitter:image:alt" content="{{ $isPostPage ? $post->title : 'صالح الشهري - خبير ريادة الأعمال ونمو المنشآت' }}">
+    <meta name="twitter:image:alt" content="{{ $isPostPage ? $post->title : config('branding.site_name') . ' - ' . config('branding.author.title') }}">
 
     {{-- Additional Meta Tags (Allow pages to override via @push('meta')) --}}
     @stack('meta')
@@ -206,13 +206,17 @@
                     </div>
                     
                     <!-- X (Twitter) -->
-                    <a href="https://x.com/alshehrysaleh" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-brand-primary transition-colors" title="X (Twitter)">
+                    @if(config('branding.social.twitter'))
+                    <a href="{{ config('branding.social.twitter') }}" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-brand-primary transition-colors" title="X (Twitter)">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                     </a>
+                    @endif
                     <!-- LinkedIn -->
-                    <a href="https://www.linkedin.com/in/alshehrysaleh" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-brand-primary transition-colors" title="LinkedIn">
+                    @if(config('branding.social.linkedin'))
+                    <a href="{{ config('branding.social.linkedin') }}" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-brand-primary transition-colors" title="LinkedIn">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                     </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -226,7 +230,7 @@
                 <a href="{{ route('home') }}" class="flex items-center gap-2 group">
                     {{-- The Text (Dark) - FIRST --}}
                     <span class="text-gray-900 font-serif font-bold text-2xl md:text-4xl tracking-tight">
-                        {{ config('app.name', 'مدونة صالح الشهري') }}
+                        {{ config('branding.site_name') }}
                     </span>
                     {{-- The Orange Dot - SECOND (appears on left in RTL) --}}
                     <span class="w-3 h-3 bg-brand-accent rounded-full inline-block group-hover:scale-110 transition-transform"></span>
@@ -601,7 +605,7 @@
                 <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                     <!-- Copyright -->
                     <div class="text-center md:text-right order-2 md:order-1">
-                        <p class="text-sm text-gray-500">&copy; {{ date('Y') }} {{ config('app.name', 'Writer Blog') }}. جميع الحقوق محفوظة.</p>
+                        <p class="text-sm text-gray-500">&copy; {{ date('Y') }} {{ config('branding.site_name') }}. جميع الحقوق محفوظة.</p>
                     </div>
                     
                     <!-- Social Links -->
@@ -609,15 +613,19 @@
                         <p class="text-sm font-medium text-gray-400">تابعني على حساباتي</p>
                         <div class="flex items-center gap-4">
                             <!-- X (Twitter) -->
-                            <a href="https://x.com/alshehrysaleh" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-brand-accent hover:border-brand-accent transition-all shadow-sm hover:shadow">
+                            @if(config('branding.social.twitter'))
+                            <a href="{{ config('branding.social.twitter') }}" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-brand-accent hover:border-brand-accent transition-all shadow-sm hover:shadow">
                                 <span class="sr-only">X (Twitter)</span>
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                             </a>
+                            @endif
                             <!-- LinkedIn -->
-                            <a href="https://www.linkedin.com/in/alshehrysaleh" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-brand-accent hover:border-brand-accent transition-all shadow-sm hover:shadow">
+                            @if(config('branding.social.linkedin'))
+                            <a href="{{ config('branding.social.linkedin') }}" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-brand-accent hover:border-brand-accent transition-all shadow-sm hover:shadow">
                                 <span class="sr-only">LinkedIn</span>
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                             </a>
+                            @endif
                         </div>
                     </div>
                 </div>

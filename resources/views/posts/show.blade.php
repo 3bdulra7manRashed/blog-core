@@ -7,7 +7,7 @@
 
 @section('description'){{ $post->excerpt ?? \Illuminate\Support\Str::limit(strip_tags($post->content), 155) }}@endsection
 
-@section('keywords')صالح حمدان الشهري, Saleh Hamdan Alshehry, مركز النخبة للتدريب, Elite Training Center, ريادة الأعمال, Entrepreneurship, منشآت, Monsha'at, جدة, Jeddah{{ $post->tags->count() > 0 ? ', ' . $post->tags->pluck('name')->implode(', ') : '' }}@endsection
+@section('keywords'){{ config('branding.default_keywords') }}{{ $post->tags->count() > 0 ? ', ' . $post->tags->pluck('name')->implode(', ') : '' }}@endsection
 
 {{-- og_type and og_image are handled by the layout logic safely --}}
 
@@ -29,7 +29,7 @@
 <meta property="article:modified_time" content="{{ $post->updated_at->toIso8601String() }}">
 @endif
 
-<meta property="article:author" content="صالح حمدان الشهري">
+<meta property="article:author" content="{{ config('branding.author.name') }}">
 
 @if($post->categories->count() > 0)
 @foreach($post->categories as $category)
@@ -43,13 +43,12 @@
 @endforeach
 @endif
 
-{{-- Twitter Card - summary_large_image for best preview --}}
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@alshehrysaleh">
-<meta name="twitter:creator" content="@alshehrysaleh">
-<meta name="twitter:title" content="{{ $post->title }} | صالح حمدان الشهري">
+<meta name="twitter:site" content="{{ config('branding.social.twitter_handle') }}">
+<meta name="twitter:creator" content="{{ config('branding.social.twitter_handle') }}">
+<meta name="twitter:title" content="{{ $post->title }} | {{ config('branding.site_name') }}">
 <meta name="twitter:description" content="{{ $post->excerpt ?? \Illuminate\Support\Str::limit(strip_tags($post->content), 150) }}">
-<meta name="twitter:image" content="{{ $post->featured_image_url ?? asset('images/saleh-alshehry-og.jpg') }}">
+<meta name="twitter:image" content="{{ $post->featured_image_url ?? asset(config('branding.default_og_image')) }}">
 @endpush
 
 
@@ -59,41 +58,24 @@
 {{-- ============================================================ --}}
 @section('schema')
 @php
-    // Define the Author (Saleh Hamdan Alshehry) as a Person schema
+    // Build social links array dynamically from config
+    $socialLinks = array_filter([
+        config('branding.social.twitter'),
+        config('branding.social.linkedin'),
+    ]);
+
+    // Define the Author as a Person schema
     $personSchema = [
         "@context" => "https://schema.org",
         "@type" => "Person",
         "@id" => url('/') . "/#person",
-        "name" => "صالح حمدان الشهري",
-        "alternateName" => "Saleh Hamdan Alshehry",
-        "givenName" => "صالح",
-        "familyName" => "الشهري",
-        "jobTitle" => "المدير التنفيذي لمركز النخبة للتدريب",
-        "description" => "المدير التنفيذي لمركز النخبة للتدريب. ماجستير في ريادة الأعمال والإبداع. متخصص في دعم تأسيس المشاريع الناشئة وتحويل المبادرات إلى مشاريع تنفيذية في جدة.",
+        "name" => config('branding.author.name'),
+        "alternateName" => config('branding.author.name_en'),
+        "jobTitle" => config('branding.author.title'),
+        "description" => config('branding.author.bio'),
         "url" => url('/'),
-        "image" => asset('images/saleh-alshehry-og.jpg'),
-        "sameAs" => [
-            "https://x.com/alshehrysaleh",
-            "https://www.linkedin.com/in/alshehrysaleh"
-        ],
-        "knowsAbout" => [
-            "ريادة الأعمال",
-            "تأسيس المشاريع",
-            "الشركات الناشئة",
-            "التدريب والتطوير",
-            "Entrepreneurship",
-            "Startups"
-        ],
-        "worksFor" => [
-            "@type" => "Organization",
-            "name" => "مركز النخبة للتدريب",
-            "alternateName" => "Elite Training Center"
-        ],
-        "address" => [
-            "@type" => "PostalAddress",
-            "addressLocality" => "جدة",
-            "addressCountry" => "SA"
-        ]
+        "image" => asset(config('branding.default_og_image')),
+        "sameAs" => array_values($socialLinks),
     ];
 
     // Build Article Schema with reference to Person
@@ -111,7 +93,7 @@
         "publisher" => [
             "@type" => "Person",
             "@id" => url('/') . "/#person",
-            "name" => "صالح حمدان الشهري"
+            "name" => config('branding.author.name')
         ],
         "mainEntityOfPage" => [
             "@type" => "WebPage",
@@ -131,7 +113,7 @@
 
     // Add keywords from tags
     if ($post->tags->count() > 0) {
-        $articleSchema['keywords'] = $post->tags->pluck('name')->implode(', ') . ', ريادة الأعمال, صالح حمدان الشهري';
+        $articleSchema['keywords'] = $post->tags->pluck('name')->implode(', ') . ', ' . config('branding.default_keywords');
     }
 
     // Add article section from categories
@@ -279,22 +261,22 @@
                 @include('partials.share-buttons', ['post' => $post])
             </div>
 
-            <!-- Author Bio Card (Saleh Hamdan Alshehry) -->
+            <!-- Author Bio Card -->
             <div class="bg-gray-50 rounded-lg p-6">
                 <div class="flex flex-col sm:flex-row-reverse items-center sm:items-start gap-4">
                     <!-- Avatar -->
                     <div class="flex-shrink-0">
                         @if($post->author && $post->author->profile_photo_url)
-                            <img src="{{ $post->author->profile_photo_url }}" alt="صالح حمدان الشهري" class="w-20 h-20 rounded-full object-cover shadow-md">
+                            <img src="{{ $post->author->profile_photo_url }}" alt="{{ config('branding.author.name') }}" class="w-20 h-20 rounded-full object-cover shadow-md">
                         @else
-                            <img src="https://ui-avatars.com/api/?name={{ urlencode('صالح الشهري') }}&background=c37c54&color=fff&size=128" alt="صالح حمدان الشهري" class="w-20 h-20 rounded-full object-cover shadow-md">
+                            <img src="https://ui-avatars.com/api/?name={{ urlencode(config('branding.author.name')) }}&background=c37c54&color=fff&size=128" alt="{{ config('branding.author.name') }}" class="w-20 h-20 rounded-full object-cover shadow-md">
                         @endif
                     </div>
                     <!-- Text Content -->
                     <div class="flex-1 text-center sm:text-right">
-                        <h3 class="text-xl font-serif font-bold text-brand-primary mb-2">صالح حمدان الشهري</h3>
+                        <h3 class="text-xl font-serif font-bold text-brand-primary mb-2">{{ config('branding.author.name') }}</h3>
                         <p class="text-gray-600 leading-relaxed">
-                            {{ $post->author->short_bio ?? 'المدير التنفيذي لمركز النخبة للتدريب. ماجستير في ريادة الأعمال والإبداع. متخصص في دعم المشاريع الناشئة وتطوير المهارات الريادية في جدة والمملكة.' }}
+                            {{ $post->author->short_bio ?? config('branding.author.bio') }}
                         </p>
                     </div>
                 </div>

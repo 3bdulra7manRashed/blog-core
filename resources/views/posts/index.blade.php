@@ -3,9 +3,9 @@
 {{-- Homepage SEO - Profile type for personal brand --}}
 
 
-@section('description', 'مدونة صالح الشهري - خبير ريادة الأعمال ومستشار في منشآت. مقالات متخصصة في تأسيس المشاريع الناشئة، التدريب والتطوير، والابتكار. اكتشف أسرار النجاح في عالم ريادة الأعمال.')
+@section('description', config('branding.site_description'))
 
-@section('keywords', 'صالح الشهري, ريادة الأعمال, تأسيس مشاريع, منشآت, استشارات ريادية, جدة, تدريب وتطوير, مشاريع ناشئة, Saleh Alshehry, مستشار أعمال')
+@section('keywords', config('branding.default_keywords'))
 
 @section('og_type', 'profile')
 

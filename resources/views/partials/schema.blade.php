@@ -1,55 +1,32 @@
 @php
+    // Build social links array dynamically from config
+    $socialLinks = array_filter([
+        config('branding.social.twitter'),
+        config('branding.social.linkedin'),
+        config('branding.social.facebook'),
+        config('branding.social.instagram'),
+    ]);
+
     $personSchema = [
         "@context" => "https://schema.org",
         "@type" => "Person",
         "@id" => url('/') . "/#person",
-        "name" => "صالح الشهري",
-        "alternateName" => "Saleh Alshehry",
-        "givenName" => "صالح",
-        "familyName" => "الشهري",
-        "jobTitle" => "خبير ريادة الأعمال ومستشار في منشآت",
-        "description" => "صالح الشهري - CEO وخبير ريادة الأعمال، حاصل على ماجستير في ريادة الأعمال. مستشار معتمد في هيئة المنشآت الصغيرة والمتوسطة (منشآت). متخصص في تأسيس المشاريع الناشئة، التدريب والتطوير، وتحويل الأفكار الإبداعية إلى مشاريع ناجحة.",
+        "name" => config('branding.author.name'),
+        "alternateName" => config('branding.author.name_en'),
+        "jobTitle" => config('branding.author.title'),
+        "description" => config('branding.author.bio'),
         "url" => url('/'),
-        "image" => asset('images/saleh-alshehry-og.jpg'),
-        "sameAs" => [
-            "https://x.com/alshehrysaleh",
-            "https://www.linkedin.com/in/alshehrysaleh",
-            "https://twitter.com/alshehrysaleh"
-        ],
-        "knowsAbout" => [
-            "ريادة الأعمال",
-            "تأسيس المشاريع",
-            "الشركات الناشئة",
-            "التدريب والتطوير",
-            "استشارات الأعمال",
-            "الابتكار",
-            "Entrepreneurship",
-            "Startups",
-            "Business Consulting"
-        ],
-        "alumniOf" => [
-            "@type" => "EducationalOrganization",
-            "name" => "ماجستير ريادة الأعمال"
-        ],
-        "worksFor" => [
-            "@type" => "Organization",
-            "name" => "منشآت - هيئة المنشآت الصغيرة والمتوسطة",
-            "url" => "https://www.monshaat.gov.sa"
-        ],
-        "address" => [
-            "@type" => "PostalAddress",
-            "addressLocality" => "جدة",
-            "addressCountry" => "SA"
-        ]
+        "image" => asset(config('branding.default_og_image')),
+        "sameAs" => array_values($socialLinks),
     ];
 
     $websiteSchema = [
         "@context" => "https://schema.org",
         "@type" => "WebSite",
         "@id" => url('/') . "/#website",
-        "name" => "صالح الشهري | Saleh Alshehry",
-        "alternateName" => "مدونة صالح الشهري",
-        "description" => "مدونة صالح الشهري - خبير ريادة الأعمال ومستشار في منشآت. مقالات متخصصة في تأسيس المشاريع، الابتكار، والتدريب والتطوير.",
+        "name" => config('branding.site_name'),
+        "alternateName" => config('branding.site_name'),
+        "description" => config('branding.site_description'),
         "url" => url('/'),
         "inLanguage" => "ar",
         "publisher" => [
@@ -75,3 +52,4 @@
 <script type="application/ld+json">
     {!! json_encode($websiteSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
 </script>
+
