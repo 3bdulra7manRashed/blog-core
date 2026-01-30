@@ -112,6 +112,13 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         // App\Providers\EventServiceProvider::class,
         // App\Providers\RouteServiceProvider::class, // Laravel 11 handles routes via bootstrap/app.php usually
+        
+        /*
+         * Module Service Providers...
+         */
+        Modules\Newsletter\Providers\NewsletterServiceProvider::class,
+        Modules\Contact\Providers\ContactServiceProvider::class,
+        Modules\Media\Providers\MediaServiceProvider::class,
     ])->toArray(),
 
     /*

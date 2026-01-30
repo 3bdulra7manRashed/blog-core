@@ -425,7 +425,9 @@
                 <div class="helpful-links-list">
                     <a href="{{ url('/') }}">الصفحة الرئيسية</a>
                     <a href="{{ route('search') }}">البحث</a>
+                    @if(feature('contact') && Route::has('contact'))
                     <a href="{{ route('contact') }}">تواصل معي</a>
+                    @endif
                     <a href="{{ route('about') }}">عني</a>
                 </div>
             </div>

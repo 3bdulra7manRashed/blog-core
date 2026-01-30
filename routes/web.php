@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\PostLikeController;
-use App\Http\Controllers\NewsletterController;
+
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -21,14 +21,10 @@ Route::get('/search', [PostController::class, 'search'])->name('search');
 Route::get('/posts/most-liked', [PostController::class, 'mostLiked'])->name('posts.most-liked');
 Route::get('/posts/most-read', [PostController::class, 'mostRead'])->name('posts.most-read');
 Route::get('/about', [PageController::class, 'about'])->name('about');
-Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-Route::post('/contact', [PageController::class, 'sendContact'])->name('contact.send');
 
-// Newsletter routes (public - for unsubscribe links in emails)
-Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
-Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
-    ->middleware('throttle:5,1') // Rate limit: 5 requests per minute per IP
-    ->name('newsletter.subscribe');
+// Note: /contact routes are now handled by Modules\Contact when feature('contact') is enabled
+
+
 
 // API routes for post likes (no authentication required for guests)
 Route::post('/api/posts/{post}/like', [PostLikeController::class, 'toggle'])->name('api.posts.like');
@@ -56,23 +52,13 @@ Route::prefix('admin')->middleware(['auth', 'role:admin|moderator'])->name('admi
     Route::resource('posts', \App\Http\Controllers\Admin\PostController::class);
     Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class)->except(['show']);
     Route::resource('tags', \App\Http\Controllers\Admin\TagController::class)->except(['show']);
-    Route::resource('media', \App\Http\Controllers\Admin\MediaController::class)->except(['show', 'edit', 'update']);
-    Route::post('media/upload', [\App\Http\Controllers\Admin\MediaController::class, 'store'])->name('media.upload');
-    Route::post('upload-image', [\App\Http\Controllers\Admin\MediaController::class, 'upload'])->name('upload.image');
+
     
     // Download Manager
     Route::resource('downloads', \App\Http\Controllers\Admin\DownloadController::class)->only(['index', 'store', 'destroy']);
     Route::patch('downloads/{download}/toggle', [\App\Http\Controllers\Admin\DownloadController::class, 'toggle'])->name('downloads.toggle');
     
-    // Newsletter Campaigns Management
-    Route::resource('campaigns', \App\Http\Controllers\Admin\CampaignController::class);
-    Route::post('campaigns/{campaign}/send-test', [\App\Http\Controllers\Admin\CampaignController::class, 'sendTest'])->name('campaigns.send-test');
-    Route::post('campaigns/{campaign}/send', [\App\Http\Controllers\Admin\CampaignController::class, 'send'])->name('campaigns.send');
-    Route::get('campaigns/{campaign}/status', [\App\Http\Controllers\Admin\CampaignController::class, 'status'])->name('campaigns.status');
-    
-    // Newsletter Subscribers Management
-    Route::resource('subscribers', \App\Http\Controllers\Admin\SubscriberController::class)->only(['index', 'store', 'destroy']);
-    Route::patch('subscribers/{subscriber}/toggle', [\App\Http\Controllers\Admin\SubscriberController::class, 'toggleStatus'])->name('subscribers.toggle');
+
     
     // Contact Messages Management
     Route::get('messages', [\App\Http\Controllers\Admin\MessageController::class, 'index'])->name('messages.index');

@@ -80,7 +80,7 @@ class User extends Authenticatable
 
     public function media(): HasMany
     {
-        return $this->hasMany(Media::class);
+        return $this->hasMany(\Modules\Media\Models\Media::class);
     }
 
     public function isAdmin(): bool

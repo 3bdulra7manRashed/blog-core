@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Media;
+use Modules\Media\Models\Media;
 use App\Models\Post;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;

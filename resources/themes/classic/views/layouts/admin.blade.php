@@ -139,9 +139,10 @@
                         الملفات والمرفقات
                     </a>
                 
-                    {{-- Messages Menu Item with Unread Badge --}}
+                    {{-- Messages Menu Item with Unread Badge (Contact Module) --}}
+                    @if(feature('contact') && class_exists(\Modules\Contact\Models\ContactMessage::class))
                     @php
-                        $unreadMessagesCount = \App\Models\ContactMessage::unreadCount();
+                        $unreadMessagesCount = \Modules\Contact\Models\ContactMessage::unreadCount();
                     @endphp
                     <a href="{{ route('admin.messages.index') }}"
                        class="flex items-center justify-between px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.messages.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-amber-700' : 'text-gray-700 hover:bg-gray-100' }}">
@@ -157,8 +158,10 @@
                             </span>
                         @endif
                     </a>
+                    @endif
                 
                     {{-- Newsletter Campaigns Menu Item --}}
+                    @if(feature('newsletter'))
                     <a href="{{ route('admin.campaigns.index') }}"
                        class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.campaigns.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-amber-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2 -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -175,6 +178,7 @@
                         </svg>
                         المشتركين
                     </a>
+                    @endif
                 
                     @can('manage-users')
                     <div class="pt-4 border-t border-gray-200 mt-4">

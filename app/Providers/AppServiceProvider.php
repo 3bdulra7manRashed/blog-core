@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Post;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +14,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Load Core Helpers
+        require_once app_path('Helpers/feature.php');
     }
 
     /**
@@ -42,6 +44,12 @@ class AppServiceProvider extends ServiceProvider
                     ->take(5)
                     ->get(),
             ]);
+        });
+
+        // @module('name') directive - uses the same feature() helper for consistency
+        // Usage: @module('newsletter') ... @endmodule
+        Blade::if('module', function (string $name) {
+            return feature(strtolower($name));
         });
     }
 }

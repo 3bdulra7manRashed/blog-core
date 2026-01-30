@@ -179,9 +179,11 @@
                     <a href="{{ route('about') }}" class="text-m font-medium text-gray-800 hover:text-brand-accent transition-colors">
                         عني
                     </a>
+                    @if(feature('contact') && Route::has('contact'))
                     <a href="{{ route('contact') }}" class="text-m font-medium text-gray-800 hover:text-brand-accent transition-colors">
                         تواصل معي
                     </a>
+                    @endif
                 </nav>
 
                 <!-- Left: Social Icons & Search (RTL: Left side, but icons ordered LTR) -->
@@ -330,6 +332,7 @@
                     </a>
 
                     <!-- تواصل معي (Contact) -->
+                    @if(feature('contact') && Route::has('contact'))
                     <a 
                         href="{{ route('contact') }}" 
                         class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('contact') ? 'text-brand-accent bg-gray-50' : '' }}"
@@ -337,6 +340,7 @@
                     >
                         تواصل معي
                     </a>
+                    @endif
 
                     <!-- Sidebar Widgets (Mobile Only) -->
                     <div class="px-4 py-4 space-y-4 border-b border-gray-100">
@@ -478,7 +482,9 @@
                     </div>
                 </details>
                 <a href="{{ route('about') }}" class="text-base font-medium text-gray-800 hover:text-brand-accent py-2">عني</a>
+                @if(feature('contact') && Route::has('contact'))
                 <a href="{{ route('contact') }}" class="text-base font-medium text-gray-800 hover:text-brand-accent py-2">تواصل معي</a>
+                @endif
                 
                 <!-- Sidebar Widgets (No-JS Fallback) -->
                 <div class="space-y-4 pt-4 border-t border-gray-100">
@@ -592,6 +598,7 @@
         <div class="container mx-auto px-4 max-w-5xl">
             
             <!-- Newsletter Section -->
+            @module('Newsletter')
             @if(!$isPostPage)
             <div class="py-12 border-b border-gray-200">
                 <div class="max-w-2xl mx-auto">
@@ -599,6 +606,7 @@
                 </div>
             </div>
             @endif
+            @endmodule
             
             <!-- Footer Bottom -->
             <div class="py-8">
