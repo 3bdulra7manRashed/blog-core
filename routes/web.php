@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 // Public blog routes
-Route::get('d/{slug}', [\App\Http\Controllers\DownloadController::class, 'download'])->name('downloads.public');
+
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('/post/{slug}', [PostController::class, 'show'])->name('post.show');
 Route::get('/category/{slug}', [PostController::class, 'category'])->name('category.show');
@@ -54,20 +54,10 @@ Route::prefix('admin')->middleware(['auth', 'role:admin|moderator'])->name('admi
     Route::resource('tags', \App\Http\Controllers\Admin\TagController::class)->except(['show']);
 
     
-    // Download Manager
-    Route::resource('downloads', \App\Http\Controllers\Admin\DownloadController::class)->only(['index', 'store', 'destroy']);
-    Route::patch('downloads/{download}/toggle', [\App\Http\Controllers\Admin\DownloadController::class, 'toggle'])->name('downloads.toggle');
-    
 
-    
-    // Contact Messages Management
-    Route::get('messages', [\App\Http\Controllers\Admin\MessageController::class, 'index'])->name('messages.index');
-    Route::get('messages/{message}', [\App\Http\Controllers\Admin\MessageController::class, 'show'])->name('messages.show');
-    Route::delete('messages/{message}', [\App\Http\Controllers\Admin\MessageController::class, 'destroy'])->name('messages.destroy');
-    Route::patch('messages/{message}/toggle-read', [\App\Http\Controllers\Admin\MessageController::class, 'toggleRead'])->name('messages.toggle-read');
-    Route::post('messages/mark-all-read', [\App\Http\Controllers\Admin\MessageController::class, 'markAllRead'])->name('messages.mark-all-read');
-    Route::delete('messages/delete-read', [\App\Http\Controllers\Admin\MessageController::class, 'deleteRead'])->name('messages.delete-read');
 });
+
+// Note: Contact Messages Management routes are now handled by Modules\Contact when feature('contact') is enabled
 
 // User management routes - Only Super Admin (مدير النظام) can access
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {

@@ -119,6 +119,7 @@ return [
         Modules\Newsletter\Providers\NewsletterServiceProvider::class,
         Modules\Contact\Providers\ContactServiceProvider::class,
         Modules\Media\Providers\MediaServiceProvider::class,
+        Modules\Download\Providers\DownloadServiceProvider::class,
     ])->toArray(),
 
     /*

@@ -3,12 +3,12 @@
 namespace App\Providers;
 
 use App\Models\Category;
-use App\Models\Media;
+
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
 use App\Policies\CategoryPolicy;
-use App\Policies\MediaPolicy;
+
 use App\Policies\PostPolicy;
 use App\Policies\TagPolicy;
 use App\Policies\UserPolicy;
@@ -26,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         Post::class => PostPolicy::class,
         Category::class => CategoryPolicy::class,
         Tag::class => TagPolicy::class,
-        Media::class => MediaPolicy::class,
+        // Media policy is now registered in Modules\Media\Providers\MediaServiceProvider
         User::class => UserPolicy::class,
     ];
 

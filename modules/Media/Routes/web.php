@@ -9,7 +9,7 @@ use Modules\Media\Http\Controllers\MediaController;
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('admin')->middleware(['auth', 'role:admin|moderator'])->name('admin.')->group(function () {
+Route::prefix('admin')->middleware(['web', 'auth', 'role:admin|moderator'])->name('admin.')->group(function () {
     Route::resource('media', MediaController::class)->except(['show', 'edit', 'update']);
     Route::post('media/upload', [MediaController::class, 'store'])->name('media.upload');
     Route::post('upload-image', [MediaController::class, 'upload'])->name('upload.image');

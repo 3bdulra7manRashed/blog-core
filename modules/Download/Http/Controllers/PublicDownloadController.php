@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\Download\Http\Controllers;
 
-use App\Models\Download;
+use Modules\Download\Models\Download;
+use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class DownloadController extends Controller
+class PublicDownloadController extends Controller
 {
     /**
      * Handle the public download request.

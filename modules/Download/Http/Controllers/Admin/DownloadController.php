@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace Modules\Download\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Download;
+use Illuminate\Routing\Controller;
+use Modules\Download\Models\Download;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -16,7 +16,7 @@ class DownloadController extends Controller
     public function index()
     {
         $downloads = Download::latest()->paginate(20);
-        return view('admin.downloads.index', compact('downloads'));
+        return view('download::admin.downloads.index', compact('downloads'));
     }
 
     /**

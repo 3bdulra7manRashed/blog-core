@@ -131,6 +131,7 @@
                         الوسائط
                     </a>
 
+                    @if(feature('download'))
                     <a href="{{ route('admin.downloads.index') }}"
                        class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.downloads.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-amber-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -138,6 +139,7 @@
                         </svg>
                         الملفات والمرفقات
                     </a>
+                    @endif
                 
                     {{-- Messages Menu Item with Unread Badge (Contact Module) --}}
                     @if(feature('contact') && class_exists(\Modules\Contact\Models\ContactMessage::class))

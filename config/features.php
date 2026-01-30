@@ -13,4 +13,5 @@ return [
 
     'newsletter' => false,
     'contact' => true,
+    'download' => false,
 ];
