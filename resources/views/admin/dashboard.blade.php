@@ -57,11 +57,9 @@
                 </div>
             </div>
             @role('admin')
-                @if(feature('manage_admins'))
-                <a href="{{ route('admin.users.index') }}" class="text-xs text-green-600 hover:text-green-800 font-medium">
+                <x-feature-link feature="manage_admins" route="admin.users.index" class="text-xs text-green-600 hover:text-green-800 font-medium">
                     إدارة المستخدمين ←
-                </a>
-                @endif
+                </x-feature-link>
             @endrole
         </div>
 

@@ -12,7 +12,7 @@ return [
     */
 
     'newsletter' => false,
-    'contact' => true,
+    'contact' => false,
     'download' => false,
     'manage_admins' => false,
 ];
