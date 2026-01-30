@@ -15,5 +15,6 @@ return [
     'contact' => false,
     'download' => false,
     'manage_admins' => false,
-    'seo' => true,
+    'seo' => true, //Basic SEO (Core)
+    'advanced_seo' => false, 
 ];

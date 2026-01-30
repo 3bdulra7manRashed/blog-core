@@ -121,6 +121,7 @@ return [
         Modules\Media\Providers\MediaServiceProvider::class,
         Modules\Download\Providers\DownloadServiceProvider::class,
         Modules\Seo\Providers\SeoServiceProvider::class,
+        Modules\AdvancedSeo\Providers\AdvancedSeoServiceProvider::class,
     ])->toArray(),
 
     /*
