@@ -65,6 +65,7 @@ return [
         'name_en' => env('BRANDING_AUTHOR_NAME_EN', 'Site Author'),
         'title' => env('BRANDING_AUTHOR_TITLE', 'Content Creator'),
         'bio' => env('BRANDING_AUTHOR_BIO', 'Content creator and blogger.'),
+        'avatar' => env('BRANDING_AUTHOR_AVATAR', 'images/avatar.jpg'),
     ],
 
     /*
@@ -116,5 +117,17 @@ return [
         'from_address' => env('NEWSLETTER_MAIL_FROM_ADDRESS', env('MAIL_FROM_ADDRESS', 'newsletter@example.com')),
         'from_name' => env('NEWSLETTER_MAIL_FROM_NAME', env('BRANDING_SITE_NAME', 'My Blog')),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Blog Identity Mode
+    |--------------------------------------------------------------------------
+    |
+    | Controls how post authorship is displayed.
+    | 'single' = All posts shown as Site Owner.
+    | 'multi' = Posts shown with actual author.
+    |
+    */
+    'blog_identity_mode' => env('BLOG_IDENTITY_MODE', 'single'),
 
 ];

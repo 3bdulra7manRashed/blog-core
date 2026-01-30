@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
+use Modules\Newsletter\Models\Campaign;
 
 class Post extends Model
 {
@@ -37,6 +38,15 @@ class Post extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    /**
+     * Get the public-facing author identity (Virtual or Real based on config).
+     */
+    public function getPublishingIdentityAttribute()
+    {
+        return \App\Support\PublishingIdentityResolver::forPost($this);
+    }
+
 
     public function categories(): BelongsToMany
     {

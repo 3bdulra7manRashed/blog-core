@@ -29,7 +29,7 @@
 <meta property="article:modified_time" content="{{ $post->updated_at->toIso8601String() }}">
 @endif
 
-<meta property="article:author" content="{{ config('branding.author.name') }}">
+<meta property="article:author" content="{{ $post->publishing_identity->name }}">
 
 @if($post->categories->count() > 0)
 @foreach($post->categories as $category)
@@ -266,17 +266,13 @@
                 <div class="flex flex-col sm:flex-row-reverse items-center sm:items-start gap-4">
                     <!-- Avatar -->
                     <div class="flex-shrink-0">
-                        @if($post->author && $post->author->profile_photo_url)
-                            <img src="{{ $post->author->profile_photo_url }}" alt="{{ config('branding.author.name') }}" class="w-20 h-20 rounded-full object-cover shadow-md">
-                        @else
-                            <img src="https://ui-avatars.com/api/?name={{ urlencode(config('branding.author.name')) }}&background=c37c54&color=fff&size=128" alt="{{ config('branding.author.name') }}" class="w-20 h-20 rounded-full object-cover shadow-md">
-                        @endif
+                        <img src="{{ $post->publishing_identity->profile_photo_url }}" alt="{{ $post->publishing_identity->name }}" class="w-20 h-20 rounded-full object-cover shadow-md">
                     </div>
                     <!-- Text Content -->
                     <div class="flex-1 text-center sm:text-right">
-                        <h3 class="text-xl font-serif font-bold text-brand-primary mb-2">{{ config('branding.author.name') }}</h3>
+                        <h3 class="text-xl font-serif font-bold text-brand-primary mb-2">{{ $post->publishing_identity->name }}</h3>
                         <p class="text-gray-600 leading-relaxed">
-                            {{ $post->author->short_bio ?? config('branding.author.bio') }}
+                            {{ $post->publishing_identity->short_bio }}
                         </p>
                     </div>
                 </div>
