@@ -57,9 +57,11 @@
                 </div>
             </div>
             @role('admin')
+                @if(feature('manage_admins'))
                 <a href="{{ route('admin.users.index') }}" class="text-xs text-green-600 hover:text-green-800 font-medium">
                     إدارة المستخدمين ←
                 </a>
+                @endif
             @endrole
         </div>
 

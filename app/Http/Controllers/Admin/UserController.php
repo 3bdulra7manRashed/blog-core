@@ -16,6 +16,14 @@ use Illuminate\View\View;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        // Safety Fallback: Ensure feature is enabled
+        if (! feature('manage_admins')) {
+            abort(404);
+        }
+    }
+
     /**
      * Display a listing of users.
      */

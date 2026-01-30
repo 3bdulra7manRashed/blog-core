@@ -59,24 +59,27 @@ Route::prefix('admin')->middleware(['auth', 'role:admin|moderator'])->name('admi
 
 // Note: Contact Messages Management routes are now handled by Modules\Contact when feature('contact') is enabled
 
-// User management routes - Only Super Admin (مدير النظام) can access
-Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
-    Route::post('users/{user}/promote', [\App\Http\Controllers\Admin\UserController::class, 'promote'])->name('users.promote');
-    Route::post('users/{user}/demote', [\App\Http\Controllers\Admin\UserController::class, 'demote'])->name('users.demote');
-});
+// User management routes - Only Super Admin (managed by feature flag)
+if (feature('manage_admins')) {
+    // User management routes - Only Super Admin (مدير النظام) can access
+    Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
+        Route::post('users/{user}/promote', [\App\Http\Controllers\Admin\UserController::class, 'promote'])->name('users.promote');
+        Route::post('users/{user}/demote', [\App\Http\Controllers\Admin\UserController::class, 'demote'])->name('users.demote');
+    });
 
-// Super-admin user management routes (soft delete, restore, force delete)
-Route::prefix('admin')->middleware(['auth', 'superadmin'])->name('admin.')->group(function () {
-    Route::delete('users/{user}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('users.destroy');
-    Route::post('users/{id}/restore', [\App\Http\Controllers\Admin\UserController::class, 'restore'])->name('users.restore');
-    Route::delete('users/{id}/force-delete', [\App\Http\Controllers\Admin\UserController::class, 'forceDelete'])->name('users.forceDelete');
-});
+    // Super-admin user management routes (soft delete, restore, force delete)
+    Route::prefix('admin')->middleware(['auth', 'superadmin'])->name('admin.')->group(function () {
+        Route::delete('users/{user}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('users.destroy');
+        Route::post('users/{id}/restore', [\App\Http\Controllers\Admin\UserController::class, 'restore'])->name('users.restore');
+        Route::delete('users/{id}/force-delete', [\App\Http\Controllers\Admin\UserController::class, 'forceDelete'])->name('users.forceDelete');
+    });
 
-// User management routes - Only Super Admin (using superadmin middleware)
-Route::prefix('admin')->middleware(['auth', 'superadmin'])->name('admin.')->group(function () {
-    Route::get('users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
-    Route::get('users/create', [\App\Http\Controllers\Admin\UserController::class, 'create'])->name('users.create');
-    Route::post('users', [\App\Http\Controllers\Admin\UserController::class, 'store'])->name('users.store');
-});
+    // User management routes - Only Super Admin (using superadmin middleware)
+    Route::prefix('admin')->middleware(['auth', 'superadmin'])->name('admin.')->group(function () {
+        Route::get('users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
+        Route::get('users/create', [\App\Http\Controllers\Admin\UserController::class, 'create'])->name('users.create');
+        Route::post('users', [\App\Http\Controllers\Admin\UserController::class, 'store'])->name('users.store');
+    });
+}
 
 require __DIR__.'/auth.php';

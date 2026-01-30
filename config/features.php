@@ -14,4 +14,5 @@ return [
     'newsletter' => false,
     'contact' => true,
     'download' => false,
+    'manage_admins' => false,
 ];
