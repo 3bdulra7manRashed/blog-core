@@ -52,6 +52,10 @@ Route::prefix('admin')->middleware(['auth', 'role:admin|moderator'])->name('admi
     Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class)->except(['show']);
     Route::resource('tags', \App\Http\Controllers\Admin\TagController::class)->except(['show']);
 
+    // Static Pages (About)
+    Route::get('/about', [\App\Http\Controllers\Admin\PageController::class, 'edit'])->name('about.edit');
+    Route::put('/about', [\App\Http\Controllers\Admin\PageController::class, 'update'])->name('about.update');
+
     
 
 });

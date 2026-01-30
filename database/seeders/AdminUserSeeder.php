@@ -47,6 +47,12 @@ class AdminUserSeeder extends Seeder
             $user->assignRole($role);
         }
 
-        $this->command->info("✓ Admin user '{$name}' (ID: {$user->id}) created/updated with Role: Admin, Super Admin: Yes");
+        // Ensure the Site Owner setting points to this admin user (Safe Identity)
+        \Illuminate\Support\Facades\DB::table('settings')->updateOrInsert(
+            ['key' => 'site_owner_user_id'],
+            ['value' => $user->id]
+        );
+
+        $this->command->info("✓ Admin user '{$name}' (ID: {$user->id}) created/updated with Role: Admin, Super Admin: Yes, Site Owner: Sync");
     }
 }

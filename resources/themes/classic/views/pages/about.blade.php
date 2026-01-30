@@ -1,48 +1,40 @@
 @extends('layouts.blog')
 
 {{-- About Page SEO --}}
-@section('title', 'عني - ' . config('branding.site_name'))
+@section('title', $page->title . ' - ' . config('branding.site_name'))
 
-@section('description', config('branding.author.bio'))
+@section('description', \Illuminate\Support\Str::limit(strip_tags($page->content), 160))
 
 @section('keywords', config('branding.default_keywords'))
 
-@section('og_type', 'profile')
+@section('og_type', 'article')
 
 @section('content')
 <div class="container mx-auto px-4 py-12" dir="rtl">
     
     <!-- Hero Section -->
     <div class="text-center mb-16">
-        <h1 class="text-3xl font-serif font-bold text-brand-accent mb-4">عني</h1>
+        <h1 class="text-3xl font-serif font-bold text-brand-accent mb-4">{{ $page->title }}</h1>
     </div>
 
-    @if($user)
     <!-- Centered Single Column Layout -->
     <div class="max-w-4xl mx-auto">
         
-        <!-- Featured Image Section - Author Profile Photo -->
-        <div class="mb-12 rounded-2xl overflow-hidden shadow-lg h-64 md:h-96 bg-gray-50 border border-gray-100">
-            <img src="{{ asset('storage/media/jYcQxvxGUe3CwPGhj4KZEhWtP7O00yDx7gOUBKnp.jpg') }}" 
-                 alt="{{ $user->name }}" 
-                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+        @if($page->featured_image)
+        <!-- Featured Image Section -->
+        <div class="mb-12 w-full overflow-hidden rounded-2xl shadow-lg border border-gray-100 aspect-[16/7] max-h-[420px]">
+            <img src="{{ asset('storage/' . $page->featured_image) }}" 
+                 alt="{{ $page->title }}" 
+                 class="w-full h-full object-cover">
         </div>
+        @endif
 
-        <!-- Biography Content -->
-        <div class="prose prose-lg max-w-none prose-headings:text-brand-accent prose-li:marker:text-brand-accent text-right" dir="rtl">
-            @if($user->biography)
-                {!! $user->biography !!}
-            @else
-                <p class="text-gray-500 text-center py-8">لم تتم إضافة نبذة تعريفية بعد.</p>
-            @endif
+        <!-- Page Content -->
+        <div class="ckeditor-content prose prose-lg max-w-none prose-headings:text-brand-accent prose-li:marker:text-brand-accent text-right" dir="rtl">
+             {!! $page->content !!}
         </div>
 
     </div>
-    @else
-        <div class="text-center py-20 bg-white rounded-xl shadow-sm">
-            <p class="text-gray-500 text-lg">لم يتم العثور على معلومات الكاتب.</p>
-        </div>
-    @endif
 
 </div>
 @endsection

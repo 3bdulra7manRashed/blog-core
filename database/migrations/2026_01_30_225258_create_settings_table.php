@@ -13,14 +13,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('settings', function (Blueprint $table) {
-            $table->string('key')->primary();
+            $table->id();
+            $table->string('key')->unique();
             $table->text('value')->nullable();
+            $table->timestamps();
         });
 
         // Seed default critical settings
         DB::table('settings')->insert([
-            ['key' => 'blog_identity_mode', 'value' => 'single'],
-            ['key' => 'site_owner_user_id', 'value' => '1'],
+            ['key' => 'blog_identity_mode', 'value' => 'single', 'created_at' => now(), 'updated_at' => now()],
+            ['key' => 'site_owner_user_id', 'value' => '1', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 
