@@ -131,22 +131,20 @@
                         الوسائط
                     </a>
 
-                    @if(feature('download'))
-                    <a href="{{ route('admin.downloads.index') }}"
+                    <x-feature-link feature="download" route="admin.downloads.index"
                        class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.downloads.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-amber-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                         </svg>
                         الملفات والمرفقات
-                    </a>
-                    @endif
+                    </x-feature-link>
                 
                     {{-- Messages Menu Item with Unread Badge (Contact Module) --}}
                     @if(feature('contact') && class_exists(\Modules\Contact\Models\ContactMessage::class))
                     @php
                         $unreadMessagesCount = \Modules\Contact\Models\ContactMessage::unreadCount();
                     @endphp
-                    <a href="{{ route('admin.messages.index') }}"
+                    <x-feature-link feature="contact" route="admin.messages.index"
                        class="flex items-center justify-between px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.messages.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-amber-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <div class="flex items-center">
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -159,40 +157,38 @@
                                 {{ $unreadMessagesCount > 99 ? '99+' : $unreadMessagesCount }}
                             </span>
                         @endif
-                    </a>
+                    </x-feature-link>
                     @endif
                 
                     {{-- Newsletter Campaigns Menu Item --}}
-                    @if(feature('newsletter'))
-                    <a href="{{ route('admin.campaigns.index') }}"
+                    <x-feature-link feature="newsletter" route="admin.campaigns.index"
                        class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.campaigns.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-amber-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2 -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
                         </svg>
                         الحملات البريدية
-                    </a>
+                    </x-feature-link>
 
                     {{-- Newsletter Subscribers Menu Item --}}
-                    <a href="{{ route('admin.subscribers.index') }}"
+                    <x-feature-link feature="newsletter" route="admin.subscribers.index"
                        class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.subscribers.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-amber-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
                         المشتركين
-                    </a>
-                    @endif
+                    </x-feature-link>
                 
                     @if(feature('manage_admins'))
                     @can('manage-users')
                     <div class="pt-4 border-t border-gray-200 mt-4">
                         <p class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">إدارة خاصة</p>
-                        <a href="{{ route('admin.users.index') }}"
+                        <x-feature-link feature="manage_admins" route="admin.users.index"
                            class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.users.*') ? 'bg-brand-accent  text-white hover:text-white hover:bg-amber-700' : 'text-gray-700 hover:bg-gray-100' }}">
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                             </svg>
                             المديرين
-                        </a>
+                        </x-feature-link>
                     </div>
                     @endcan
                     @endif
