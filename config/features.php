@@ -15,4 +15,5 @@ return [
     'contact' => false,
     'download' => false,
     'manage_admins' => false,
+    'seo' => true,
 ];

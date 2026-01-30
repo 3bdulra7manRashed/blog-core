@@ -120,6 +120,7 @@ return [
         Modules\Contact\Providers\ContactServiceProvider::class,
         Modules\Media\Providers\MediaServiceProvider::class,
         Modules\Download\Providers\DownloadServiceProvider::class,
+        Modules\Seo\Providers\SeoServiceProvider::class,
     ])->toArray(),
 
     /*
