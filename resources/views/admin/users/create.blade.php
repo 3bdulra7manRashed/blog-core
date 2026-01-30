@@ -5,9 +5,9 @@
 @section('content')
 <div class="mb-6 flex items-center justify-between">
     <h1 class="text-3xl font-serif font-bold text-brand-primary">إنشاء مستخدم جديد</h1>
-    <a href="{{ route('admin.users.index') }}" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors bg-white">
+    <x-feature-link feature="manage_admins" route="admin.users.index" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors bg-white">
         العودة للقائمة
-    </a>
+    </x-feature-link>
 </div>
 
 <form action="{{ route('admin.users.store') }}" method="POST" id="user-form">
@@ -107,9 +107,9 @@
                 <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">الإجراءات</h3>
 
                 <div class="flex items-center justify-between pt-4 border-t mt-4">
-                    <a href="{{ route('admin.users.index') }}" class="px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors text-sm font-medium">
+                    <x-feature-link feature="manage_admins" route="admin.users.index" class="px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors text-sm font-medium">
                         إلغاء
-                    </a>
+                    </x-feature-link>
                     <button type="submit" class="px-6 py-2 bg-brand-primary text-white rounded hover:bg-opacity-90 transition-colors text-sm font-medium shadow-sm">
                         إنشاء المستخدم
                     </button>
