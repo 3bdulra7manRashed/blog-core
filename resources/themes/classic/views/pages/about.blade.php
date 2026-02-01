@@ -22,10 +22,10 @@
         
         @if($page->featured_image)
         <!-- Featured Image Section -->
-        <div class="mb-12 w-full overflow-hidden rounded-2xl shadow-lg border border-gray-100 aspect-[16/7] max-h-[420px]">
+        <div class="mb-12">
             <img src="{{ asset('storage/' . $page->featured_image) }}" 
                  alt="{{ $page->title }}" 
-                 class="w-full h-full object-cover">
+                 class="w-full h-[340px] object-cover rounded-2xl shadow-sm">
         </div>
         @endif
 

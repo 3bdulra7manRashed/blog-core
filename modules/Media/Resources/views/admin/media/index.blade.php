@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 <div class="mb-6">
     <h1 class="text-2xl md:text-3xl font-serif font-bold text-brand-primary mb-4">مكتبة الوسائط</h1>
     
-    <form action="{{ route('admin.media.store') }}" method="POST" enctype="multipart/form-data" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+    <form action="{{ route('admin.media.library.store') }}" method="POST" enctype="multipart/form-data" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         @csrf
         <div class="flex-1">
             <input type="file" name="file" accept=".jpeg,.jpg,.png,.gif,.webp,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.rar" required 
@@ -37,11 +37,11 @@ use Illuminate\Support\Str;
 
 @if(request()->has('search') || $media->count() > 0)
     <div class="mb-4">
-        <form method="GET" action="{{ route('admin.media.index') }}" class="flex items-center gap-3">
+        <form method="GET" action="{{ route('admin.media.library.index') }}" class="flex items-center gap-3">
             <input type="text" name="search" value="{{ request('search') }}" placeholder="بحث باسم الملف..." class="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-accent text-sm">
             <button type="submit" class="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800 text-sm">بحث</button>
             @if(request()->has('search'))
-                <a href="{{ route('admin.media.index') }}" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 text-sm">مسح</a>
+                <a href="{{ route('admin.media.library.index') }}" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 text-sm">مسح</a>
             @endif
         </form>
     </div>
@@ -86,7 +86,7 @@ use Illuminate\Support\Str;
                         <span class="btn-text">نسخ</span>
                     </button>
 
-                    <form action="{{ route('admin.media.destroy', $item->id) }}" method="POST" class="inline-block">
+                    <form action="{{ route('admin.media.library.destroy', $item->id) }}" method="POST" class="inline-block">
                         @csrf
                         @method('DELETE')
                         <button type="submit" 

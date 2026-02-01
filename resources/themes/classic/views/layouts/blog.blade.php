@@ -70,11 +70,23 @@
                 <!-- Right: Navigation Links (RTL: Right side) -->
                 <nav class="hidden md:flex items-center space-x-6 space-x-reverse">
                     <!-- المقالات - Direct Link -->
-                    <a href="{{ route('home') }}" class="text-m font-medium text-gray-800 hover:text-brand-accent transition-colors">
+                    <a href="{{ route('home') }}" class="text-m font-medium {{ request()->routeIs('home') || request()->routeIs('post.*') || request()->routeIs('category.*') ? 'text-brand-accent font-bold' : 'text-gray-800' }} hover:text-brand-accent transition-colors">
                         المقالات
                     </a>
                     
-                    <a href="{{ route('about') }}" class="text-m font-medium text-gray-800 hover:text-brand-accent transition-colors">
+                    @if(feature('vod.video'))
+                    <a href="{{ route('videos.index') }}" class="text-m font-medium {{ request()->routeIs('videos.*') ? 'text-brand-accent font-bold' : 'text-gray-800' }} hover:text-brand-accent transition-colors">
+                        مكتبة الفيديو
+                    </a>
+                    @endif
+
+                    @if(feature('vod.audio'))
+                    <a href="{{ route('audios.index') }}" class="text-m font-medium {{ request()->routeIs('audios.*') ? 'text-brand-accent font-bold' : 'text-gray-800' }} hover:text-brand-accent transition-colors">
+                        الصوتيات
+                    </a>
+                    @endif
+
+                    <a href="{{ route('about') }}" class="text-m font-medium {{ request()->routeIs('about') ? 'text-brand-accent font-bold' : 'text-gray-800' }} hover:text-brand-accent transition-colors">
                         عني
                     </a>
                     @if(feature('contact') && Route::has('contact'))
@@ -214,11 +226,33 @@
                     <!-- المقالات (Articles) - Direct Link -->
                     <a 
                         href="{{ route('home') }}" 
-                        class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('home') ? 'text-brand-accent bg-gray-50' : '' }}"
+                        class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('home') || request()->routeIs('post.*') ? 'text-brand-accent bg-gray-50' : '' }}"
                         @click="mobileMenuOpen = false"
                     >
                         المقالات
                     </a>
+
+                    <!-- Video Library -->
+                    @if(feature('vod.video'))
+                    <a 
+                        href="{{ route('videos.index') }}" 
+                        class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('videos.*') ? 'text-brand-accent bg-gray-50' : '' }}"
+                        @click="mobileMenuOpen = false"
+                    >
+                        مكتبة الفيديو
+                    </a>
+                    @endif
+
+                    <!-- Audio Library -->
+                    @if(feature('vod.audio'))
+                    <a 
+                        href="{{ route('audios.index') }}" 
+                        class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('audios.*') ? 'text-brand-accent bg-gray-50' : '' }}"
+                        @click="mobileMenuOpen = false"
+                    >
+                        الصوتيات
+                    </a>
+                    @endif
 
                     <!-- عني (About) -->
                     <a 

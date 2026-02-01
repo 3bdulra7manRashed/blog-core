@@ -4,184 +4,134 @@
 <script src="{{ asset('vendor/ckeditor/translations/ar.js') }}"></script>
 
 <style>
-    /* CKEditor Professional Styles */
+    /* CKEditor Base Styles */
     .ckeditor {
         min-height: 200px;
     }
     
     .ck-editor__editable {
-        min-height: 700px !important;
-        max-height: 90vh !important;
-        overflow-y: auto !important;
-        padding: 40px !important;
         line-height: 1.8 !important;
         font-size: 16px !important;
+        padding: 20px !important;
+    }
+
+    /* PROFILE: Default (Article) */
+    .ck-editor-default .ck-editor__editable {
+        min-height: 600px !important;
+        max-height: 85vh !important;
+    }
+
+    /* PROFILE: Compact (Short Description) */
+    .ck-editor-compact .ck-editor__editable {
+        min-height: 150px !important;
+        max-height: 300px !important;
+        overflow-y: auto !important;
+        padding: 15px !important;
     }
     
-    /* Professional Editor Styles - Like Word */
+    /* Content Styles */
     .ck-content {
         font-family: 'Cairo', sans-serif;
     }
-    
-    .ck-content ul {
-        list-style-type: disc;
-        padding-right: 20px;
-    }
-    
-    .ck-content ol {
-        list-style-type: decimal;
-        padding-right: 20px;
-    }
-    
-    .ck-content h2 {
-        font-size: 1.5em;
-        font-weight: bold;
-        margin: 1em 0;
-    }
-    
-    .ck-content h3 {
-        font-size: 1.17em;
-        font-weight: bold;
-        margin: 0.8em 0;
-    }
-    
-    .ck-content h4 {
-        font-size: 1em;
-        font-weight: bold;
-        margin: 0.8em 0;
-    }
-    
-    .ck-content p {
-        margin-bottom: 0.8em;
-    }
+    .ck-content ul { list-style-type: disc; padding-right: 20px; }
+    .ck-content ol { list-style-type: decimal; padding-right: 20px; }
+    .ck-content h2 { font-size: 1.5em; font-weight: bold; margin: 1em 0; }
+    .ck-content h3 { font-size: 1.17em; font-weight: bold; margin: 0.8em 0; }
+    .ck-content p { margin-bottom: 0.8em; }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Track initialized editors to prevent duplicate initialization
     const initializedEditors = new WeakSet();
     
-    // Custom Image Upload Adapter
     class CustomImageUploadAdapter {
-        constructor(loader) {
-            this.loader = loader;
-        }
-
+        constructor(loader) { this.loader = loader; }
         upload() {
-            return this.loader.file
-                .then(file => new Promise((resolve, reject) => {
-                    const data = new FormData();
-                    data.append('upload', file);
-                    
-                    // Get CSRF token from meta tag
-                    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
-                    if (csrfToken) {
-                        data.append('_token', csrfToken);
-                    }
+            return this.loader.file.then(file => new Promise((resolve, reject) => {
+                const data = new FormData();
+                data.append('upload', file);
+                const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+                if (csrfToken) data.append('_token', csrfToken);
 
-                    fetch('{{ route("ckeditor.upload") }}', { 
-                        method: 'POST',
-                        body: data,
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken || ''
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.url) {
-                            resolve({
-                                default: data.url
-                            });
-                        } else {
-                            reject(data.error || 'فشل عملية الرفع');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Upload error:', error);
-                        reject('حدث خطأ أثناء رفع الصورة');
-                    });
-                }));
+                fetch('{{ route("ckeditor.upload") }}', { 
+                    method: 'POST', body: data, headers: { 'X-CSRF-TOKEN': csrfToken || '' }
+                })
+                .then(r => r.json())
+                .then(d => d.url ? resolve({ default: d.url }) : reject(d.error || 'فشل'))
+                .catch(e => reject('خطأ'));
+            }));
         }
-
-        abort() {
-            // Can add upload abort logic here if needed
-        }
+        abort() {}
     }
 
-    // Plugin to register the upload adapter
     function CustomImageUploadAdapterPlugin(editor) {
-        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-            return new CustomImageUploadAdapter(loader);
-        };
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => new CustomImageUploadAdapter(loader);
     }
 
-    // Initialize all .ckeditor textareas
     function initializeCKEditors() {
         const textareas = document.querySelectorAll('textarea.ckeditor');
         
         textareas.forEach(textarea => {
-            // Skip if already initialized
-            if (initializedEditors.has(textarea)) {
-                return;
-            }
-            
-            // Mark as initialized
+            if (initializedEditors.has(textarea)) return;
             initializedEditors.add(textarea);
             
-            // Get configuration from data attributes
-            const placeholder = textarea.dataset.placeholder || 'ابدأ الكتابة هنا...';
-            const minHeight = textarea.dataset.minHeight || '700px';
+            const profile = textarea.dataset.profile || 'default';
             
+            // Define Toolbars based on Profile
+            const toolbars = {
+                default: [
+                    'heading', '|',
+                    'bold', 'italic', 'underline', 'link', 'blockQuote', 'insertTable', '|',
+                    'bulletedList', 'numberedList', 'outdent', 'indent', '|',
+                    'mediaEmbed', 'imageUpload', 'undo', 'redo'
+                ],
+                compact: [
+                    'bold', 'italic', 'link', '|',
+                    'bulletedList', 'numberedList', '|',
+                    'undo', 'redo'
+                ]
+            };
+
             ClassicEditor.create(textarea, {
                 language: { ui: 'ar', content: 'ar' },
-                placeholder: placeholder,
+                placeholder: textarea.dataset.placeholder || 'ابدأ الكتابة...',
                 extraPlugins: [CustomImageUploadAdapterPlugin],
                 toolbar: {
                     shouldNotGroupWhenFull: true,
-                    items: [
-                        'heading', '|',
-                        'bold', 'italic', 'underline', 'link', 'blockQuote', 'insertTable', '|',
-                        'bulletedList', 'numberedList', 'outdent', 'indent', '|',
-                        'mediaEmbed', 'imageUpload', 'undo', 'redo'
-                    ]
+                    items: toolbars[profile] || toolbars.default
                 },
-                mediaEmbed: {
-                    previewsInData: true
-                }
+                mediaEmbed: { previewsInData: true }
             })
             .then(editor => {
-                // Store editor instance on textarea element
                 textarea.ckeditorInstance = editor;
                 
-                // Auto-sync content before form submission
+                // Add Profile Class to the Main Editor Container
+                // .ck-editor is the wrapper created by CKEditor next to textarea
+                const editorElement = editor.ui.view.element;
+                if (editorElement) {
+                    editorElement.classList.add('ck-editor-' + profile);
+                }
+
+                // Sync Logic
                 const form = textarea.closest('form');
                 if (form && !form.ckeditorSyncAttached) {
                     form.ckeditorSyncAttached = true;
-                    form.addEventListener('submit', function(e) {
-                        // Sync all CKEditor instances in this form
-                        const textareas = form.querySelectorAll('textarea.ckeditor');
-                        textareas.forEach(ta => {
-                            if (ta.ckeditorInstance) {
-                                ta.ckeditorInstance.updateSourceElement();
-                            }
+                    form.addEventListener('submit', function() {
+                        form.querySelectorAll('textarea.ckeditor').forEach(ta => {
+                            if (ta.ckeditorInstance) ta.ckeditorInstance.updateSourceElement();
                         });
                     });
                 }
             })
             .catch(error => {
-                console.error('CKEditor initialization error:', error);
-                initializedEditors.delete(textarea); // Allow retry
+                console.error(error);
+                initializedEditors.delete(textarea);
             });
         });
     }
     
-    // Initialize editors on page load
     initializeCKEditors();
-    
-    // Re-initialize if new editors are added dynamically (optional)
-    // You can call window.initializeCKEditors() after adding new textareas via JS
     window.initializeCKEditors = initializeCKEditors;
 });
 </script>
 @endonce
-

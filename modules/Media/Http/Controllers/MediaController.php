@@ -73,7 +73,7 @@ class MediaController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.media.index')
+        return redirect()->route('admin.media.library.index')
             ->with('success', 'تم رفع الملف بنجاح.');
     }
 
@@ -100,7 +100,7 @@ class MediaController extends Controller
         $media = Media::withTrashed()->find($id);
 
         if (!$media) {
-            return redirect()->route('admin.media.index')
+            return redirect()->route('admin.media.library.index')
                 ->with('error', 'الصورة غير موجودة أو تم حذفها بالفعل.');
         }
 
@@ -118,7 +118,7 @@ class MediaController extends Controller
         // 3. Force delete from DB
         $media->forceDelete();
 
-        return redirect()->route('admin.media.index')
+        return redirect()->route('admin.media.library.index')
             ->with('success', 'تم حذف الصورة نهائياً.');
     }
 }

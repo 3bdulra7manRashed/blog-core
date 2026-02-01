@@ -123,14 +123,31 @@
                         الوسوم
                     </a>
                 
-                    <a href="{{ route('admin.media.index') }}"
-                       class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.media.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-amber-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                    <a href="{{ route('admin.media.library.index') }}"
+                       class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.media.library.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-amber-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
                         الوسائط
                     </a>
 
+                    @if(feature('vod.enabled'))
+                    <x-feature-link feature="vod" route="admin.vod.contents.index"
+                       class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.vod.contents.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-amber-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        مكتبة الفيديو
+                    </x-feature-link>
+                    <x-feature-link feature="vod" route="admin.vod.playlists.index"
+                       class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.vod.playlists.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-amber-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                        </svg>
+                        قوائم التشغيل
+                    </x-feature-link>
+                    @endif
                     <x-feature-link feature="download" route="admin.downloads.index"
                        class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.downloads.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-amber-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

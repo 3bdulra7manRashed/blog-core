@@ -1,0 +1,96 @@
+<?php
+
+namespace Modules\Vod\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use Modules\Vod\Models\VodContent;
+use Modules\Vod\Models\VodPlaylist;
+use Illuminate\Http\Request;
+
+class VodController extends Controller
+{
+    public function indexVideos(Request $request)
+    {
+        $tab = $request->get('tab', 'videos');
+
+        if ($tab === 'playlists') {
+            $contents = VodPlaylist::where('type', 'video')
+                ->withCount('items')
+                ->latest()
+                ->paginate(12);
+
+            $contents->appends(['tab' => 'playlists']);
+        } else {
+            $contents = VodContent::published()
+                ->videos()
+                ->latest('published_at')
+                ->paginate(12);
+        }
+
+        return view('vod::front.index', [
+            'contents' => $contents,
+            'title' => 'مكتبة الفيديو',
+            'type' => 'video',
+            'currentTab' => $tab
+        ]);
+    }
+
+    public function indexAudios(Request $request)
+    {
+        $tab = $request->get('tab', 'audios');
+
+        if ($tab === 'playlists') {
+            $contents = VodPlaylist::where('type', 'audio')
+                ->withCount('items')
+                ->latest()
+                ->paginate(12);
+
+            $contents->appends(['tab' => 'playlists']);
+        } else {
+            $contents = VodContent::published()
+                ->audios()
+                ->latest('published_at')
+                ->paginate(12);
+        }
+
+        return view('vod::front.index', [
+            'contents' => $contents,
+            'title' => 'مكتبة الصوتيات',
+            'type' => 'audio',
+            'currentTab' => $tab
+        ]);
+    }
+
+    public function show(Request $request, $slug)
+    {
+        $content = VodContent::published()
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        // Strict Type Check (SEO & UX)
+        if ($request->routeIs('videos.show') && $content->type !== 'video') {
+            return redirect()->route('audios.show', $content->slug, 301);
+        }
+        if ($request->routeIs('audios.show') && $content->type !== 'audio') {
+            return redirect()->route('videos.show', $content->slug, 301);
+        }
+
+        $content->increment('views_count');
+
+        return view('vod::front.show', compact('content'));
+    }
+
+    public function showPlaylist($slug)
+    {
+        $playlist = VodPlaylist::where('slug', $slug)->firstOrFail();
+
+        $playlist->load(['items' => function ($query) {
+            $query->where('status', 'published');
+        }]);
+
+        // Explicitly set type based on playlist type used for breadcrumbs/layout
+        $type = $playlist->type; 
+
+        return view('vod::front.playlists.show', compact('playlist', 'type'));
+    }
+}

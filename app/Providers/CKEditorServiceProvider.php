@@ -36,11 +36,20 @@ BLADE;
         // Register @ckeditor('fieldName') Blade directive
         // This creates a textarea that will be initialized as CKEditor
         Blade::directive('ckeditor', function ($expression) {
-            // Remove quotes from expression if present
-            $fieldName = trim($expression, " '\"");
+            // Parse arguments: name, profile (optional)
+            $args = array_map('trim', explode(',', $expression));
+            $nameInd = $args[0];
+            $profileInd = $args[1] ?? "'default'";
             
+            // value for old() needs clean name string
+            $nameString = trim($nameInd, " '\"");
+
             return <<<BLADE
-<?php echo view('components.ckeditor-field', ['fieldName' => {$expression}, 'value' => old({$expression}, \$value ?? '')])->render(); ?>
+<?php echo view('components.ckeditor-field', [
+    'fieldName' => {$nameInd}, 
+    'value' => old('{$nameString}', \$value ?? ''), 
+    'profile' => {$profileInd}
+])->render(); ?>
 BLADE;
         });
     }

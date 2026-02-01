@@ -10,6 +10,12 @@ if (! function_exists('feature')) {
      */
     function feature(string $feature, bool $default = false): bool
     {
-        return config("features.{$feature}", $default);
+        $value = config("features.{$feature}", $default);
+
+        if (is_array($value)) {
+            return isset($value['enabled']) && (bool) $value['enabled'];
+        }
+
+        return (bool) $value;
     }
 }

@@ -5,4 +5,5 @@ return [
     App\Providers\AuthServiceProvider::class,
     App\Providers\ViewComposerServiceProvider::class,
     App\Providers\ThemeServiceProvider::class,
+    Modules\Media\Providers\MediaServiceProvider::class,
 ];
