@@ -1,15 +1,15 @@
 @extends('theme::layouts.admin')
 
-@section('title', 'ط§ظ„ط­ظ…ظ„ط§طھ ط§ظ„ط¨ط±ظٹط¯ظٹط©')
+@section('title', 'الحملات البريدية')
 
 @section('content')
 <div class="mb-6 flex items-center justify-between">
-    <h1 class="text-3xl font-serif font-bold text-brand-primary">ط§ظ„ط­ظ…ظ„ط§طھ ط§ظ„ط¨ط±ظٹط¯ظٹط©</h1>
+    <h1 class="text-3xl font-serif font-bold text-brand-primary">الحملات البريدية</h1>
     <a href="{{ route('admin.campaigns.create') }}" class="flex items-center px-4 py-2 bg-brand-accent text-white rounded-md hover:bg-amber-700 hover:text-white transition-colors shadow-sm">
         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
         </svg>
-        ط­ظ…ظ„ط© ط¬ط¯ظٹط¯ط©
+        حملة جديدة
     </a>
 </div>
 
@@ -19,11 +19,11 @@
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
-                    <th class="px-4 md:px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[200px]">ط§ظ„ط­ظ…ظ„ط©</th>
-                    <th class="px-4 md:px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">ط§ظ„ظ…ظ‚ط§ظ„ط§طھ</th>
-                    <th class="px-4 md:px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">ط§ظ„ط­ط§ظ„ط©</th>
-                    <th class="px-4 md:px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">ط§ظ„طھط§ط±ظٹط®</th>
-                    <th class="px-4 md:px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ط§ظ„ط¥ط¬ط±ط§ط،ط§طھ</th>
+                    <th class="px-4 md:px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[200px]">الحملة</th>
+                    <th class="px-4 md:px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">المقالات</th>
+                    <th class="px-4 md:px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">الحالة</th>
+                    <th class="px-4 md:px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">التاريخ</th>
+                    <th class="px-4 md:px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">الإجراءات</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -59,15 +59,15 @@
                                 <div class="md:hidden">
                                     @if($campaign->isSent())
                                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                            طھظ… ط§ظ„ط¥ط±ط³ط§ظ„
+                                            تم الإرسال
                                         </span>
                                     @elseif($campaign->isSending())
                                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                            ط¬ط§ط±ظچ ط§ظ„ط¥ط±ط³ط§ظ„
+                                            جارٍ الإرسال
                                         </span>
                                     @else
                                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                            ظ…ط³ظˆط¯ط©
+                                            مسودة
                                         </span>
                                     @endif
                                 </div>
@@ -80,7 +80,7 @@
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                 </svg>
-                                {{ $campaign->posts_count }} ظ…ظ‚ط§ظ„
+                                {{ $campaign->posts_count }} مقال
                             </span>
                         </td>
                         
@@ -91,7 +91,7 @@
                                     <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                     </svg>
-                                    طھظ… ط§ظ„ط¥ط±ط³ط§ظ„
+                                    تم الإرسال
                                 </span>
                             @elseif($campaign->isSending())
                                 <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
@@ -99,14 +99,14 @@
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                     </svg>
-                                    ط¬ط§ط±ظچ ط§ظ„ط¥ط±ط³ط§ظ„
+                                    جارٍ الإرسال
                                 </span>
                             @else
                                 <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
                                     <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
                                     </svg>
-                                    ظ…ط³ظˆط¯ط©
+                                    مسودة
                                 </span>
                             @endif
                         </td>
@@ -123,9 +123,9 @@
                                 </span>
                                 <span class="text-xs text-gray-400">
                                     @if($campaign->sent_at)
-                                        ط£ظڈط±ط³ظ„طھ
+                                        أُرسلت
                                     @else
-                                        ط£ظڈظ†ط´ط¦طھ
+                                        أُنشئت
                                     @endif
                                 </span>
                             </div>
@@ -141,11 +141,11 @@
                                               hover:bg-blue-100 hover:text-blue-800 font-medium text-xs 
                                               transition-colors duration-200
                                               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
-                                       title="طھط¹ط¯ظٹظ„ ط§ظ„ط­ظ…ظ„ط©">
+                                       title="تعديل الحملة">
                                         <svg class="w-3.5 h-3.5 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                         </svg>
-                                        طھط¹ط¯ظٹظ„
+                                        تعديل
                                     </a>
                                 @endif
                                 
@@ -158,12 +158,12 @@
                                                    hover:bg-red-100 hover:text-red-800 font-medium text-xs 
                                                    transition-colors duration-200
                                                    focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1"
-                                            data-confirm-message="ظ‡ظ„ ط£ظ†طھ ظ…طھط£ظƒط¯ ظ…ظ† ط­ط°ظپ ظ‡ط°ظ‡ ط§ظ„ط­ظ…ظ„ط© ط§ظ„ط¨ط±ظٹط¯ظٹط©طں"
-                                            title="ط­ط°ظپ ط§ظ„ط­ظ…ظ„ط©">
+                                            data-confirm-message="هل أنت متأكد من حذف هذه الحملة البريدية؟"
+                                            title="حذف الحملة">
                                         <svg class="w-3.5 h-3.5 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                         </svg>
-                                        ط­ط°ظپ
+                                        حذف
                                     </button>
                                 </form>
                             </div>
@@ -176,13 +176,13 @@
                                 <svg class="w-16 h-16 text-gray-300 mb-4 -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
                                 </svg>
-                                <p class="text-gray-500 text-lg mb-2">ظ„ط§ طھظˆط¬ط¯ ط­ظ…ظ„ط§طھ ط¨ط±ظٹط¯ظٹط©</p>
-                                <p class="text-gray-400 text-sm mb-4">ط§ط¨ط¯ط£ ط¨ط¥ظ†ط´ط§ط، ط£ظˆظ„ ط­ظ…ظ„ط© ط¨ط±ظٹط¯ظٹط© ظ„ط¥ط±ط³ط§ظ„ظ‡ط§ ظ„ظ„ظ…ط´طھط±ظƒظٹظ†</p>
+                                <p class="text-gray-500 text-lg mb-2">لا توجد حملات بريدية</p>
+                                <p class="text-gray-400 text-sm mb-4">ابدأ بإنشاء أول حملة بريدية لإرسالها للمشتركين</p>
                                 <a href="{{ route('admin.campaigns.create') }}" class="flex items-center px-4 py-2 bg-brand-accent text-white rounded-md hover:bg-amber-700 hover:text-white transition-colors shadow-sm">
                                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                                     </svg>
-                                    ط¥ظ†ط´ط§ط، ط­ظ…ظ„ط© ط¬ط¯ظٹط¯ط©
+                                    إنشاء حملة جديدة
                                 </a>
                             </div>
                         </td>

@@ -1,6 +1,6 @@
 @extends('theme::layouts.admin')
 
-@section('title', 'ط¥ط¯ط§ط±ط© ط§ظ„ط­ظ…ظ„ط©: ' . $campaign->subject)
+@section('title', 'إدارة الحملة: ' . $campaign->subject)
 
 @section('content')
 <div x-data="{ 
@@ -24,7 +24,7 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
-                ظ…ط¹ط§ظٹظ†ط© ظˆط¥ط¯ط§ط±ط© ط§ظ„ط­ظ…ظ„ط© ط§ظ„ط¨ط±ظٹط¯ظٹط©
+                معاينة وإدارة الحملة البريدية
             </p>
         </div>
 
@@ -36,13 +36,13 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                     </svg>
-                    طھط¹ط¯ظٹظ„
+                    تعديل
                 </a>
             @endif
 
             <!-- Back Button -->
             <a href="{{ route('admin.campaigns.index') }}" class="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors bg-white">
-                ط¹ظˆط¯ط© ظ„ظ„ظ‚ط§ط¦ظ…ط©
+                عودة للقائمة
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/>
                 </svg>
@@ -64,14 +64,14 @@
                         <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
                         <div class="w-3 h-3 rounded-full bg-green-400"></div>
                     </div>
-                    <span class="text-sm text-gray-500 font-medium">ظ…ط¹ط§ظٹظ†ط© ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ</span>
+                    <span class="text-sm text-gray-500 font-medium">معاينة البريد الإلكتروني</span>
                 </div>
                 <div class="flex items-center gap-2 text-xs text-gray-400">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                     </svg>
-                    ظˆط¶ط¹ ط§ظ„ظ…ط¹ط§ظٹظ†ط©
+                    وضع المعاينة
                 </div>
             </div>
             
@@ -104,7 +104,7 @@
                 },
 
                 startPolling() {
-                    this.statusMessage = 'ط¬ط§ط±ظچ ط¥ط±ط³ط§ظ„ ط§ظ„ط­ظ…ظ„ط©...';
+                    this.statusMessage = 'جارٍ إرسال الحملة...';
                     this.pollInterval = setInterval(() => { this.checkStatus(); }, 3000);
                     setTimeout(() => { this.stopPolling(); }, 300000); // Stop after 5 mins
                 },
@@ -125,7 +125,7 @@
                                 this.showModal = false;
                                 this.isSending = false;
                             } else if (this.status === 'failed') {
-                                this.statusMessage = 'ظپط´ظ„ ط§ظ„ط¥ط±ط³ط§ظ„!';
+                                this.statusMessage = 'فشل الإرسال!';
                                 this.stopPolling();
                                 this.isSending = false;
                             }
@@ -149,7 +149,7 @@
             
             <!-- Reactive Progress Stepper -->
             <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
-                <h3 class="font-bold text-gray-800 mb-4 text-sm">ط®ط·ظˆط§طھ ط§ظ„ط­ظ…ظ„ط©</h3>
+                <h3 class="font-bold text-gray-800 mb-4 text-sm">خطوات الحملة</h3>
                 
                 <div class="relative">
                     <!-- Vertical Line -->
@@ -163,8 +163,8 @@
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm font-medium text-green-600">ط§ظ„ظ…ط­طھظˆظ‰</p>
-                            <p class="text-xs text-green-500">طھظ… âœ“</p>
+                            <p class="text-sm font-medium text-green-600">المحتوى</p>
+                            <p class="text-xs text-green-500">تم âœ“</p>
                         </div>
                     </div>
                     
@@ -177,8 +177,8 @@
                             </svg>
                         </div>
                         <div x-show="status === 'sent' || status === 'sending'">
-                            <p class="text-sm font-medium text-green-600">ط§ظ„ظ…ط¹ط§ظٹظ†ط©</p>
-                            <p class="text-xs text-green-500">طھظ… âœ“</p>
+                            <p class="text-sm font-medium text-green-600">المعاينة</p>
+                            <p class="text-xs text-green-500">تم âœ“</p>
                         </div>
 
                         <!-- Active State -->
@@ -186,8 +186,8 @@
                             <span class="text-white text-xs font-bold">2</span>
                         </div>
                         <div x-show="status !== 'sent' && status !== 'sending'">
-                            <p class="text-sm font-bold text-gray-900">ط§ظ„ظ…ط¹ط§ظٹظ†ط©</p>
-                            <p class="text-xs text-brand-accent">ط§ظ„ط®ط·ظˆط© ط§ظ„ط­ط§ظ„ظٹط©</p>
+                            <p class="text-sm font-bold text-gray-900">المعاينة</p>
+                            <p class="text-xs text-brand-accent">الخطوة الحالية</p>
                         </div>
                     </div>
                     
@@ -200,8 +200,8 @@
                             </svg>
                         </div>
                         <div x-show="status === 'sent'">
-                            <p class="text-sm font-medium text-green-600">ط§ظ„ط¥ط±ط³ط§ظ„</p>
-                            <p class="text-xs text-green-500">طھظ… ط§ظ„ط¥ط±ط³ط§ظ„</p>
+                            <p class="text-sm font-medium text-green-600">الإرسال</p>
+                            <p class="text-xs text-green-500">تم الإرسال</p>
                         </div>
 
                         <!-- Pending/Active State -->
@@ -209,8 +209,8 @@
                             <span class="text-gray-400 text-xs font-bold">3</span>
                         </div>
                         <div x-show="status !== 'sent'">
-                            <p class="text-sm font-medium text-gray-400">ط§ظ„ط¥ط±ط³ط§ظ„</p>
-                            <p class="text-xs text-gray-400">ط¥ط±ط³ط§ظ„ ظ„ظ„ظ…ط´طھط±ظƒظٹظ†</p>
+                            <p class="text-sm font-medium text-gray-400">الإرسال</p>
+                            <p class="text-xs text-gray-400">إرسال للمشتركين</p>
                         </div>
                     </div>
                 </div>
@@ -226,7 +226,7 @@
                     </div>
                     <div class="flex-1">
                         <p class="text-3xl font-bold text-gray-900">{{ number_format($subscriberCount) }}</p>
-                        <p class="text-sm text-gray-500">ظ…ط´طھط±ظƒ ظ†ط´ط·</p>
+                        <p class="text-sm text-gray-500">مشترك نشط</p>
                     </div>
                 </div>
                 <div class="mt-4 pt-4 border-t border-gray-100">
@@ -240,7 +240,7 @@
                         <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
                         </svg>
-                        <span>{{ $campaign->posts->count() }} ظ…ظ‚ط§ظ„ط§طھ</span>
+                        <span>{{ $campaign->posts->count() }} مقالات</span>
                     </div>
                 </div>
             </div>
@@ -251,7 +251,7 @@
                     <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
                     </svg>
-                    ط¥ط±ط³ط§ظ„ ظ†ط³ط®ط© طھط¬ط±ظٹط¨ظٹط©
+                    إرسال نسخة تجريبية
                 </h3>
                 <form action="{{ route('admin.campaigns.send-test', $campaign) }}" method="POST">
                     @csrf
@@ -263,7 +263,7 @@
                             <svg class="w-4 h-4 -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
                             </svg>
-                            <span>ط¥ط±ط³ط§ظ„</span>
+                            <span>إرسال</span>
                         </button>
                     </div>
                     @error('email')
@@ -280,7 +280,7 @@
                         <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
                         </svg>
-                        ط¥ط·ظ„ط§ظ‚ ط§ظ„ط­ظ…ظ„ط©
+                        إطلاق الحملة
                     </h3>
                     
                     <button type="button"
@@ -291,10 +291,10 @@
                         <svg class="w-5 h-5 -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
                         </svg>
-                        ط¥ط±ط³ط§ظ„ ظ„ظ„ط¬ظ…ظٹط¹
+                        إرسال للجميع
                     </button>
                     
-                    <p class="text-xs text-gray-500 text-center mt-3">ط³ظٹظڈط·ظ„ط¨ ظ…ظ†ظƒ ط§ظ„طھط£ظƒظٹط¯ ظ‚ط¨ظ„ ط§ظ„ط¥ط±ط³ط§ظ„</p>
+                    <p class="text-xs text-gray-500 text-center mt-3">سيُطلب منك التأكيد قبل الإرسال</p>
                 </div>
 
                 <!-- Success State -->
@@ -306,9 +306,9 @@
                             </svg>
                         </div>
                         <div>
-                            <p class="font-bold text-lg text-green-800">طھظ… ط¥ط±ط³ط§ظ„ ط§ظ„ط­ظ…ظ„ط© ط¨ظ†ط¬ط§ط­! ًںژ‰</p>
+                            <p class="font-bold text-lg text-green-800">تم إرسال الحملة بنجاح! ًںژ‰</p>
                             <p class="text-sm text-green-700 mt-1">
-                                طھظ… ط§ظ„ط¥ط±ط³ط§ظ„ ط§ظ„ط¢ظ† ط§ظ„ط³ط§ط¹ط© <span x-text="sentTime"></span>
+                                تم الإرسال الآن الساعة <span x-text="sentTime"></span>
                             </p>
                         </div>
                     </div>
@@ -321,17 +321,17 @@
                         <div class="bg-gradient-to-r from-brand-accent to-amber-500 h-1.5"></div>
                         <div class="p-6">
                             <div class="text-center mb-6">
-                                <h3 class="text-xl font-bold text-gray-900">ظ‡ظ„ ط£ظ†طھ ظ…طھط£ظƒط¯طں</h3>
-                                <p class="text-gray-500 mt-2">ط£ظ†طھ ط¹ظ„ظ‰ ظˆط´ظƒ ط¥ط±ط³ط§ظ„ ظ‡ط°ظ‡ ط§ظ„ط­ظ…ظ„ط© ط¥ظ„ظ‰ <span class="font-bold text-brand-accent">{{ number_format($subscriberCount) }}</span> ظ…ط´طھط±ظƒ.</p>
+                                <h3 class="text-xl font-bold text-gray-900">هل أنت متأكد؟</h3>
+                                <p class="text-gray-500 mt-2">أنت على وشك إرسال هذه الحملة إلى <span class="font-bold text-brand-accent">{{ number_format($subscriberCount) }}</span> مشترك.</p>
                             </div>
                             <div class="grid grid-cols-2 gap-3 items-stretch">
                                 <form action="{{ route('admin.campaigns.send', $campaign) }}" method="POST" class="h-full" @submit="handleSubmit()">
                                     @csrf
                                     <button type="submit" :disabled="isSending" class="w-full h-full px-4 py-3 bg-brand-accent text-white rounded-xl hover:bg-brand-accent-hover transition-all font-bold flex items-center justify-center gap-2">
-                                        <span x-text="isSending ? 'ط¬ط§ط±ظچ ط§ظ„ط¥ط±ط³ط§ظ„...' : 'ظ†ط¹ظ…طŒ ط£ط±ط³ظ„ ط§ظ„ط¢ظ†'">ظ†ط¹ظ…طŒ ط£ط±ط³ظ„ ط§ظ„ط¢ظ†</span>
+                                        <span x-text="isSending ? 'جارٍ الإرسال...' : 'نعم، أرسل الآن'">نعم، أرسل الآن</span>
                                     </button>
                                 </form>
-                                <button type="button" @click="showModal = false" :disabled="isSending" class="w-full h-full px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium">ط¥ظ„ط؛ط§ط،</button>
+                                <button type="button" @click="showModal = false" :disabled="isSending" class="w-full h-full px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium">إلغاء</button>
                             </div>
                             <div x-show="isSending && statusMessage" class="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg text-center">
                                 <span x-text="statusMessage" class="text-sm font-medium text-blue-700"></span>

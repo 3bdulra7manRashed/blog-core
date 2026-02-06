@@ -1,6 +1,6 @@
 @extends('theme::layouts.admin')
 
-@section('title', 'ط¥ط¯ط§ط±ط© ط§ظ„ظ…ط´طھط±ظƒظٹظ†')
+@section('title', 'إدارة المشتركين')
 
 @section('content')
 <div class="mb-6">
@@ -13,8 +13,8 @@
                 </svg>
             </div>
             <div>
-                <h1 class="text-3xl font-serif font-bold text-gray-900 mb-1">ط¥ط¯ط§ط±ط© ط§ظ„ظ…ط´طھط±ظƒظٹظ†</h1>
-                <p class="text-gray-500 text-sm">ط¥ط¯ط§ط±ط© ظ‚ط§ط¦ظ…ط© ظ…ط´طھط±ظƒظٹ ط§ظ„ظ†ط´ط±ط© ط§ظ„ط¨ط±ظٹط¯ظٹط©</p>
+                <h1 class="text-3xl font-serif font-bold text-gray-900 mb-1">إدارة المشتركين</h1>
+                <p class="text-gray-500 text-sm">إدارة قائمة مشتركي النشرة البريدية</p>
             </div>
         </div>
     </div>
@@ -30,7 +30,7 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-sm font-medium text-gray-500">ط¥ط¬ظ…ط§ظ„ظٹ ط§ظ„ظ…ط´طھط±ظƒظٹظ†</p>
+                    <p class="text-sm font-medium text-gray-500">إجمالي المشتركين</p>
                     <p class="text-2xl font-bold text-gray-900">{{ number_format($stats['total']) }}</p>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-sm font-medium text-gray-500">ط§ظ„ظ…ط´طھط±ظƒظˆظ† ط§ظ„ظ†ط´ط·ظˆظ†</p>
+                    <p class="text-sm font-medium text-gray-500">المشتركون النشطون</p>
                     <p class="text-2xl font-bold text-green-600">{{ number_format($stats['active']) }}</p>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-sm font-medium text-gray-500">ظ…ظ„ط؛ظˆ ط§ظ„ط§ط´طھط±ط§ظƒ</p>
+                    <p class="text-sm font-medium text-gray-500">ملغو الاشتراك</p>
                     <p class="text-2xl font-bold text-red-600">{{ number_format($stats['unsubscribed']) }}</p>
                 </div>
             </div>
@@ -73,7 +73,7 @@
             <div>
                 <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2">
                     <span class="w-1.5 h-6 bg-brand-accent rounded-full inline-block"></span>
-                    ط¥ط¶ط§ظپط© ظ…ط´طھط±ظƒ ط¬ط¯ظٹط¯
+                    إضافة مشترك جديد
                 </h2>
             </div>
         </div>
@@ -83,7 +83,7 @@
             
             <!-- Email Input -->
             <div class="w-full md:flex-[2]">
-                <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ</label>
+                <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">البريد الإلكتروني</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -101,7 +101,7 @@
 
             <!-- Name Input (Optional) -->
             <div class="w-full md:flex-1">
-                <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">ط§ظ„ط§ط³ظ… (ط§ط®طھظٹط§ط±ظٹ)</label>
+                <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">الاسم (اختياري)</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -110,7 +110,7 @@
                     </div>
                     <input type="text" name="name" id="name" value="{{ old('name') }}"
                            class="block w-full pr-10 pl-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent transition-all {{ $errors->has('name') ? 'border-red-300 bg-red-50' : '' }}"
-                           placeholder="ط§ط³ظ… ط§ظ„ظ…ط´طھط±ظƒ...">
+                           placeholder="اسم المشترك...">
                 </div>
                 @error('name')
                     <p class="text-red-600 text-xs mt-1.5 flex items-center gap-1">{{ $message }}</p>
@@ -123,7 +123,7 @@
                     <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
-                    ط¥ط¶ط§ظپط© ظ…ط´طھط±ظƒ
+                    إضافة مشترك
                 </button>
             </div>
         </form>
@@ -132,9 +132,9 @@
     <!-- Subscribers List -->
     <div class="bg-white rounded-xl shadow-sm ring-1 ring-gray-200 overflow-hidden">
         <div class="border-b border-gray-100 px-6 py-4 flex items-center justify-between bg-gray-50/50">
-            <h3 class="text-base font-bold text-gray-900">ظ‚ط§ط¦ظ…ط© ط§ظ„ظ…ط´طھط±ظƒظٹظ†</h3>
+            <h3 class="text-base font-bold text-gray-900">قائمة المشتركين</h3>
             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                {{ $subscribers->total() }} ظ…ط´طھط±ظƒ
+                {{ $subscribers->total() }} مشترك
             </span>
         </div>
 
@@ -143,10 +143,10 @@
                 <table class="min-w-full divide-y divide-gray-100">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">ط§ظ„ظ…ط´طھط±ظƒ</th>
-                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">طھط§ط±ظٹط® ط§ظ„ط§ط´طھط±ط§ظƒ</th>
-                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ط§ظ„ط­ط§ظ„ط©</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ط§ظ„ط¥ط¬ط±ط§ط،ط§طھ</th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">المشترك</th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">تاريخ الاشتراك</th>
+                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">الحالة</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">الإجراءات</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-100">
@@ -184,14 +184,14 @@
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                             </svg>
-                                            ظ†ط´ط·
+                                            نشط
                                         </span>
                                     @else
                                         <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-700 border border-red-100">
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path>
                                             </svg>
-                                            ظ…ظ„ط؛ظٹ
+                                            ملغي
                                         </span>
                                     @endif
                                 </td>
@@ -206,33 +206,33 @@
                                             @if($subscriber->is_active)
                                                 <button type="submit" 
                                                         class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded border transition-colors shadow-sm bg-gray-50 text-gray-600 border-gray-200 hover:bg-red-50 hover:text-red-600 hover:border-red-200"
-                                                        title="ط¥ظ„ط؛ط§ط، ط§ظ„ط§ط´طھط±ط§ظƒ">
+                                                        title="إلغاء الاشتراك">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path>
                                                     </svg>
-                                                    ط¥ظ„ط؛ط§ط،
+                                                    إلغاء
                                                 </button>
                                             @else
                                                 <button type="submit" 
                                                         class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded border transition-colors shadow-sm bg-gray-50 text-gray-600 border-gray-200 hover:bg-green-50 hover:text-green-600 hover:border-green-200"
-                                                        title="ط¥ط¹ط§ط¯ط© ط§ظ„طھظپط¹ظٹظ„">
+                                                        title="إعادة التفعيل">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                     </svg>
-                                                    طھظپط¹ظٹظ„
+                                                    تفعيل
                                                 </button>
                                             @endif
                                         </form>
 
                                         {{-- Delete Button --}}
                                         <form action="{{ route('admin.subscribers.destroy', $subscriber) }}" method="POST" class="inline-block"
-                                              onsubmit="return confirm('ظ‡ظ„ ط£ظ†طھ ظ…طھط£ظƒط¯ ظ…ظ† ط­ط°ظپ ظ‡ط°ط§ ط§ظ„ظ…ط´طھط±ظƒ ظ†ظ‡ط§ط¦ظٹط§ظ‹طں')">
+                                              onsubmit="return confirm('هل أنت متأكد من حذف هذا المشترك نهائياً؟')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" 
                                                     class="js-confirm p-1.5 text-red-600 hover:text-white hover:bg-red-500 rounded border border-red-100 hover:border-red-500 transition-colors shadow-sm" 
-                                                    title="ط­ط°ظپ ط§ظ„ظ…ط´طھط±ظƒ"
-                                                    data-confirm-message="ظ‡ظ„ ط£ظ†طھ ظ…طھط£ظƒط¯ ظ…ظ† ط­ط°ظپ ظ‡ط°ط§ ط§ظ„ظ…ط´طھط±ظƒ ظ†ظ‡ط§ط¦ظٹط§ظ‹طں">
+                                                    title="حذف المشترك"
+                                                    data-confirm-message="هل أنت متأكد من حذف هذا المشترك نهائياً؟">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                                 </svg>
@@ -259,8 +259,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                     </svg>
                 </div>
-                <h3 class="text-lg font-medium text-gray-900 mb-1">ظ„ط§ ظٹظˆط¬ط¯ ظ…ط´طھط±ظƒظˆظ† ط­ط§ظ„ظٹط§ظ‹</h3>
-                <p class="text-gray-500 text-sm max-w-xs mx-auto">ظ‚ظ… ط¨ط¥ط¶ط§ظپط© ظ…ط´طھط±ظƒ ط¬ط¯ظٹط¯ ظ…ظ† ط§ظ„ظ†ظ…ظˆط°ط¬ ط£ط¹ظ„ط§ظ‡ ط£ظˆ ط§ظ†طھط¸ط± ط§ط´طھط±ط§ظƒط§طھ ط¬ط¯ظٹط¯ط© ظ…ظ† ط§ظ„ظ…ظˆظ‚ط¹.</p>
+                <h3 class="text-lg font-medium text-gray-900 mb-1">لا يوجد مشتركون حالياً</h3>
+                <p class="text-gray-500 text-sm max-w-xs mx-auto">قم بإضافة مشترك جديد من النموذج أعلاه أو انتظر اشتراكات جديدة من الموقع.</p>
             </div>
         @endif
     </div>

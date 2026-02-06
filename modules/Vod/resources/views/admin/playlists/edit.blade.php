@@ -1,12 +1,12 @@
 @extends('theme::layouts.admin')
 
-@section('title', 'طھط¹ط¯ظٹظ„ ط§ظ„ظ‚ط§ط¦ظ…ط©: ' . $playlist->title)
+@section('title', 'تعديل القائمة: ' . $playlist->title)
 
 @section('content')
 <div class="mb-6 flex items-center justify-between">
-    <h1 class="text-3xl font-serif font-bold text-brand-primary">طھط¹ط¯ظٹظ„ ط§ظ„ظ‚ط§ط¦ظ…ط©</h1>
+    <h1 class="text-3xl font-serif font-bold text-brand-primary">تعديل القائمة</h1>
     <a href="{{ route('admin.vod.playlists.index') }}" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-        ط§ظ„ط¹ظˆط¯ط© ظ„ظ„ظ‚ط§ط¦ظ…ط©
+        العودة للقائمة
     </a>
 </div>
 
@@ -22,16 +22,16 @@
             <div class="bg-white p-6 rounded shadow">
                 <!-- Title -->
                 <div class="mb-4">
-                    <label for="title" class="block text-sm font-medium text-gray-700 mb-2">ط§ط³ظ… ط§ظ„ظ‚ط§ط¦ظ…ط©</label>
+                    <label for="title" class="block text-sm font-medium text-gray-700 mb-2">اسم القائمة</label>
                     <input type="text" name="title" id="title" value="{{ old('title', $playlist->title) }}" 
                            class="w-full px-4 py-3 text-xl font-bold border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-accent @error('title') border-red-500 @enderror"
-                           placeholder="ط£ط¯ط®ظ„ ط§ط³ظ… ط§ظ„ظ‚ط§ط¦ظ…ط©" required>
+                           placeholder="أدخل اسم القائمة" required>
                     @error('title') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
                 <!-- Slug -->
                 <div class="mb-4">
-                    <label for="slug" class="block text-sm font-medium text-gray-700 mb-2">ط§ظ„ط±ط§ط¨ط· ط§ظ„ط¯ط§ط¦ظ… (Slug)</label>
+                    <label for="slug" class="block text-sm font-medium text-gray-700 mb-2">الرابط الدائم (Slug)</label>
                     <div class="flex items-center">
                         <span class="text-gray-500 bg-gray-50 border border-l-0 border-gray-300 rounded-r-md px-3 py-2 text-sm" dir="ltr">{{ config('app.url') }}/playlists/</span>
                         <input type="text" name="slug" id="slug" value="{{ old('slug', $playlist->slug) }}" 
@@ -43,7 +43,7 @@
 
             <!-- Description -->
             <div class="bg-white p-6 rounded shadow">
-                <label for="description" class="block text-sm font-medium text-gray-700 mb-2">ط§ظ„ظˆطµظپ</label>
+                <label for="description" class="block text-sm font-medium text-gray-700 mb-2">الوصف</label>
                 <div class="@error('description') border border-red-500 rounded @enderror">
                     @php $value = old('description', $playlist->description); @endphp
                     @ckeditor('description')
@@ -53,7 +53,7 @@
             
             <!-- Videos Selector -->
             <div class="bg-white p-6 rounded shadow">
-                <label class="block text-sm font-medium text-gray-700 mb-4">ط¥ط¶ط§ظپط© ظپظٹط¯ظٹظˆظ‡ط§طھ ظ„ظ„ظ‚ط§ط¦ظ…ط©</label>
+                <label class="block text-sm font-medium text-gray-700 mb-4">إضافة فيديوهات للقائمة</label>
                 
                 @if($contents->count() > 0)
                     <div class="border border-gray-200 rounded-md max-h-96 overflow-y-auto p-4 space-y-2 bg-gray-50">
@@ -65,17 +65,17 @@
                             <div class="flex-1">
                                 <span class="text-gray-900 font-medium block">{{ $content->title }}</span>
                                 <span class="text-xs text-gray-500 block">
-                                    {{ $content->type === 'video' ? 'ظپظٹط¯ظٹظˆ' : 'طµظˆطھ' }} | 
+                                    {{ $content->type === 'video' ? 'فيديو' : 'صوت' }} | 
                                     {{ $content->published_at ? $content->published_at->format('Y-m-d') : '' }}
                                 </span>
                             </div>
                         </label>
                         @endforeach
                     </div>
-                    <p class="mt-2 text-xs text-gray-500">ط§ط®طھط± ط§ظ„ظپظٹط¯ظٹظˆظ‡ط§طھ ط§ظ„طھظٹ طھط±ظٹط¯ ط¥ط¶ط§ظپطھظ‡ط§ ظ„ظ‡ط°ظ‡ ط§ظ„ظ‚ط§ط¦ظ…ط©.</p>
+                    <p class="mt-2 text-xs text-gray-500">اختر الفيديوهات التي تريد إضافتها لهذه القائمة.</p>
                 @else
                     <div class="text-center py-6 text-gray-500 bg-gray-50 rounded border border-dashed border-gray-300">
-                        ظ„ط§ طھظˆط¬ط¯ ظپظٹط¯ظٹظˆظ‡ط§طھ ظ…ظ†ط´ظˆط±ط© ط­ط§ظ„ظٹط§ظ‹ ظ„ط¥ط¶ط§ظپطھظ‡ط§.
+                        لا توجد فيديوهات منشورة حالياً لإضافتها.
                     </div>
                 @endif
                 @error('contents') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
@@ -88,10 +88,10 @@
             
             <!-- Actions Box -->
             <div class="bg-white p-4 rounded shadow">
-                <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">ظ†ط´ط±</h3>
+                <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">نشر</h3>
                 <div class="pt-2">
                     <button type="submit" class="w-full px-6 py-2 bg-brand-primary text-white rounded hover:bg-opacity-90 shadow-sm transition-colors font-medium">
-                        طھط­ط¯ظٹط« ط§ظ„ظ‚ط§ط¦ظ…ط©
+                        تحديث القائمة
                     </button>
                 </div>
             </div>

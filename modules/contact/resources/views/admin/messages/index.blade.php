@@ -1,14 +1,14 @@
 @extends('theme::layouts.admin')
 
-@section('title', 'ط§ظ„ط±ط³ط§ط¦ظ„')
+@section('title', 'الرسائل')
 
 @section('content')
 <div class="space-y-6">
     {{-- Header --}}
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">ط§ظ„ط±ط³ط§ط¦ظ„</h1>
-            <p class="text-gray-500 mt-1">ط¥ط¯ط§ط±ط© ط±ط³ط§ط¦ظ„ ظ†ظ…ظˆط°ط¬ ط§ظ„طھظˆط§طµظ„ ({{ $totalCount }} ط±ط³ط§ظ„ط©طŒ {{ $unreadCount }} ط؛ظٹط± ظ…ظ‚ط±ظˆط،ط©)</p>
+            <h1 class="text-2xl font-bold text-gray-900">الرسائل</h1>
+            <p class="text-gray-500 mt-1">إدارة رسائل نموذج التواصل ({{ $totalCount }} رسالة، {{ $unreadCount }} غير مقروءة)</p>
         </div>
         
         <div class="flex items-center gap-3">
@@ -19,7 +19,7 @@
                         <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
-                        طھط­ط¯ظٹط¯ ط§ظ„ظƒظ„ ظƒظ…ظ‚ط±ظˆط،
+                        تحديد الكل كمقروء
                     </button>
                 </form>
             @endif
@@ -30,25 +30,25 @@
     <div class="mb-6 bg-white p-4 rounded-lg shadow">
         <form method="GET" action="{{ route('admin.messages.index') }}" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             {{-- Search Input --}}
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="ط¨ط­ط« ظپظٹ ط§ظ„ط±ط³ط§ط¦ظ„..." 
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="بحث في الرسائل..." 
                    class="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-accent">
             
             {{-- Status Filter --}}
             <select name="filter" class="py-2 pr-8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-accent">
-                <option value="">ط¬ظ…ظٹط¹ ط§ظ„ط±ط³ط§ط¦ظ„</option>
-                <option value="unread" {{ request('filter') === 'unread' ? 'selected' : '' }}>ط؛ظٹط± ظ…ظ‚ط±ظˆط،ط©</option>
-                <option value="read" {{ request('filter') === 'read' ? 'selected' : '' }}>ظ…ظ‚ط±ظˆط،ط©</option>
+                <option value="">جميع الرسائل</option>
+                <option value="unread" {{ request('filter') === 'unread' ? 'selected' : '' }}>غير مقروءة</option>
+                <option value="read" {{ request('filter') === 'read' ? 'selected' : '' }}>مقروءة</option>
             </select>
             
             {{-- Filter Button --}}
             <button type="submit" class="px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800 whitespace-nowrap font-medium transition-colors">
-                طھط·ط¨ظٹظ‚
+                تطبيق
             </button>
             
             {{-- Clear Button (Conditional) --}}
             @if(request()->hasAny(['search', 'filter']))
                 <a href="{{ route('admin.messages.index') }}" class="px-4 py-2 bg-gray-100 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-200 text-center whitespace-nowrap transition-colors">
-                    ظ…ط³ط­
+                    مسح
                 </a>
             @endif
         </form>
@@ -62,11 +62,11 @@
                 <table class="w-full">
                     <thead class="bg-gray-50 border-b border-gray-100">
                         <tr>
-                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">ط§ظ„ط­ط§ظ„ط©</th>
-                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">ط§ظ„ظ…ط±ط³ظ„</th>
-                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">ط§ظ„ط±ط³ط§ظ„ط©</th>
-                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider hidden sm:table-cell">ط§ظ„طھط§ط±ظٹط®</th>
-                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">ط§ظ„ط¥ط¬ط±ط§ط،ط§طھ</th>
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">الحالة</th>
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">المرسل</th>
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">الرسالة</th>
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider hidden sm:table-cell">التاريخ</th>
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">الإجراءات</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
@@ -78,11 +78,11 @@
                                     @if(!$message->is_read)
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                             <span class="w-2 h-2 ml-1.5 bg-blue-500 rounded-full animate-pulse"></span>
-                                            ط¬ط¯ظٹط¯
+                                            جديد
                                         </span>
                                     @else
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
-                                            ظ…ظ‚ط±ظˆط،
+                                            مقروء
                                         </span>
                                     @endif
                                 </td>
@@ -126,7 +126,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="js-confirm inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 text-xs font-medium rounded-lg hover:bg-red-100 transition-colors"
-                                                    data-confirm-message="ظ‡ظ„ ط£ظ†طھ ظ…طھط£ظƒط¯ ظ…ظ† ط­ط°ظپ ظ‡ط°ظ‡ ط§ظ„ط±ط³ط§ظ„ط©طں">
+                                                    data-confirm-message="هل أنت متأكد من حذف هذه الرسالة؟">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                                 </svg>
@@ -152,12 +152,12 @@
                 <svg class="w-16 h-16 mx-auto text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                 </svg>
-                <h3 class="mt-4 text-lg font-medium text-gray-900">ظ„ط§ طھظˆط¬ط¯ ط±ط³ط§ط¦ظ„</h3>
+                <h3 class="mt-4 text-lg font-medium text-gray-900">لا توجد رسائل</h3>
                 <p class="mt-2 text-gray-500">
                     @if(request('filter') || request('search'))
-                        ظ„ظ… ظٹطھظ… ط§ظ„ط¹ط«ظˆط± ط¹ظ„ظ‰ ط±ط³ط§ط¦ظ„ طھط·ط§ط¨ظ‚ ط§ظ„ط¨ط­ط«
+                        لم يتم العثور على رسائل تطابق البحث
                     @else
-                        ط³طھط¸ظ‡ط± ط§ظ„ط±ط³ط§ط¦ظ„ ط§ظ„ظˆط§ط±ط¯ط© ظ…ظ† ظ†ظ…ظˆط°ط¬ ط§ظ„طھظˆط§طµظ„ ظ‡ظ†ط§
+                        ستظهر الرسائل الواردة من نموذج التواصل هنا
                     @endif
                 </p>
             </div>

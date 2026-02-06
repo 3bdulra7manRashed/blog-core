@@ -1,6 +1,6 @@
 @extends('theme::layouts.admin')
 
-@section('title', 'ظ…ظƒطھط¨ط© ط§ظ„ظ…ظ„ظپط§طھ ظˆط§ظ„ظ…ط±ظپظ‚ط§طھ')
+@section('title', 'مكتبة الملفات والمرفقات')
 
 @section('content')
 <div class="mb-6">
@@ -13,8 +13,8 @@
                 </svg>
             </div>
             <div>
-                <h1 class="text-3xl font-serif font-bold text-gray-900 mb-1">ظ…ظƒطھط¨ط© ط§ظ„ظ…ظ„ظپط§طھ</h1>
-                <p class="text-gray-500 text-sm">ط¥ط¯ط§ط±ط© ط§ظ„ظ…ظ„ظپط§طھ ظˆط±ظˆط§ط¨ط· ط§ظ„طھط­ظ…ظٹظ„ ط§ظ„ظ…ط¨ط§ط´ط±ط©</p>
+                <h1 class="text-3xl font-serif font-bold text-gray-900 mb-1">مكتبة الملفات</h1>
+                <p class="text-gray-500 text-sm">إدارة الملفات وروابط التحميل المباشرة</p>
             </div>
         </div>
     </div>
@@ -25,7 +25,7 @@
             <div>
                 <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2">
                     <span class="w-1.5 h-6 bg-brand-accent rounded-full inline-block"></span>
-                    ط±ظپط¹ ظ…ظ„ظپ ط¬ط¯ظٹط¯
+                    رفع ملف جديد
                 </h2>
             </div>
         </div>
@@ -35,14 +35,14 @@
             
             <!-- Title Input -->
             <div class="w-full md:flex-[2]">
-                <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">ط¹ظ†ظˆط§ظ† ط§ظ„ظ…ظ„ظپ</label>
+                <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">عنوان الملف</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                     </div>
                     <input type="text" name="title" id="title" value="{{ old('title') }}" required
                            class="block w-full pr-10 pl-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent transition-all {{ $errors->has('title') ? 'border-red-300 bg-red-50 text-red-900 placeholder-red-300 focus:ring-red-500' : '' }}"
-                           placeholder="ط£ط¯ط®ظ„ ط¹ظ†ظˆط§ظ†ط§ظ‹ ظˆطµظپظٹط§ظ‹ ظ„ظ„ظ…ظ„ظپ...">
+                           placeholder="أدخل عنواناً وصفياً للملف...">
                 </div>
                 @error('title')
                     <p class="text-red-600 text-xs mt-1.5 flex items-center gap-1">{{ $message }}</p>
@@ -51,7 +51,7 @@
 
             <!-- File Input -->
             <div class="w-full md:flex-1">
-                <label for="file" class="block text-sm font-semibold text-gray-700 mb-2">ط§ظ„ظ…ظ„ظپ ط§ظ„ظ…ط±ظپظ‚</label>
+                <label for="file" class="block text-sm font-semibold text-gray-700 mb-2">الملف المرفق</label>
                 <div class="relative">
                     <input type="file" name="file" id="file" required
                            class="block w-full text-sm text-gray-500
@@ -73,7 +73,7 @@
                     <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
                     </svg>
-                    ط±ظپط¹ ط§ظ„ظ…ظ„ظپ
+                    رفع الملف
                 </button>
             </div>
         </form>
@@ -82,9 +82,9 @@
     <!-- Files List -->
     <div class="bg-white rounded-xl shadow-sm ring-1 ring-gray-200 overflow-hidden">
         <div class="border-b border-gray-100 px-6 py-4 flex items-center justify-between bg-gray-50/50">
-            <h3 class="text-base font-bold text-gray-900">ط§ظ„ظ…ظ„ظپط§طھ ط§ظ„ظ…ط±ظپظˆط¹ط©</h3>
+            <h3 class="text-base font-bold text-gray-900">الملفات المرفوعة</h3>
             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                {{ $downloads->count() }} ظ…ظ„ظپ
+                {{ $downloads->count() }} ملف
             </span>
         </div>
 
@@ -93,11 +93,11 @@
                 <table class="min-w-full divide-y divide-gray-100">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">طھظپط§طµظٹظ„ ط§ظ„ظ…ظ„ظپ</th>
-                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ط§ظ„ط­ط§ظ„ط©</th>
-                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">طھط§ط±ظٹط® ط§ظ„ط±ظپط¹</th>
-                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ط§ظ„طھط­ظ…ظٹظ„ط§طھ</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ط§ظ„ط¥ط¬ط±ط§ط،ط§طھ</th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">تفاصيل الملف</th>
+                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">الحالة</th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">تاريخ الرفع</th>
+                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">التحميلات</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">الإجراءات</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-100">
@@ -130,7 +130,7 @@
                                     <form action="{{ route('admin.downloads.toggle', $download) }}" method="POST" class="inline-flex items-center justify-center">
                                         @csrf
                                         @method('PATCH')
-                                        <label class="relative inline-flex items-center cursor-pointer" title="{{ $download->is_active ? 'طھط¹ط·ظٹظ„ ط§ظ„طھط­ظ…ظٹظ„' : 'طھظپط¹ظٹظ„ ط§ظ„طھط­ظ…ظٹظ„' }}">
+                                        <label class="relative inline-flex items-center cursor-pointer" title="{{ $download->is_active ? 'تعطيل التحميل' : 'تفعيل التحميل' }}">
                                             <input type="checkbox" 
                                                    class="sr-only peer" 
                                                    {{ $download->is_active ? 'checked' : '' }}
@@ -146,7 +146,7 @@
                                                         transition-colors duration-200"></div>
                                             {{-- Status Label --}}
                                             <span class="mr-2 text-xs font-medium {{ $download->is_active ? 'text-green-600' : 'text-gray-400' }}">
-                                                {{ $download->is_active ? 'ظ…ظپط¹ظ‘ظ„' : 'ظ…ط¹ط·ظ‘ظ„' }}
+                                                {{ $download->is_active ? 'مفعّل' : 'معطّل' }}
                                             </span>
                                         </label>
                                     </form>
@@ -161,7 +161,7 @@
                                 {{-- Downloads Count Column --}}
                                 <td class="px-6 py-4 whitespace-nowrap align-middle text-center">
                                     <span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-50 text-blue-700">
-                                        {{ $download->downloads_count }} طھط­ظ…ظٹظ„
+                                        {{ $download->downloads_count }} تحميل
                                     </span>
                                 </td>
 
@@ -178,7 +178,7 @@
                                         :class="copied 
                                             ? 'bg-green-50 text-green-600 border border-green-200' 
                                             : 'bg-gray-50 hover:bg-brand-accent hover:text-white text-gray-600 border border-gray-200'"
-                                        title="ظ†ط³ط® ط§ظ„ط±ط§ط¨ط·">
+                                        title="نسخ الرابط">
                                             <span class="icon-placeholder">
                                                 <template x-if="!copied">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -191,18 +191,18 @@
                                                     </svg>
                                                 </template>
                                             </span>
-                                            <span class="btn-text" x-text="copied ? 'طھظ… ط§ظ„ظ†ط³ط®!' : 'ظ†ط³ط®'">ظ†ط³ط®</span>
+                                            <span class="btn-text" x-text="copied ? 'تم النسخ!' : 'نسخ'">نسخ</span>
                                         </button>
 
                                         {{-- Delete Button --}}
                                         <form action="{{ route('admin.downloads.destroy', $download->id) }}" method="POST" class="inline-block"
-                                              onsubmit="return confirm('ظ‡ظ„ ط£ظ†طھ ظ…طھط£ظƒط¯ ظ…ظ† ط­ط°ظپ ظ‡ط°ط§ ط§ظ„ظ…ظ„ظپطں')">
+                                              onsubmit="return confirm('هل أنت متأكد من حذف هذا الملف؟')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" 
                                                     class="js-confirm p-1.5 text-red-600 hover:text-white hover:bg-red-500 rounded border border-red-100 hover:border-red-500 transition-colors shadow-sm" 
-                                                    title="ط­ط°ظپ ط§ظ„ظ…ظ„ظپ"
-                                                    data-confirm-message="ظ‡ظ„ ط£ظ†طھ ظ…طھط£ظƒط¯ ظ…ظ† ط­ط°ظپ ظ‡ط°ط§ ط§ظ„ظ…ظ„ظپطں">
+                                                    title="حذف الملف"
+                                                    data-confirm-message="هل أنت متأكد من حذف هذا الملف؟">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                                 </svg>
@@ -229,8 +229,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                     </svg>
                 </div>
-                <h3 class="text-lg font-medium text-gray-900 mb-1">ط§ظ„ظ…ظƒطھط¨ط© ظپط§ط±ط؛ط©</h3>
-                <p class="text-gray-500 text-sm max-w-xs mx-auto">ظ„ظ… ظٹطھظ… ط±ظپط¹ ط£ظٹ ظ…ظ„ظپط§طھ ط¨ط¹ط¯. ط§ط³طھط®ط¯ظ… ط§ظ„ظ†ظ…ظˆط°ط¬ ط£ط¹ظ„ط§ظ‡ ظ„ط¥ط¶ط§ظپط© ط£ظˆظ„ ظ…ظ„ظپ.</p>
+                <h3 class="text-lg font-medium text-gray-900 mb-1">المكتبة فارغة</h3>
+                <p class="text-gray-500 text-sm max-w-xs mx-auto">لم يتم رفع أي ملفات بعد. استخدم النموذج أعلاه لإضافة أول ملف.</p>
             </div>
         @endif
     </div>

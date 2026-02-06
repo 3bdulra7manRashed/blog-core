@@ -1,12 +1,12 @@
 @extends('theme::layouts.admin')
 
-@section('title', 'طھط¹ط¯ظٹظ„ ط§ظ„ط­ظ…ظ„ط© ط§ظ„ط¨ط±ظٹط¯ظٹط©')
+@section('title', 'تعديل الحملة البريدية')
 
 @section('content')
 <div class="mb-6 flex items-center justify-between">
-    <h1 class="text-3xl font-serif font-bold text-brand-primary">طھط¹ط¯ظٹظ„ ط§ظ„ط­ظ…ظ„ط© ط§ظ„ط¨ط±ظٹط¯ظٹط©</h1>
+    <h1 class="text-3xl font-serif font-bold text-brand-primary">تعديل الحملة البريدية</h1>
     <a href="{{ route('admin.campaigns.index') }}" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors bg-white">
-        ط§ظ„ط¹ظˆط¯ط© ظ„ظ„ظ‚ط§ط¦ظ…ط©
+        العودة للقائمة
     </a>
 </div>
 
@@ -26,12 +26,12 @@
                             <svg class="w-4 h-4 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
-                            ط¹ظ†ظˆط§ظ† ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ (Subject)
+                            عنوان البريد الإلكتروني (Subject)
                         </span>
                     </label>
                     <input type="text" name="subject" id="subject" value="{{ old('subject', $campaign->subject) }}" 
                            class="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent transition-all @error('subject') border-red-500 ring-1 ring-red-500 @enderror"
-                           placeholder="ظ…ط«ط§ظ„: ظ†ط´ط±طھظ†ط§ ط§ظ„ط£ط³ط¨ظˆط¹ظٹط© - ط£ط­ط¯ط« ط§ظ„ظ…ظ‚ط§ظ„ط§طھ">
+                           placeholder="مثال: نشرتنا الأسبوعية - أحدث المقالات">
                     @error('subject')
                         <p class="mt-2 text-sm text-red-600 flex items-center gap-1">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
@@ -46,13 +46,13 @@
                             <svg class="w-4 h-4 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
                             </svg>
-                            ط§ظ„ط¹ظ†ظˆط§ظ† ط§ظ„ط¯ط§ط®ظ„ظٹ (Internal Title)
+                            العنوان الداخلي (Internal Title)
                         </span>
                     </label>
                     <input type="text" name="title" id="title" value="{{ old('title', $campaign->title) }}" 
                            class="w-full px-4 py-3 text-xl font-bold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent transition-all @error('title') border-red-500 ring-1 ring-red-500 @enderror"
-                           placeholder="ط§ظ„ط¹ظ†ظˆط§ظ† ط§ظ„ط±ط¦ظٹط³ظٹ ط¯ط§ط®ظ„ ط§ظ„ط±ط³ط§ظ„ط©">
-                    <p class="mt-1 text-xs text-gray-500">ظ‡ط°ط§ ط§ظ„ط¹ظ†ظˆط§ظ† ط³ظٹط¸ظ‡ط± ظƒط¹ظ†ظˆط§ظ† ط±ط¦ظٹط³ظٹ ط¯ط§ط®ظ„ ظ…ط­طھظˆظ‰ ط§ظ„ط±ط³ط§ظ„ط©.</p>
+                           placeholder="العنوان الرئيسي داخل الرسالة">
+                    <p class="mt-1 text-xs text-gray-500">هذا العنوان سيظهر كعنوان رئيسي داخل محتوى الرسالة.</p>
                     @error('title')
                         <p class="mt-2 text-sm text-red-600 flex items-center gap-1">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
@@ -69,13 +69,13 @@
                         <svg class="w-4 h-4 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
-                        ط§ظ„ظ†طµ ط§ظ„طھظ…ظ‡ظٹط¯ظٹ (Intro Text)
+                        النص التمهيدي (Intro Text)
                     </span>
                 </label>
                 <textarea name="content" id="content" rows="5"
                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent transition-all resize-none @error('content') border-red-500 ring-1 ring-red-500 @enderror"
-                          placeholder="ظ…ط±ط­ط¨ط§ظ‹ ط¨ظƒ ظپظٹ ظ†ط´ط±طھظ†ط§ ط§ظ„ط£ط³ط¨ظˆط¹ظٹط©! ط¥ظ„ظٹظƒ ط£ط­ط¯ط« ط§ظ„ظ…ظ‚ط§ظ„ط§طھ ط§ظ„طھظٹ ظ‚ط¯ طھظ‡ظ…ظƒ...">{{ old('content', $campaign->content) }}</textarea>
-                <p class="mt-1 text-xs text-gray-500">ط±ط³ط§ظ„ط© طھط±ط­ظٹط¨ظٹط© ظ‚طµظٹط±ط© طھط¸ظ‡ط± ظ‚ط¨ظ„ ظ‚ط§ط¦ظ…ط© ط§ظ„ظ…ظ‚ط§ظ„ط§طھ.</p>
+                          placeholder="مرحباً بك في نشرتنا الأسبوعية! إليك أحدث المقالات التي قد تهمك...">{{ old('content', $campaign->content) }}</textarea>
+                <p class="mt-1 text-xs text-gray-500">رسالة ترحيبية قصيرة تظهر قبل قائمة المقالات.</p>
                 @error('content')
                     <p class="mt-2 text-sm text-red-600 flex items-center gap-1">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
@@ -105,11 +105,11 @@
                             <svg class="w-4 h-4 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
                             </svg>
-                            ط§ط®طھط± ط§ظ„ظ…ظ‚ط§ظ„ط§طھ ظ„ظ„ظ†ط´ط±ط©
+                            اختر المقالات للنشرة
                         </span>
                     </label>
                     <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                        طھظ… ط§ط®طھظٹط§ط±: <span class="font-bold text-brand-primary" x-text="selectedPosts.length">{{ count($selectedPostIds) }}</span> ظ…ظ‚ط§ظ„
+                        تم اختيار: <span class="font-bold text-brand-primary" x-text="selectedPosts.length">{{ count($selectedPostIds) }}</span> مقال
                     </span>
                 </div>
                 
@@ -132,8 +132,8 @@
                         <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
-                        <p class="text-gray-500">ظ„ط§ طھظˆط¬ط¯ ظ…ظ‚ط§ظ„ط§طھ ظ…ظ†ط´ظˆط±ط© ط­ط§ظ„ظٹط§ظ‹.</p>
-                        <a href="{{ route('admin.posts.create') }}" class="mt-3 inline-block text-brand-accent hover:underline">ط¥ظ†ط´ط§ط، ظ…ظ‚ط§ظ„ ط¬ط¯ظٹط¯</a>
+                        <p class="text-gray-500">لا توجد مقالات منشورة حالياً.</p>
+                        <a href="{{ route('admin.posts.create') }}" class="mt-3 inline-block text-brand-accent hover:underline">إنشاء مقال جديد</a>
                     </div>
                 @else
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -187,7 +187,7 @@
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                             </svg>
-                                            {{ $post->published_at?->translatedFormat('j M Y') ?? 'ط؛ظٹط± ظ…ظ†ط´ظˆط±' }}
+                                            {{ $post->published_at?->translatedFormat('j M Y') ?? 'غير منشور' }}
                                         </div>
                                     </div>
                                 </div>
@@ -204,18 +204,18 @@
             
             <!-- Campaign Info Card -->
             <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
-                <h3 class="font-bold text-gray-800 mb-4 text-sm">ظ…ط¹ظ„ظˆظ…ط§طھ ط§ظ„ط­ظ…ظ„ط©</h3>
+                <h3 class="font-bold text-gray-800 mb-4 text-sm">معلومات الحملة</h3>
                 
                 <div class="space-y-3">
                     <!-- Status Badge -->
                     <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                        <span class="text-sm text-gray-600">ط§ظ„ط­ط§ظ„ط©</span>
+                        <span class="text-sm text-gray-600">الحالة</span>
                         @if($campaign->status === 'sent')
                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                 <svg class="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                 </svg>
-                                طھظ… ط§ظ„ط¥ط±ط³ط§ظ„
+                                تم الإرسال
                             </span>
                         @elseif($campaign->status === 'sending')
                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
@@ -223,27 +223,27 @@
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
-                                ط¬ط§ط±ظٹ ط§ظ„ط¥ط±ط³ط§ظ„
+                                جاري الإرسال
                             </span>
                         @else
                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                                 <svg class="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
                                 </svg>
-                                ظ…ط³ظˆط¯ط©
+                                مسودة
                             </span>
                         @endif
                     </div>
                     
                     <!-- Created Date -->
                     <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                        <span class="text-sm text-gray-600">طھط§ط±ظٹط® ط§ظ„ط¥ظ†ط´ط§ط،</span>
+                        <span class="text-sm text-gray-600">تاريخ الإنشاء</span>
                         <span class="text-sm font-medium text-gray-900">{{ $campaign->created_at->translatedFormat('j M Y') }}</span>
                     </div>
                     
                     <!-- Last Updated -->
                     <div class="flex items-center justify-between py-2">
-                        <span class="text-sm text-gray-600">ط¢ط®ط± طھط­ط¯ظٹط«</span>
+                        <span class="text-sm text-gray-600">آخر تحديث</span>
                         <span class="text-sm font-medium text-gray-900">{{ $campaign->updated_at->translatedFormat('j M Y - H:i') }}</span>
                     </div>
                 </div>
@@ -258,7 +258,7 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
-                        <span>ط­ظپط¸ ط§ظ„طھط¹ط¯ظٹظ„ط§طھ</span>
+                        <span>حفظ التعديلات</span>
                     </button>
                     
                     <!-- Secondary Button: Preview -->
@@ -268,45 +268,45 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                         </svg>
-                        <span>ظ…ط¹ط§ظٹظ†ط© ط§ظ„ط­ظ…ظ„ط©</span>
+                        <span>معاينة الحملة</span>
                     </a>
                 </div>
                 
                 <!-- Helper Text -->
                 <p class="text-xs text-gray-400 text-center mt-3">
-                    ط³ظٹطھظ… ط­ظپط¸ ط§ظ„طھط¹ط¯ظٹظ„ط§طھ ط¹ظ„ظ‰ ط§ظ„ط­ظ…ظ„ط© ط§ظ„ط­ط§ظ„ظٹط©
+                    سيتم حفظ التعديلات على الحملة الحالية
                 </p>
             </div>
 
             <!-- Tips Card -->
             <div class="bg-blue-50 p-5 rounded-xl">
                 <h3 class="font-bold text-slate-700 mb-3 text-sm flex items-center gap-2">
-                    ًں’، ظ†طµط§ط¦ط­ ط³ط±ظٹط¹ط©
+                    ًں’، نصائح سريعة
                 </h3>
                 <ul class="space-y-2.5">
                     <li class="flex items-start gap-2">
                         <svg class="w-4 h-4 mt-0.5 flex-shrink-0 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        <span class="text-sm text-slate-600">ط§ط®طھط± ط¹ظ†ظˆط§ظ† ط¨ط±ظٹط¯ ط¬ط°ط§ط¨ ظˆظ…ط®طھطµط±</span>
+                        <span class="text-sm text-slate-600">اختر عنوان بريد جذاب ومختصر</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <svg class="w-4 h-4 mt-0.5 flex-shrink-0 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        <span class="text-sm text-slate-600">3-5 ظ…ظ‚ط§ظ„ط§طھ ظ‡ظˆ ط§ظ„ط¹ط¯ط¯ ط§ظ„ظ…ط«ط§ظ„ظٹ</span>
+                        <span class="text-sm text-slate-600">3-5 مقالات هو العدد المثالي</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <svg class="w-4 h-4 mt-0.5 flex-shrink-0 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        <span class="text-sm text-slate-600">ط§ظƒطھط¨ ظ†طµ طھط±ط­ظٹط¨ظٹ ط´ط®طµظٹ ظˆظ…ظ…ظٹط²</span>
+                        <span class="text-sm text-slate-600">اكتب نص ترحيبي شخصي ومميز</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <svg class="w-4 h-4 mt-0.5 flex-shrink-0 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        <span class="text-sm text-slate-600">ط±ط§ط¬ط¹ ط§ظ„ظ…ط¹ط§ظٹظ†ط© ظ‚ط¨ظ„ ط§ظ„ط¥ط±ط³ط§ظ„</span>
+                        <span class="text-sm text-slate-600">راجع المعاينة قبل الإرسال</span>
                     </li>
                 </ul>
             </div>
