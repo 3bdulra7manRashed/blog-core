@@ -10,7 +10,7 @@
     </a>
 </div>
 
-<form action="{{ route('admin.books.update', $book) }}" method="POST" id="book-form">
+<form action="{{ route('admin.books.update', $book) }}" method="POST" id="book-form" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     @include('books::admin.books._form', ['book' => $book])

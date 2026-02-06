@@ -157,10 +157,8 @@
                     </x-feature-link>
                 
                     {{-- Messages Menu Item with Unread Badge (Contact Module) --}}
-                    @if(feature('contact') && class_exists(\Modules\Contact\Models\ContactMessage::class))
-                    @php
-                        $unreadMessagesCount = \Modules\Contact\Models\ContactMessage::unreadCount();
-                    @endphp
+                    {{-- unreadMessagesCount is injected via App\View\Composers\AdminLayoutComposer --}}
+                    @if(feature('contact'))
                     <x-feature-link feature="contact" route="admin.messages.index"
                        class="flex items-center justify-between px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.messages.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-amber-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <div class="flex items-center">

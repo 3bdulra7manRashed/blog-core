@@ -1,12 +1,10 @@
-@php
-  $biography = Cache::remember('site_owner_bio', 3600, function () {
-      $owner = \App\Models\User::where('is_super_admin', true)->orWhere('id', 1)->first();
-      return $owner ? $owner->biography : null;
-  });
-@endphp
-
+{{-- 
+    Biography is injected via App\View\Composers\OwnerBioComposer
+    Theme Boundary: Views must NEVER execute database queries directly.
+--}}
 @if($biography)
   <div class="owner-bio prose prose-lg max-w-none">
     {!! $biography !!}
   </div>
 @endif
+

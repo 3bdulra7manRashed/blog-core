@@ -11,9 +11,9 @@ return [
     |
     */
 
-    'newsletter' => false,
-    'contact' => false,
-    'download' => false,
+    'newsletter' => true,
+    'contact' => true,
+    'download' => true,
     'manage_admins' => true,
     'seo' => true, //Basic SEO (Core)
     'media_pages' => true,
@@ -24,6 +24,6 @@ return [
         'audio' => true,
         'playlists' => true,
     ],
-    'advanced_seo' => false,
+    'advanced_seo' => true,
     'books' => true,
 ];

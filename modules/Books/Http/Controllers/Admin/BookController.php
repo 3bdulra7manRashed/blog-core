@@ -49,6 +49,23 @@ class BookController extends Controller
         $data = $request->validated();
         $data['slug'] = $this->generateSlug($data['slug'] ?? $data['title']);
 
+        // Handle publish/draft action
+        if ($request->action === 'publish') {
+            $data['status'] = 'published';
+            $data['published_at'] = $request->published_at ?? now();
+        } else {
+            $data['status'] = 'draft';
+            $data['published_at'] = null;
+        }
+
+        // Handle cover image upload or URL
+        if ($request->hasFile('cover_file')) {
+            $path = $request->file('cover_file')->store('books', 'public');
+            $data['cover_image'] = '/storage/' . $path;
+        } elseif ($request->filled('cover_url')) {
+            $data['cover_image'] = $request->cover_url;
+        }
+
         Book::create($data);
 
         return redirect()->route('admin.books.index')
@@ -74,6 +91,23 @@ class BookController extends Controller
             $data['slug'] = $this->generateSlug($data['slug']);
         } elseif (empty($data['slug'])) {
             $data['slug'] = $this->generateSlug($data['title']);
+        }
+
+        // Handle publish/draft action
+        if ($request->action === 'publish') {
+            $data['status'] = 'published';
+            $data['published_at'] = $request->published_at ?? now();
+        } else {
+            $data['status'] = 'draft';
+            $data['published_at'] = null;
+        }
+
+        // Handle cover image upload or URL
+        if ($request->hasFile('cover_file')) {
+            $path = $request->file('cover_file')->store('books', 'public');
+            $data['cover_image'] = '/storage/' . $path;
+        } elseif ($request->filled('cover_url')) {
+            $data['cover_image'] = $request->cover_url;
         }
 
         $book->update($data);

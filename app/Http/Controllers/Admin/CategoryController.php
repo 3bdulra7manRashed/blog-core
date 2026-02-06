@@ -49,7 +49,10 @@ class CategoryController extends Controller
     {
         Gate::authorize('create', Category::class);
 
-        return view('admin.categories.create');
+        // Pass parent categories for dropdown - Theme Boundary: Controllers provide data, not Blade
+        $parentCategories = Category::pluck('name', 'id');
+
+        return view('admin.categories.create', compact('parentCategories'));
     }
 
     public function store(Request $request)
@@ -92,7 +95,10 @@ class CategoryController extends Controller
     {
         Gate::authorize('update', $category);
 
-        return view('admin.categories.edit', compact('category'));
+        // Pass parent categories excluding self - Theme Boundary: Controllers provide data, not Blade
+        $parentCategories = Category::where('id', '!=', $category->id)->pluck('name', 'id');
+
+        return view('admin.categories.edit', compact('category', 'parentCategories'));
     }
 
     public function update(Request $request, Category $category): RedirectResponse

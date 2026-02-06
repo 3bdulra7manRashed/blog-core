@@ -102,7 +102,7 @@
                     </a>
                     @endif
 
-                    @if(feature('books') && \Modules\Books\Models\Book::published()->exists())
+                    @if(feature('books') && $hasBooks)
                     <a href="{{ route('books.index') }}" class="text-m font-medium {{ request()->routeIs('books.*') ? 'text-brand-accent font-bold' : 'text-gray-800' }} hover:text-brand-accent transition-colors">
                         الإصدارات
                     </a>
@@ -277,7 +277,7 @@
                     @endif
 
                     <!-- الإصدارات (Books) -->
-                    @if(feature('books') && \Modules\Books\Models\Book::published()->exists())
+                    @if(feature('books') && $hasBooks)
                     <a 
                         href="{{ route('books.index') }}" 
                         class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('books.*') ? 'text-brand-accent bg-gray-50' : '' }}"

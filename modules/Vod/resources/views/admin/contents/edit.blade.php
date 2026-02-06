@@ -65,33 +65,6 @@
         <!-- Sidebar Column -->
         <div class="w-full lg:w-1/3 space-y-6">
             
-            <!-- Publish Box (Strict Clone of Posts) -->
-            <div class="bg-white p-4 rounded shadow">
-                <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">النشر</h3>
-                
-                <div class="mb-4">
-                    <label for="published_at" class="block text-sm font-medium text-gray-700 mb-2">تاريخ النشر</label>
-                    <input type="datetime-local" name="published_at" id="published_at" 
-                           value="{{ old('published_at', $content->published_at ? $content->published_at->format('Y-m-d\TH:i') : '') }}" 
-                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-accent text-sm"
-                           dir="ltr">
-                </div>
-                
-                <!-- Hidden Status Input -->
-                <input type="hidden" name="status" id="status_input" value="{{ old('status', $content->status) }}">
-
-                <div class="flex items-center justify-between pt-4 border-t mt-4">
-                    <button type="submit" onclick="document.getElementById('status_input').value='draft'" 
-                            class="px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors text-sm font-medium">
-                        حفظ كمسودة
-                    </button>
-                    <button type="submit" onclick="document.getElementById('status_input').value='published'" 
-                            class="px-6 py-2 bg-brand-primary text-white rounded hover:bg-opacity-90 transition-colors text-sm font-medium shadow-sm">
-                        نشر الآن
-                    </button>
-                </div>
-            </div>
-
             <!-- Type Box -->
             <div class="bg-white p-4 rounded shadow">
                 <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">النوع</h3>
@@ -125,6 +98,33 @@
                         </div>
                     </div>
                     <input type="file" name="thumbnail" id="thumbnail" accept="image/*" class="hidden" onchange="previewImage(this)">
+                </div>
+            </div>
+
+            <!-- Publish Box (at bottom for better UX) -->
+            <div class="bg-white p-4 rounded shadow">
+                <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">النشر</h3>
+                
+                <div class="mb-4">
+                    <label for="published_at" class="block text-sm font-medium text-gray-700 mb-2">تاريخ النشر</label>
+                    <input type="datetime-local" name="published_at" id="published_at" 
+                           value="{{ old('published_at', $content->published_at ? $content->published_at->format('Y-m-d\TH:i') : '') }}" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-accent text-sm"
+                           dir="ltr">
+                </div>
+                
+                <!-- Hidden Status Input -->
+                <input type="hidden" name="status" id="status_input" value="{{ old('status', $content->status) }}">
+
+                <div class="flex items-center justify-between pt-4 border-t mt-4">
+                    <button type="submit" onclick="document.getElementById('status_input').value='draft'" 
+                            class="px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors text-sm font-medium">
+                        حفظ كمسودة
+                    </button>
+                    <button type="submit" onclick="document.getElementById('status_input').value='published'" 
+                            class="px-6 py-2 bg-brand-primary text-white rounded hover:bg-opacity-90 transition-colors text-sm font-medium shadow-sm">
+                        نشر الآن
+                    </button>
                 </div>
             </div>
         </div>

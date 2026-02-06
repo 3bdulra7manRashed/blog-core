@@ -1,6 +1,6 @@
 # Blog Core System Architecture & Rules
 
-> **Version**: 2.1.0
+> **Version**: 2.4.0
 > **Status**: Authoritative Architectural Contract
 > **Strictness**: High (Non-negotiable)
 
@@ -206,3 +206,287 @@ All source files MUST adhere to strict encoding standards to prevent character c
 *   All IDE/editors MUST be configured to use UTF-8 without BOM and LF line endings
 
 ---
+
+## 14. THEME BOUNDARY ENFORCEMENT
+
+**Added**: 2026-02-06 | **Updated by**: Architectural Refactor
+
+Themes are **presentation layers only**. They must remain "dumb" views that receive data and display it.
+
+### 14.1 Core Rules
+
+| Rule | Description |
+| :--- | :--- |
+| **No DB Queries** | Views must NEVER execute database queries (`::where()`, `::pluck()`, `::exists()`, `::count()`) |
+| **No Module References** | Themes must NEVER directly reference `\Modules\*` classes |
+| **Computed State via Composers** | Layouts must receive computed state (booleans, counts) via View Composers |
+| **Controller Provides Data** | Page-specific data must be passed from Controllers |
+| **Services for Counters** | Global counters (unread messages, published books) must come from Services/Composers |
+
+### 14.2 View Composers
+
+These composers inject computed state into layouts:
+
+| Composer | Layout | Variables Injected |
+| :--- | :--- | :--- |
+| `PublicLayoutComposer` | `theme::layouts.blog` | `$hasBooks`, `$isPostPage` |
+| `AdminLayoutComposer` | `theme::layouts.admin` | `$unreadMessagesCount` |
+| `OwnerBioComposer` | `partials.owner-bio` | `$biography` |
+
+**Location**: `App\View\Composers\*`
+**Registration**: `App\Providers\ViewComposerServiceProvider`
+
+### 14.3 Enforcement Pattern
+
+**Before (Violation)**:
+```blade
+@if(feature('books') && \Modules\Books\Models\Book::published()->exists())
+```
+
+**After (Correct)**:
+```blade
+@if(feature('books') && $hasBooks)
+```
+
+### 14.4 Adding New Module UI Dependencies
+
+1.  Create a method in the relevant Composer (or create new Composer)
+2.  Check feature flag and class existence in Composer
+3.  Cache the result appropriately
+4.  Inject boolean/count into view
+5.  Use injected variable in Blade
+
+---
+
+## 15. ENCODING & FILE STANDARDS
+
+**Status**: Enforced
+
+### 15.1 Required Standards
+
+| Standard | Value | Enforcement |
+| :--- | :--- | :--- |
+| **Encoding** | UTF-8 (no BOM) | `.editorconfig`, pre-commit checks |
+| **Line Endings** | LF (Unix) | `.editorconfig`, git auto-conversion |
+| **Final Newline** | Required | `.editorconfig` |
+| **Arabic Content** | Native UTF-8 | Encoding validation tools |
+
+### 15.2 Prohibited
+
+*   ❌ UTF-8 BOM (`EF BB BF` bytes)
+*   ❌ CRLF line endings
+*   ❌ Windows-1256, ANSI, or other legacy encodings
+*   ❌ Copying Blade files between encodings without validation
+
+### 15.3 Recovery Procedure
+
+If encoding corruption is detected:
+1.  Identify corrupted files via pattern matching (`ط§` sequences)
+2.  Create backup before repair
+3.  Apply character-by-character mapping reversal
+4.  Validate repairs against expected Arabic text
+5.  Clean up temporary scripts
+
+---
+
+## 16. ADMIN THEME CONTRACT
+
+Admin themes are swappable UI implementations that must adhere to a strict contract.
+
+### 16.1 Requirements
+
+| Requirement | Description |
+| :--- | :--- |
+| **No DB Queries** | Admin themes must not execute database queries in Blade |
+| **Layout Slots** | Must implement standard slots: `content`, `title`, `scripts`, `styles` |
+| **No Module Hardcoding** | Must not directly reference Module classes |
+| **Composer-Injected State** | Must use variables injected via `AdminLayoutComposer` |
+| **Swappability** | Theme switch must not break any functionality |
+
+### 16.2 Standard Variables
+
+Admin layouts automatically receive:
+
+| Variable | Type | Description |
+| :--- | :--- | :--- |
+| `$unreadMessagesCount` | `int` | Number of unread contact messages (0 if feature disabled) |
+
+### 16.3 Feature Conditionals
+
+Use feature flags to conditionally show menu items:
+```blade
+@if(feature('contact'))
+    {{-- Show contact menu item using $unreadMessagesCount --}}
+@endif
+```
+
+Do NOT check `class_exists()` in Blade. That check happens in the Composer.
+
+---
+
+## 17. GLOBAL STATS CONTRACT
+
+**Added**: 2026-02-06 | **Status**: Infrastructure Ready
+
+The Global Stats system provides an extensible way for modules to contribute global counters/flags to admin layouts without tight coupling.
+
+### 17.1 Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     AdminLayoutComposer                      │
+│  ┌─────────────────┐    ┌─────────────────────────────────┐ │
+│  │   Core Stats    │ + │     GlobalStatsManager          │ │
+│  │ (unreadMessages │    │  ┌───────────────────────────┐ │ │
+│  │      Count)     │    │  │ Registered Providers      │ │ │
+│  └─────────────────┘    │  │ ├─ ContactStatsProvider   │ │ │
+│                          │  │ ├─ OrderStatsProvider     │ │ │
+│                          │  │ └─ NotificationProvider   │ │ │
+│                          │  └───────────────────────────┘ │ │
+│                          └─────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+                      Blade Layout Views
+                    (receives merged stats)
+```
+
+### 17.2 Contract Interface
+
+```php
+namespace App\Contracts;
+
+interface HasGlobalStats
+{
+    /**
+     * Return associative array of global counters.
+     * Keys should match expected Blade variable names.
+     *
+     * @return array<string, int|bool>
+     */
+    public function getGlobalStats(): array;
+}
+```
+
+### 17.3 Creating a Stats Provider
+
+**Step 1**: Create provider class in your module:
+
+```php
+namespace Modules\Orders\Providers;
+
+use App\Contracts\HasGlobalStats;
+use Modules\Orders\Models\Order;
+
+class OrderStatsProvider implements HasGlobalStats
+{
+    public function getGlobalStats(): array
+    {
+        return [
+            'pendingOrdersCount' => Order::pending()->count(),
+        ];
+    }
+}
+```
+
+**Step 2**: Register in your module's ServiceProvider:
+
+```php
+use App\Support\GlobalStats\GlobalStatsManager;
+
+public function boot(): void
+{
+    // Guard with feature flag
+    if (!feature('orders')) {
+        return;
+    }
+
+    $manager = app(GlobalStatsManager::class);
+    $manager->register(
+        \Modules\Orders\Providers\OrderStatsProvider::class,
+        'orders'  // Feature flag to check
+    );
+}
+```
+
+### 17.4 Safety Guarantees
+
+The GlobalStatsManager provides these guarantees:
+
+| Guarantee | Description |
+| :--- | :--- |
+| **Feature Guarded** | Will not call provider if feature is disabled |
+| **Class Existence** | Safely ignores non-existent classes |
+| **Exception Safety** | Catches all errors, logs them, returns empty array |
+| **Empty Default** | Returns `[]` if no providers registered |
+
+### 17.5 Best Practices
+
+1. **Always feature-guard**: Pass the feature flag when registering
+2. **Cache expensive queries**: Use `Cache::remember()` in providers
+3. **Use descriptive keys**: Variable names should be self-documenting
+4. **Integer or Boolean only**: Stats should be simple scalar values
+5. **Don't duplicate core stats**: Core stats take precedence in merge
+
+### 17.6 Current Core Stats
+
+These stats are always available in admin layouts (via `AdminLayoutComposer`):
+
+| Variable | Type | Source |
+| :--- | :--- | :--- |
+| `$unreadMessagesCount` | `int` | Contact module |
+
+Additional stats from GlobalStatsManager are merged additively.
+
+---
+
+## 18. PUBLIC LAYOUT CONTRACT
+
+**Added**: 2026-02-07 | **Status**: Enforced | **Version**: 2.4.0
+
+The `layouts.blog` layout depends on the following injected variables from `PublicLayoutComposer`:
+
+### 18.1 Required Variables
+
+| Variable | Type | Description |
+| :--- | :--- | :--- |
+| `$hasBooks` | `bool` | Whether published books exist (feature-guarded) |
+| `$isPostPage` | `bool` | Whether current page is a single post (`post.show`) |
+
+### 18.2 Variables from ViewComposerServiceProvider (Global)
+
+| Variable | Type | Description |
+| :--- | :--- | :--- |
+| `$trendingRecentPosts` | `Collection` | Latest published posts |
+| `$trendingMostLikedPosts` | `Collection` | Most liked posts |
+| `$trendingMostReadPosts` | `Collection` | Most viewed posts |
+
+### 18.3 Variables from AppServiceProvider (Sidebar)
+
+| Variable | Type | Description |
+| :--- | :--- | :--- |
+| `$mostLikedPosts` | `Collection` | Top liked posts for sidebar |
+| `$mostReadPosts` | `Collection` | Top viewed posts for sidebar |
+
+### 18.4 Architectural Rules
+
+1. **Layouts MUST NOT compute route state** — Use injected `$isPostPage` instead of `request()->routeIs()` in Blade
+2. **Layouts MUST NOT depend on controller-local variables** — All layout state comes from Composers
+3. **All layout state MUST be injected via View Composers** — No `@php` blocks for state computation
+4. **Feature flags MUST NOT introduce hidden layout dependencies** — All conditional variables must be injected with safe defaults
+
+### 18.5 Why This Matters
+
+The Newsletter module uses `$isPostPage` to conditionally hide the footer newsletter form on post pages (where an inline form already exists). Without proper injection, enabling the Newsletter feature exposes the undefined variable.
+
+---
+
+## CHANGELOG
+
+| Date | Version | Change |
+| :--- | :--- | :--- |
+| 2026-02-07 | 2.4.0 | Added Public Layout Contract (§18): `$isPostPage` injection |
+| 2026-02-06 | 2.3.0 | Added Global Stats Contract (§17) |
+| 2026-02-06 | 2.2.0 | Added Theme Boundary Enforcement (§14), File Standards (§15), Admin Theme Contract (§16) |
+| 2026-02-01 | 2.1.0 | Added Encoding Policy (§13) |
+| 2026-01-15 | 2.0.0 | Initial architecture document |

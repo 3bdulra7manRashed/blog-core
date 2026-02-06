@@ -103,7 +103,7 @@
                             <h3 class="text-lg font-bold text-gray-800">تعديل البيانات الشخصية</h3>
                         </div>
                         <div class="p-4 md:p-6">
-                            @include('profile.partials.update-profile-information-form')
+                            @include('theme::profile.partials.update-profile-information-form')
                         </div>
                     </div>
 
@@ -113,7 +113,7 @@
                             <h3 class="text-lg font-bold text-gray-800">تحديث كلمة المرور</h3>
                         </div>
                         <div class="p-4 md:p-6">
-                            @include('profile.partials.update-password-form')
+                            @include('theme::profile.partials.update-password-form')
                         </div>
                     </div>
 
@@ -123,7 +123,7 @@
                             <h3 class="text-lg font-bold text-red-800">منطقة الخطر</h3>
                         </div>
                         <div class="p-4 md:p-6">
-                            @include('profile.partials.delete-user-form')
+                            @include('theme::profile.partials.delete-user-form')
                         </div>
                     </div>
 
