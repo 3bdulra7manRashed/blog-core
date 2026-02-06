@@ -1,0 +1,16 @@
+{
+    "name": "Books",
+    "alias": "books",
+    "description": "Manages published books with external purchase links",
+    "version": "1.0.0",
+    "keywords": [
+        "books",
+        "publications",
+        "external-links"
+    ],
+    "priority": 0,
+    "providers": [
+        "Modules\\Books\\Providers\\BooksServiceProvider"
+    ],
+    "files": []
+}

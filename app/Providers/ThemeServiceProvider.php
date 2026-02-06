@@ -11,6 +11,9 @@ class ThemeServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
+    /**
+     * Register any application services.
+     */
     public function register(): void
     {
         // Register theme helper functions
@@ -22,66 +25,59 @@ class ThemeServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->registerThemeViewPaths();
-        $this->registerThemeNamespace();
+        // Use segments to detect admin panel early in the lifecycle
+        // This is more robust than request()->is() in some lifecycle stages
+        $isAdmin = false;
+        try {
+            if (!app()->runningInConsole()) {
+                $segment = request()->segment(1); 
+                $isAdmin = ($segment === 'admin');
+            }
+        } catch (\Throwable $e) {
+            // Fallback
+        }
+
+        $themeDirectory = config('theme.directory', 'themes');
+
+        if ($isAdmin) {
+            $theme = config('theme.admin_active', 'classic');
+            $path = resource_path("{$themeDirectory}/admin/{$theme}/views");
+        } else {
+            $theme = config('theme.active', 'classic');
+            $path = resource_path("{$themeDirectory}/{$theme}/views");
+        }
+
+        // CRITICAL: Force register the path
+        if (is_dir($path)) {
+            // Register namespace 'theme::'
+            $this->loadViewsFrom($path, 'theme');
+            
+            // Add to global finder
+            $this->app['view']->addLocation($path);
+            $this->app['view']->prependLocation($path);
+        } else {
+             // Only throw explicitly if not in console (to avoid breaking artisan)
+             if (!app()->runningInConsole()) {
+                 // Stop execution if path is wrong, so we know immediately
+                 throw new \InvalidArgumentException("Theme Path Not Found: " . $path);
+             }
+        }
+
         $this->registerThemeComponents();
     }
 
     /**
-     * Register the theme view paths.
-     * 
-     * This prepends the active theme's view directory to Laravel's view paths,
-     * allowing theme views to take priority over default views.
-     */
-    protected function registerThemeViewPaths(): void
-    {
-        $activeTheme = config('theme.active', 'classic');
-        $themeDirectory = config('theme.directory', 'themes');
-        
-        // Path to the active theme's views
-        $themePath = resource_path("{$themeDirectory}/{$activeTheme}/views");
-        
-        if (is_dir($themePath)) {
-            // Prepend theme views to take priority
-            $this->app['view']->prependLocation($themePath);
-        }
-
-        // Register core views as fallback namespace
-        $corePath = resource_path('views/core');
-        if (is_dir($corePath)) {
-            $this->app['view']->addNamespace('core', $corePath);
-        }
-    }
-
-    /**
-     * Register the theme namespace for explicit theme view references.
-     */
-    protected function registerThemeNamespace(): void
-    {
-        $activeTheme = config('theme.active', 'classic');
-        $themeDirectory = config('theme.directory', 'themes');
-        
-        $themePath = resource_path("{$themeDirectory}/{$activeTheme}/views");
-        
-        if (is_dir($themePath)) {
-            $this->app['view']->addNamespace('theme', $themePath);
-        }
-    }
-
-    /**
      * Register theme components with Blade.
-     * 
-     * This allows components from the theme to be auto-discovered.
      */
     protected function registerThemeComponents(): void
     {
         $activeTheme = config('theme.active', 'classic');
         $themeDirectory = config('theme.directory', 'themes');
         
+        // Basic component registration - can be expanded if needed
         $componentsPath = resource_path("{$themeDirectory}/{$activeTheme}/views/components");
         
         if (is_dir($componentsPath)) {
-            // Register anonymous components from the theme
             Blade::anonymousComponentPath($componentsPath);
         }
     }

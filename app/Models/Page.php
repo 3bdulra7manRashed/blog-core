@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Contracts\Seoable;
+use App\Support\SEO\Traits\HasSeo;
 use Illuminate\Database\Eloquent\Model;
 
-class Page extends Model
+class Page extends Model implements Seoable
 {
+    use HasSeo;
     protected $fillable = [
         'slug',
         'title',
@@ -33,5 +36,25 @@ class Page extends Model
         }
         
         return $baseUrl . '/storage/' . $this->featured_image;
+    }
+
+    // =========================================================================
+    // SEO Interface Implementation
+    // =========================================================================
+
+    /**
+     * Get canonical URL for this page
+     */
+    public function getSeoCanonicalUrl(): string
+    {
+        return url($this->slug);
+    }
+
+    /**
+     * Get SEO type - pages are website type
+     */
+    public function getSeoType(): string
+    {
+        return 'website';
     }
 }

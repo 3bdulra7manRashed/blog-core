@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\Seoable;
+use App\Support\SEO\Traits\HasSeo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,9 +11,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 use Modules\Newsletter\Models\Campaign;
 
-class Post extends Model
+class Post extends Model implements Seoable
 {
-    use HasFactory;
+    use HasFactory, HasSeo;
 
     protected $fillable = [
         'user_id',
@@ -141,5 +143,25 @@ class Post extends Model
         $plainText = preg_replace('/\s+/', ' ', trim($plainText));
         
         return Str::words($plainText, 30, '...');
+    }
+
+    // =========================================================================
+    // SEO Interface Implementation
+    // =========================================================================
+
+    /**
+     * Get canonical URL for this post
+     */
+    public function getSeoCanonicalUrl(): string
+    {
+        return route('post.show', $this->slug);
+    }
+
+    /**
+     * Get SEO type - posts are articles
+     */
+    public function getSeoType(): string
+    {
+        return 'article';
     }
 }

@@ -24,5 +24,6 @@ return [
         'audio' => true,
         'playlists' => true,
     ],
-    'advanced_seo' => false, 
+    'advanced_seo' => false,
+    'books' => true,
 ];

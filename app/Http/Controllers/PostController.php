@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Support\SEO\SeoManager;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -29,7 +30,7 @@ class PostController extends Controller
         return view('posts.index', compact('posts', 'recentPosts', 'categories'));
     }
 
-    public function show(string $slug): View
+    public function show(string $slug, SeoManager $seoManager): View
     {
         $post = Post::with(['author', 'categories', 'tags'])
             ->where('slug', $slug)
@@ -38,6 +39,9 @@ class PostController extends Controller
         
         // Increment views count
         $post->increment('views');
+
+        // Set SEO data via SeoManager (generates OpenGraph, Twitter, JSON-LD)
+        $seoManager->forModel($post);
 
         $relatedPosts = Post::published()
             ->where('id', '!=', $post->id)
