@@ -81,12 +81,24 @@ class PostController extends Controller
         $data['user_id'] = auth()->id();
         $data['slug'] = $this->generateArabicSlug($data['slug'] ?? $data['title']);
 
-        // Auto-publish if published_at is set and not explicitly marked as draft
-        if (!empty($data['published_at']) && empty($data['is_draft'])) {
-            $publishDate = \Carbon\Carbon::parse($data['published_at']);
-            // If publish date is now or in the past, set as published
-            if ($publishDate->isPast() || $publishDate->isToday()) {
-                $data['is_draft'] = false;
+        // Handle publish/draft action from publish-card component
+        $action = $request->input('action');
+        if ($action === 'publish') {
+            $data['is_draft'] = false;
+            $data['published_at'] = $request->filled('published_at')
+                ? $request->published_at
+                : now();
+        } elseif ($action === 'draft') {
+            $data['is_draft'] = true;
+            $data['published_at'] = null;
+        } else {
+            // Backward compatibility: Auto-publish if published_at is set and not explicitly marked as draft
+            if (!empty($data['published_at']) && empty($data['is_draft'])) {
+                $publishDate = \Carbon\Carbon::parse($data['published_at']);
+                // If publish date is now or in the past, set as published
+                if ($publishDate->isPast() || $publishDate->isToday()) {
+                    $data['is_draft'] = false;
+                }
             }
         }
 
@@ -143,12 +155,24 @@ class PostController extends Controller
             $data['slug'] = $this->generateArabicSlug($data['title']);
         }
 
-        // Auto-publish if published_at is set and not explicitly marked as draft
-        if (!empty($data['published_at']) && empty($data['is_draft'])) {
-            $publishDate = \Carbon\Carbon::parse($data['published_at']);
-            // If publish date is now or in the past, set as published
-            if ($publishDate->isPast() || $publishDate->isToday()) {
-                $data['is_draft'] = false;
+        // Handle publish/draft action from publish-card component
+        $action = $request->input('action');
+        if ($action === 'publish') {
+            $data['is_draft'] = false;
+            $data['published_at'] = $request->filled('published_at')
+                ? $request->published_at
+                : now();
+        } elseif ($action === 'draft') {
+            $data['is_draft'] = true;
+            $data['published_at'] = null;
+        } else {
+            // Backward compatibility: Auto-publish if published_at is set and not explicitly marked as draft
+            if (!empty($data['published_at']) && empty($data['is_draft'])) {
+                $publishDate = \Carbon\Carbon::parse($data['published_at']);
+                // If publish date is now or in the past, set as published
+                if ($publishDate->isPast() || $publishDate->isToday()) {
+                    $data['is_draft'] = false;
+                }
             }
         }
 

@@ -26,7 +26,6 @@ class CreateBookRequest extends FormRequest
             'description' => 'nullable|string',
             'cover_image' => 'nullable|string',
             'external_url' => 'required|url',
-            'status' => 'required|in:draft,published,archived',
             'published_at' => 'nullable|date',
         ];
     }
@@ -43,7 +42,6 @@ class CreateBookRequest extends FormRequest
             'description' => 'الوصف',
             'cover_image' => 'صورة الغلاف',
             'external_url' => 'رابط الشراء',
-            'status' => 'الحالة',
             'published_at' => 'تاريخ النشر',
         ];
     }
