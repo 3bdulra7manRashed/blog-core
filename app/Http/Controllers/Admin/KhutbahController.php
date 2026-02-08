@@ -14,33 +14,29 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
-class PostController extends Controller
+class KhutbahController extends Controller
 {
     /**
      * Generate a slug that preserves Arabic characters
      */
     private function generateArabicSlug(string $text): string
     {
-        // Replace spaces with hyphens
         $slug = preg_replace('/\s+/', '-', trim($text));
-        
-        // Remove special characters but preserve Arabic (Unicode range \u0600-\u06FF), English letters, numbers, and hyphens
         $slug = preg_replace('/[^\p{Arabic}\p{L}\p{N}\-]+/u', '', $slug);
-        
-        // Replace multiple consecutive hyphens with single hyphen
         $slug = preg_replace('/\-+/', '-', $slug);
-        
-        // Trim hyphens from start and end
         $slug = trim($slug, '-');
-        
+
         return $slug;
     }
 
+    /**
+     * Display a listing of khutab.
+     */
     public function index(Request $request): View
     {
         Gate::authorize('viewAny', Post::class);
 
-        $query = Post::with(['author', 'categories', 'tags'])->posts();
+        $query = Post::with(['author', 'categories', 'tags'])->khutab();
 
         if ($request->has('status')) {
             match ($request->status) {
@@ -60,9 +56,12 @@ class PostController extends Controller
 
         $posts = $query->latest('created_at')->paginate(15)->withQueryString();
 
-        return view('admin.posts.index', compact('posts'));
+        return view('admin.khutab.index', compact('posts'));
     }
 
+    /**
+     * Show the form for creating a new khutbah.
+     */
     public function create(): View
     {
         Gate::authorize('create', Post::class);
@@ -70,9 +69,12 @@ class PostController extends Controller
         $categories = Category::orderBy('order_column')->get();
         $tags = Tag::orderBy('name')->get();
 
-        return view('admin.posts.create', compact('categories', 'tags'));
+        return view('admin.khutab.create', compact('categories', 'tags'));
     }
 
+    /**
+     * Store a newly created khutbah.
+     */
     public function store(StorePostRequest $request): RedirectResponse
     {
         Gate::authorize('create', Post::class);
@@ -80,7 +82,9 @@ class PostController extends Controller
         $data = $request->validated();
         $data['user_id'] = auth()->id();
         $data['slug'] = $this->generateArabicSlug($data['slug'] ?? $data['title']);
-        $data['type'] = 'post';  // Explicitly set type for posts
+        
+        // Force type to khutbah
+        $data['type'] = 'khutbah';
 
         // Handle publish/draft action from publish-card component
         $action = $request->input('action');
@@ -93,10 +97,8 @@ class PostController extends Controller
             $data['is_draft'] = true;
             $data['published_at'] = null;
         } else {
-            // Backward compatibility: Auto-publish if published_at is set and not explicitly marked as draft
             if (!empty($data['published_at']) && empty($data['is_draft'])) {
                 $publishDate = \Carbon\Carbon::parse($data['published_at']);
-                // If publish date is now or in the past, set as published
                 if ($publishDate->isPast() || $publishDate->isToday()) {
                     $data['is_draft'] = false;
                 }
@@ -119,42 +121,44 @@ class PostController extends Controller
             $post->tags()->sync($data['tags']);
         }
 
-        return redirect()->route('admin.posts.index')
-        ->with('success', 'تم إنشاء المقال بنجاح');
+        return redirect()->route('admin.khutab.index')
+            ->with('success', 'تم إنشاء الخطبة بنجاح');
     }
 
-    public function show(Post $post): View
+    /**
+     * Show the form for editing the specified khutbah.
+     */
+    public function edit(Post $khutbah): View
     {
-        Gate::authorize('view', $post);
+        Gate::authorize('update', $khutbah);
 
-        $post->load(['author', 'categories', 'tags']);
-
-        return view('admin.posts.show', compact('post'));
-    }
-
-    public function edit(Post $post): View
-    {
-        Gate::authorize('update', $post);
-
-        $post->load(['categories', 'tags']);
+        $khutbah->load(['categories', 'tags']);
         $categories = Category::orderBy('order_column')->get();
         $tags = Tag::orderBy('name')->get();
 
-        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
+        return view('admin.khutab.edit', [
+            'post' => $khutbah,
+            'categories' => $categories,
+            'tags' => $tags,
+        ]);
     }
 
-    public function update(UpdatePostRequest $request, Post $post): RedirectResponse
+    /**
+     * Update the specified khutbah.
+     */
+    public function update(UpdatePostRequest $request, Post $khutbah): RedirectResponse
     {
-        Gate::authorize('update', $post);
+        Gate::authorize('update', $khutbah);
 
         $data = $request->validated();
 
         if (isset($data['slug']) && !empty($data['slug'])) {
             $data['slug'] = $this->generateArabicSlug($data['slug']);
         } elseif (empty($data['slug'] ?? '')) {
-            // If slug is empty, generate from title
             $data['slug'] = $this->generateArabicSlug($data['title']);
         }
+
+        // DO NOT change type - keep existing type
 
         // Handle publish/draft action from publish-card component
         $action = $request->input('action');
@@ -167,56 +171,54 @@ class PostController extends Controller
             $data['is_draft'] = true;
             $data['published_at'] = null;
         } else {
-            // Backward compatibility: Auto-publish if published_at is set and not explicitly marked as draft
             if (!empty($data['published_at']) && empty($data['is_draft'])) {
                 $publishDate = \Carbon\Carbon::parse($data['published_at']);
-                // If publish date is now or in the past, set as published
                 if ($publishDate->isPast() || $publishDate->isToday()) {
                     $data['is_draft'] = false;
                 }
             }
         }
 
-        // Handle featured image upload - use $request->hasFile() because
-        // Laravel's validated() method doesn't include file objects in the returned array
         if ($request->hasFile('featured_image')) {
-            if ($post->featured_image_path) {
-                Storage::disk('public')->delete($post->featured_image_path);
+            if ($khutbah->featured_image_path) {
+                Storage::disk('public')->delete($khutbah->featured_image_path);
             }
             $path = $request->file('featured_image')->store('posts', 'public');
             $data['featured_image_path'] = $path;
         }
 
-        $post->update($data);
+        $khutbah->update($data);
 
         if (isset($data['categories'])) {
-            $post->categories()->sync($data['categories']);
+            $khutbah->categories()->sync($data['categories']);
         } else {
-            $post->categories()->detach();
+            $khutbah->categories()->detach();
         }
 
         if (isset($data['tags'])) {
-            $post->tags()->sync($data['tags']);
+            $khutbah->tags()->sync($data['tags']);
         } else {
-            $post->tags()->detach();
+            $khutbah->tags()->detach();
         }
 
-        return redirect()->route('admin.posts.index')
-        ->with('success', 'تم تحديث المقال بنجاح');
+        return redirect()->route('admin.khutab.index')
+            ->with('success', 'تم تحديث الخطبة بنجاح');
     }
 
-    public function destroy(Post $post): RedirectResponse
+    /**
+     * Remove the specified khutbah.
+     */
+    public function destroy(Post $khutbah): RedirectResponse
     {
-        Gate::authorize('delete', $post);
+        Gate::authorize('delete', $khutbah);
 
-        if ($post->featured_image_path) {
-            Storage::disk('public')->delete($post->featured_image_path);
+        if ($khutbah->featured_image_path) {
+            Storage::disk('public')->delete($khutbah->featured_image_path);
         }
 
-        $post->delete();
+        $khutbah->delete();
 
-        return redirect()->route('admin.posts.index')
-        ->with('success', 'تم حذف المقال بنجاح');
+        return redirect()->route('admin.khutab.index')
+            ->with('success', 'تم حذف الخطبة بنجاح');
     }
 }
-

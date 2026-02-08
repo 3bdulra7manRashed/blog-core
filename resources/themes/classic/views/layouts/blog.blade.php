@@ -108,6 +108,12 @@
                     </a>
                     @endif
 
+                    @if(feature('khutab'))
+                    <a href="{{ route('khutab.index') }}" class="text-m font-medium {{ request()->routeIs('khutab.*') ? 'text-brand-accent font-bold' : 'text-gray-800' }} hover:text-brand-accent transition-colors">
+                        الخطب
+                    </a>
+                    @endif
+
                     <a href="{{ route('about') }}" class="text-m font-medium {{ request()->routeIs('about') ? 'text-brand-accent font-bold' : 'text-gray-800' }} hover:text-brand-accent transition-colors">
                         عني
                     </a>
@@ -284,6 +290,17 @@
                         @click="mobileMenuOpen = false"
                     >
                         الإصدارات
+                    </a>
+                    @endif
+
+                    <!-- الخطب (Khutab) -->
+                    @if(feature('khutab'))
+                    <a 
+                        href="{{ route('khutab.index') }}" 
+                        class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('khutab.*') ? 'text-brand-accent bg-gray-50' : '' }}"
+                        @click="mobileMenuOpen = false"
+                    >
+                        الخطب
                     </a>
                     @endif
 

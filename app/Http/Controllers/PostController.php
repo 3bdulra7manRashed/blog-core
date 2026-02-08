@@ -14,11 +14,13 @@ class PostController extends Controller
     public function index(Request $request): View
     {
         $posts = Post::with(['author', 'categories', 'tags'])
+            ->posts()
             ->published()
             ->latest('published_at')
             ->paginate(9);
 
-        $recentPosts = Post::published()
+        $recentPosts = Post::posts()
+            ->published()
             ->latest('published_at')
             ->limit(5)
             ->get();
@@ -33,6 +35,7 @@ class PostController extends Controller
     public function show(string $slug, SeoManager $seoManager): View
     {
         $post = Post::with(['author', 'categories', 'tags'])
+            ->posts()
             ->where('slug', $slug)
             ->published()
             ->firstOrFail();
@@ -43,7 +46,8 @@ class PostController extends Controller
         // Set SEO data via SeoManager (generates OpenGraph, Twitter, JSON-LD)
         $seoManager->forModel($post);
 
-        $relatedPosts = Post::published()
+        $relatedPosts = Post::posts()
+            ->published()
             ->where('id', '!=', $post->id)
             ->whereHas('categories', function ($query) use ($post) {
                 $query->whereIn('categories.id', $post->categories->pluck('id'));
@@ -52,23 +56,27 @@ class PostController extends Controller
             ->get();
 
         if ($relatedPosts->isEmpty()) {
-            $relatedPosts = Post::published()
+            $relatedPosts = Post::posts()
+                ->published()
                 ->where('id', '!=', $post->id)
                 ->limit(3)
                 ->get();
         }
 
-        $previousPost = Post::published()
+        $previousPost = Post::posts()
+            ->published()
             ->where('published_at', '<', $post->published_at)
             ->orderBy('published_at', 'desc')
             ->first();
 
-        $nextPost = Post::published()
+        $nextPost = Post::posts()
+            ->published()
             ->where('published_at', '>', $post->published_at)
             ->orderBy('published_at', 'asc')
             ->first();
 
-        $recentPosts = Post::published()
+        $recentPosts = Post::posts()
+            ->published()
             ->where('id', '!=', $post->id)
             ->latest('published_at')
             ->limit(5)
@@ -86,6 +94,7 @@ class PostController extends Controller
         $category = Category::where('slug', $slug)->firstOrFail();
 
         $posts = Post::with(['author', 'categories', 'tags'])
+            ->posts()
             ->whereHas('categories', function ($query) use ($category) {
                 $query->where('categories.id', $category->id);
             })
@@ -93,7 +102,8 @@ class PostController extends Controller
             ->latest('published_at')
             ->paginate(9);
 
-        $recentPosts = Post::published()
+        $recentPosts = Post::posts()
+            ->published()
             ->latest('published_at')
             ->limit(5)
             ->get();
@@ -110,6 +120,7 @@ class PostController extends Controller
         $tag = Tag::where('slug', $slug)->firstOrFail();
 
         $posts = Post::with(['author', 'categories', 'tags'])
+            ->posts()
             ->whereHas('tags', function ($query) use ($tag) {
                 $query->where('tags.id', $tag->id);
             })
@@ -117,7 +128,8 @@ class PostController extends Controller
             ->latest('published_at')
             ->paginate(9);
 
-        $recentPosts = Post::published()
+        $recentPosts = Post::posts()
+            ->published()
             ->latest('published_at')
             ->limit(5)
             ->get();
@@ -134,6 +146,7 @@ class PostController extends Controller
         $query = $request->get('q', '');
 
         $posts = Post::with(['author', 'categories', 'tags'])
+            ->posts()
             ->published()
             ->when($query, function ($q) use ($query) {
                 $q->where(function ($queryBuilder) use ($query) {
@@ -146,7 +159,8 @@ class PostController extends Controller
             ->paginate(9)
             ->withQueryString();
 
-        $recentPosts = Post::published()
+        $recentPosts = Post::posts()
+            ->published()
             ->latest('published_at')
             ->limit(5)
             ->get();
@@ -161,11 +175,13 @@ class PostController extends Controller
     public function mostLiked(Request $request): View
     {
         $posts = Post::with(['author', 'categories', 'tags'])
+            ->posts()
             ->published()
             ->orderBy('likes_count', 'desc')
             ->paginate(9);
 
-        $recentPosts = Post::published()
+        $recentPosts = Post::posts()
+            ->published()
             ->latest('published_at')
             ->limit(5)
             ->get();
@@ -180,11 +196,13 @@ class PostController extends Controller
     public function mostRead(Request $request): View
     {
         $posts = Post::with(['author', 'categories', 'tags'])
+            ->posts()
             ->published()
             ->orderBy('views', 'desc')
             ->paginate(9);
 
-        $recentPosts = Post::published()
+        $recentPosts = Post::posts()
+            ->published()
             ->latest('published_at')
             ->limit(5)
             ->get();

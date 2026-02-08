@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\PostLikeController;
 
+use App\Http\Controllers\KhutbahController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -20,6 +21,14 @@ Route::get('/search', [PostController::class, 'search'])->name('search');
 Route::get('/posts/most-liked', [PostController::class, 'mostLiked'])->name('posts.most-liked');
 Route::get('/posts/most-read', [PostController::class, 'mostRead'])->name('posts.most-read');
 Route::get('/about', [PageController::class, 'about'])->name('about');
+
+// Khutab Routes (Feature-gated)
+if (feature('khutab')) {
+    Route::prefix('khutab')->group(function () {
+        Route::get('/', [KhutbahController::class, 'index'])->name('khutab.index');
+        Route::get('/{slug}', [KhutbahController::class, 'show'])->name('khutab.show');
+    });
+}
 
 // Note: /contact routes are now handled by Modules\Contact when feature('contact') is enabled
 
@@ -56,7 +65,12 @@ Route::prefix('admin')->middleware(['auth', 'role:admin|moderator'])->name('admi
     Route::get('/about', [\App\Http\Controllers\Admin\PageController::class, 'edit'])->name('about.edit');
     Route::put('/about', [\App\Http\Controllers\Admin\PageController::class, 'update'])->name('about.update');
 
-    
+    // Khutab Admin Routes (Feature-gated)
+    if (feature('khutab')) {
+        Route::resource('khutab', \App\Http\Controllers\Admin\KhutbahController::class)
+            ->parameters(['khutab' => 'khutbah'])
+            ->except(['show']);
+    }
 
 });
 

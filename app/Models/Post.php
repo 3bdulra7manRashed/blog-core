@@ -28,6 +28,7 @@ class Post extends Model implements Seoable
         'likes_count',
         'views',
         'meta',
+        'type',
     ];
 
     protected $casts = [
@@ -73,6 +74,22 @@ class Post extends Model implements Seoable
         return $query->where('is_draft', false)
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now());
+    }
+
+    /**
+     * Scope: Only posts (type = 'post')
+     */
+    public function scopePosts($query)
+    {
+        return $query->where('type', 'post');
+    }
+
+    /**
+     * Scope: Only khutab (type = 'khutbah')
+     */
+    public function scopeKhutab($query)
+    {
+        return $query->where('type', 'khutbah');
     }
 
     public function isPublished(): bool

@@ -26,4 +26,5 @@ return [
     ],
     'advanced_seo' => true,
     'books' => true,
+    'khutab' => true,
 ];
