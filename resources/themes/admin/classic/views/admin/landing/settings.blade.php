@@ -136,24 +136,32 @@
                             id="show_category_one"
                             value="1"
                             {{ old('show_category_one', $settings->show_category_one) ? 'checked' : '' }}
-                            class="h-4 w-4 text-brand-accent focus:ring-brand-accent border-gray-300 rounded"
+                            class="h-4 w-4 text-brand-accent focus:ring-brand-accent border-gray-300 rounded js-toggle-trigger"
+                            data-target="category_one_id"
                         >
                         <label for="show_category_one" class="mr-2 text-sm font-bold text-gray-700">إظهار القسم الأول</label>
                     </div>
                     <div>
-                        <label for="category_one_id" class="block text-sm font-medium text-gray-700 mb-1">رقم التصنيف (ID)</label>
-                        <input
-                            type="number"
-                            name="category_one_id"
-                            id="category_one_id"
-                            value="{{ old('category_one_id', $settings->category_one_id) }}"
-                            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brand-accent focus:border-brand-accent @error('category_one_id') border-red-500 @enderror"
-                            placeholder="مثال: 1"
-                            min="1"
-                        >
+                        <label for="category_one_id" class="block text-sm font-medium text-gray-700 mb-1">التصنيف</label>
+                        <div class="searchable-select-wrapper relative">
+                            <select
+                                name="category_one_id"
+                                id="category_one_id"
+                                class="searchable-select w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brand-accent focus:border-brand-accent @error('category_one_id') border-red-500 @enderror"
+                                {{ old('show_category_one', $settings->show_category_one) ? '' : 'disabled' }}
+                            >
+                                <option value="">-- اختر تصنيف --</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('category_one_id', $settings->category_one_id) == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                         @error('category_one_id')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
+                        <p class="text-xs text-gray-500 mt-1">اختر التصنيف الذي تريد عرض مقالاته في القسم الأول</p>
                     </div>
                 </div>
 
@@ -166,24 +174,32 @@
                             id="show_category_two"
                             value="1"
                             {{ old('show_category_two', $settings->show_category_two) ? 'checked' : '' }}
-                            class="h-4 w-4 text-brand-accent focus:ring-brand-accent border-gray-300 rounded"
+                            class="h-4 w-4 text-brand-accent focus:ring-brand-accent border-gray-300 rounded js-toggle-trigger"
+                            data-target="category_two_id"
                         >
                         <label for="show_category_two" class="mr-2 text-sm font-bold text-gray-700">إظهار القسم الثاني</label>
                     </div>
                     <div>
-                        <label for="category_two_id" class="block text-sm font-medium text-gray-700 mb-1">رقم التصنيف (ID)</label>
-                        <input
-                            type="number"
-                            name="category_two_id"
-                            id="category_two_id"
-                            value="{{ old('category_two_id', $settings->category_two_id) }}"
-                            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brand-accent focus:border-brand-accent @error('category_two_id') border-red-500 @enderror"
-                            placeholder="مثال: 2"
-                            min="1"
-                        >
+                        <label for="category_two_id" class="block text-sm font-medium text-gray-700 mb-1">التصنيف</label>
+                        <div class="searchable-select-wrapper relative">
+                            <select
+                                name="category_two_id"
+                                id="category_two_id"
+                                class="searchable-select w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brand-accent focus:border-brand-accent @error('category_two_id') border-red-500 @enderror"
+                                {{ old('show_category_two', $settings->show_category_two) ? '' : 'disabled' }}
+                            >
+                                <option value="">-- اختر تصنيف --</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('category_two_id', $settings->category_two_id) == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                         @error('category_two_id')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
+                        <p class="text-xs text-gray-500 mt-1">اختر التصنيف الذي تريد عرض مقالاته في القسم الثاني</p>
                     </div>
                 </div>
 
@@ -196,24 +212,32 @@
                             id="show_khutab"
                             value="1"
                             {{ old('show_khutab', $settings->show_khutab) ? 'checked' : '' }}
-                            class="h-4 w-4 text-brand-accent focus:ring-brand-accent border-gray-300 rounded"
+                            class="h-4 w-4 text-brand-accent focus:ring-brand-accent border-gray-300 rounded js-toggle-trigger"
+                            data-target="khutab_category_id"
                         >
                         <label for="show_khutab" class="mr-2 text-sm font-bold text-gray-700">إظهار قسم الخطب</label>
                     </div>
                     <div>
-                        <label for="khutab_category_id" class="block text-sm font-medium text-gray-700 mb-1">رقم تصنيف الخطب (ID)</label>
-                        <input
-                            type="number"
-                            name="khutab_category_id"
-                            id="khutab_category_id"
-                            value="{{ old('khutab_category_id', $settings->khutab_category_id) }}"
-                            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brand-accent focus:border-brand-accent @error('khutab_category_id') border-red-500 @enderror"
-                            placeholder="مثال: 3"
-                            min="1"
-                        >
+                        <label for="khutab_category_id" class="block text-sm font-medium text-gray-700 mb-1">تصنيف الخطب</label>
+                        <div class="searchable-select-wrapper relative">
+                            <select
+                                name="khutab_category_id"
+                                id="khutab_category_id"
+                                class="searchable-select w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brand-accent focus:border-brand-accent @error('khutab_category_id') border-red-500 @enderror"
+                                {{ old('show_khutab', $settings->show_khutab) ? '' : 'disabled' }}
+                            >
+                                <option value="">-- اختر تصنيف (اختياري) --</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('khutab_category_id', $settings->khutab_category_id) == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                         @error('khutab_category_id')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
+                        <p class="text-xs text-gray-500 mt-1">اختياري — إن لم يُحدد تصنيف، ستُعرض أحدث الخطب بدون تصفية</p>
                     </div>
                 </div>
             </div>
@@ -287,3 +311,79 @@
     </div>
 </form>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // ── 1. Toggle-Disable: disable selects when their checkbox is OFF ──
+    document.querySelectorAll('.js-toggle-trigger').forEach(function (checkbox) {
+        var targetId = checkbox.getAttribute('data-target');
+        var target = document.getElementById(targetId);
+        if (!target) return;
+
+        checkbox.addEventListener('change', function () {
+            target.disabled = !this.checked;
+            target.closest('.searchable-select-wrapper')
+                ?.classList.toggle('opacity-50', !this.checked);
+        });
+
+        // Initial state
+        target.disabled = !checkbox.checked;
+        target.closest('.searchable-select-wrapper')
+            ?.classList.toggle('opacity-50', !checkbox.checked);
+    });
+
+    // ── 2. Searchable Select: filter options by typing ──
+    document.querySelectorAll('.searchable-select').forEach(function (select) {
+        var wrapper = select.closest('.searchable-select-wrapper');
+        if (!wrapper) return;
+
+        // Build search input
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = 'ابحث عن تصنيف...';
+        input.className = 'w-full border border-gray-200 rounded-md px-3 py-1.5 mb-1 text-sm focus:ring-brand-accent focus:border-brand-accent';
+        input.style.display = 'none';
+
+        wrapper.insertBefore(input, select);
+
+        // Cache original options
+        var options = Array.from(select.options);
+
+        select.addEventListener('focus', function () {
+            input.style.display = '';
+            input.value = '';
+            input.focus();
+        });
+
+        input.addEventListener('input', function () {
+            var term = this.value.toLowerCase();
+            // Clear current options
+            while (select.options.length > 0) select.remove(0);
+
+            options.forEach(function (opt) {
+                if (!term || opt.value === '' || opt.text.toLowerCase().indexOf(term) !== -1) {
+                    select.appendChild(opt.cloneNode(true));
+                }
+            });
+
+            // Restore selection
+            var currentVal = select.getAttribute('data-current') || '';
+            if (currentVal) select.value = currentVal;
+        });
+
+        select.addEventListener('change', function () {
+            select.setAttribute('data-current', this.value);
+        });
+
+        // Set initial data-current
+        select.setAttribute('data-current', select.value);
+
+        input.addEventListener('blur', function () {
+            // Delay to allow select click
+            setTimeout(function () { input.style.display = 'none'; }, 200);
+        });
+    });
+});
+</script>
+@endpush

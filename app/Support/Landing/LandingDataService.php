@@ -199,10 +199,17 @@ class LandingDataService
 
     /**
      * Get latest posts for the quotes/articles section.
+     *
+     * Only shown when NO other section is enabled — acts as a fallback.
      */
     public function getLatestPosts(LandingSetting $settings, int $limit = 6): Collection
     {
         if (!$settings->show_quotes_section) {
+            return collect();
+        }
+
+        // Latest posts is a fallback — hide when any section is active
+        if ($this->hasAnySectionEnabled($settings)) {
             return collect();
         }
 
@@ -222,5 +229,17 @@ class LandingDataService
         } catch (\Throwable $e) {
             return collect();
         }
+    }
+
+    /**
+     * Check if any content section is enabled in settings.
+     */
+    private function hasAnySectionEnabled(LandingSetting $settings): bool
+    {
+        return $settings->show_thoughts
+            || $settings->show_category_one
+            || $settings->show_category_two
+            || $settings->show_khutab
+            || $settings->show_releases;
     }
 }

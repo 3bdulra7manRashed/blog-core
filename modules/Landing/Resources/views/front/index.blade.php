@@ -62,13 +62,4 @@
     ])
 @endif
 
-{{-- Newsletter Section --}}
-@module('Newsletter')
-<section class="py-16 bg-gradient-to-br from-brand-accent/5 to-brand-accent/10">
-    <div class="container mx-auto px-4 max-w-2xl text-center">
-        <x-newsletter-form />
-    </div>
-</section>
-@endmodule
-
 @endsection
