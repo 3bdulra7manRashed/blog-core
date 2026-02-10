@@ -4,6 +4,7 @@ namespace Modules\Landing\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Support\Landing\LandingThoughtsManager;
 use App\Support\SEO\SeoManager;
 use Illuminate\View\View;
 use Modules\Landing\Models\LandingSetting;
@@ -13,7 +14,7 @@ class LandingController extends Controller
     /**
      * Display the landing page.
      */
-    public function index(SeoManager $seoManager): View
+    public function index(SeoManager $seoManager, LandingThoughtsManager $thoughtsManager): View
     {
         // Get landing settings
         $settings = LandingSetting::getInstance();
@@ -25,6 +26,13 @@ class LandingController extends Controller
             ->latest('published_at')
             ->limit(6)
             ->get();
+
+        // Resolve thoughts via contract-based manager (decoupled)
+        $thoughts = collect();
+
+        if (feature('thoughts')) {
+            $thoughts = $thoughtsManager->resolve();
+        }
 
         // Set SEO via SeoManager
         $seoManager->forPage([
@@ -39,6 +47,6 @@ class LandingController extends Controller
                 : null,
         ]);
 
-        return view('landing::front.index', compact('settings', 'latestPosts'));
+        return view('landing::front.index', compact('settings', 'latestPosts', 'thoughts'));
     }
 }

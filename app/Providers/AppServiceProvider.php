@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Post;
+use App\Support\Landing\LandingThoughtsManager;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -16,6 +17,9 @@ class AppServiceProvider extends ServiceProvider
     {
         // Load Core Helpers
         require_once app_path('Helpers/feature.php');
+
+        // Register Landing Thoughts Manager (contract-based provider system)
+        $this->app->singleton(LandingThoughtsManager::class);
     }
 
     /**

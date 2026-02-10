@@ -2,7 +2,9 @@
 
 namespace Modules\Thoughts\Providers;
 
+use App\Support\Landing\LandingThoughtsManager;
 use Illuminate\Support\ServiceProvider;
+use Modules\Thoughts\Support\ThoughtLandingProvider;
 
 class ThoughtsServiceProvider extends ServiceProvider
 {
@@ -24,5 +26,11 @@ class ThoughtsServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../Routes/admin.php');
 
         $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'thoughts');
+
+        // Register Thoughts as a landing content provider (contract-based)
+        if (feature('thoughts')) {
+            app(LandingThoughtsManager::class)
+                ->register(ThoughtLandingProvider::class);
+        }
     }
 }
