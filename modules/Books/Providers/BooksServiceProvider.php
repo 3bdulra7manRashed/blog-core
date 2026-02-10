@@ -2,7 +2,9 @@
 
 namespace Modules\Books\Providers;
 
+use App\Support\Landing\LandingReleasesManager;
 use Illuminate\Support\ServiceProvider;
+use Modules\Books\Support\BookLandingProvider;
 
 class BooksServiceProvider extends ServiceProvider
 {
@@ -25,5 +27,12 @@ class BooksServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../Routes/admin.php');
 
         $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'books');
+
+        // Register releases provider for landing page (contract-based)
+        if (feature('books')) {
+            $manager = app(LandingReleasesManager::class);
+            $manager->register(BookLandingProvider::class);
+        }
     }
 }
+

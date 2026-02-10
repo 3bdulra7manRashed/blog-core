@@ -72,6 +72,12 @@ Route::prefix('admin')->middleware(['auth', 'role:admin|moderator'])->name('admi
             ->except(['show']);
     }
 
+    // Landing Settings Admin Routes (Feature-gated)
+    if (feature('landing')) {
+        Route::get('landing/settings', [\App\Http\Controllers\Admin\LandingSettingsController::class, 'edit'])->name('landing.settings.edit');
+        Route::put('landing/settings', [\App\Http\Controllers\Admin\LandingSettingsController::class, 'update'])->name('landing.settings.update');
+    }
+
 });
 
 // Note: Contact Messages Management routes are now handled by Modules\Contact when feature('contact') is enabled

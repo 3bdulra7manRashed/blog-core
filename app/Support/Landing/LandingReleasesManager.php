@@ -2,28 +2,28 @@
 
 namespace App\Support\Landing;
 
-use App\Contracts\ProvidesLandingThoughts;
+use App\Contracts\ProvidesLandingReleases;
 use Illuminate\Support\Collection;
 
-class LandingThoughtsManager
+class LandingReleasesManager
 {
     protected array $providers = [];
 
     public function register(string $provider): void
     {
-        if (is_subclass_of($provider, ProvidesLandingThoughts::class)) {
+        if (is_subclass_of($provider, ProvidesLandingReleases::class)) {
             $this->providers[] = $provider;
         }
     }
 
-    public function resolve(): Collection
+    public function resolve(int $limit = 3): Collection
     {
         $collection = collect();
 
         foreach ($this->providers as $provider) {
             try {
                 $instance = app($provider);
-                $result = $instance->getLandingThoughts();
+                $result = $instance->getLandingReleases($limit);
 
                 // Normalize: ensure result is always a Collection
                 $collection = $collection->merge(
@@ -38,4 +38,3 @@ class LandingThoughtsManager
         return $collection;
     }
 }
-

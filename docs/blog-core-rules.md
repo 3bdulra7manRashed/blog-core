@@ -1,6 +1,6 @@
 # Blog Core System Architecture & Rules
 
-> **Version**: 2.4.0
+> **Version**: 2.7.0
 > **Status**: Authoritative Architectural Contract
 > **Strictness**: High (Non-negotiable)
 
@@ -532,10 +532,58 @@ The Newsletter module uses `$isPostPage` to conditionally hide the footer newsle
 
 ---
 
+## 19. OPTIONAL MODULE INTEGRATION (CONTRACT-BASED)
+
+**Added**: 2026-02-10 | **Status**: Enforced | **Version**: 2.7.0
+
+Core modules (e.g., `Landing`) MUST NOT directly depend on optional feature modules (e.g., `Thoughts`). Integration must be achieved via **Contracts** and **Managers**.
+
+### 19.1 Architecture Pattern
+
+1.  **Contract**: Define an interface in `app/Contracts/` (e.g., `ProvidesLandingThoughts`).
+2.  **Manager**: Create a `Manager` class in `app/Support/` (e.g., `LandingThoughtsManager`) to collect providers.
+3.  **Provider**: Implement the contract in the optional module (e.g., `Modules/Thoughts/Support/ThoughtLandingProvider`).
+4.  **Registration**: Register the provider in the module's `ServiceProvider::boot()` method, strictly guarded by the feature flag.
+5.  **Consumption**: Inject the Manager into the Consumer (Core) Controller/Class.
+
+### 19.2 Rules
+
+| Rule | Description |
+| :--- | :--- |
+| **Zero Direct Coupling** | Top-level modules must never `use Modules\Feature\Models\Model;` |
+| **Feature Guarded Registration** | Providers must only be registered if `feature('name')` is true |
+| **Graceful Degradation** | The Manager must handle empty provider lists without errors |
+| **Type Safety** | Managers must validate that registered classes implement the required interface |
+
+---
+
+## 20. FRONTEND BUILD CONFIGURATION
+
+**Added**: 2026-02-10 | **Status**: Enforced | **Version**: 2.7.0
+
+### 20.1 Tailwind CSS Configuration
+
+The `tailwind.config.js` `content` array must explicitly include ALL directories containing Blade files. Explicitly covering `resources` does NOT cover `resources/themes` if it is a separate directory root.
+
+**Required Patterns**:
+```javascript
+content: [
+    './resources/views/**/*.blade.php',
+    './resources/themes/**/*.blade.php', // CRITICAL: For theme files
+    './modules/**/Resources/views/**/*.blade.php', // For lowercase modules
+    './Modules/**/Resources/views/**/*.blade.php', // For Capitalized modules
+],
+```
+
+**Why**: Tailwind's JIT compiler purges classes not found in the scanned files. Missing paths lead to "invisible" UI elements (e.g., missing specific width/positioning classes) despite correct HTML.
+
+---
+
 ## CHANGELOG
 
 | Date | Version | Change |
 | :--- | :--- | :--- |
+| 2026-02-10 | 2.7.0 | Added Contract-Based Integration (§19) and Tailwind Config Rules (§20) |
 | 2026-02-08 | 2.6.0 | Added Thoughts module (§3.1): Admin CRUD for short-form content |
 | 2026-02-08 | 2.5.0 | Added Landing module (§3.1), Module Route Override Architecture (§3.3) |
 | 2026-02-07 | 2.4.0 | Added Public Layout Contract (§18): `$isPostPage` injection |

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Post;
+use App\Support\Landing\LandingReleasesManager;
 use App\Support\Landing\LandingThoughtsManager;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Blade;
@@ -20,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
 
         // Register Landing Thoughts Manager (contract-based provider system)
         $this->app->singleton(LandingThoughtsManager::class);
+        $this->app->singleton(LandingReleasesManager::class);
     }
 
     /**

@@ -3,50 +3,54 @@
 namespace Modules\Landing\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
-use App\Support\Landing\LandingThoughtsManager;
+use App\Models\LandingSetting;
+use App\Support\Landing\LandingDataService;
 use App\Support\SEO\SeoManager;
 use Illuminate\View\View;
-use Modules\Landing\Models\LandingSetting;
 
 class LandingController extends Controller
 {
     /**
      * Display the landing page.
      */
-    public function index(SeoManager $seoManager, LandingThoughtsManager $thoughtsManager): View
+    public function index(SeoManager $seoManager, LandingDataService $dataService): View
     {
-        // Get landing settings
-        $settings = LandingSetting::getInstance();
+        $settings = LandingSetting::current();
 
-        // Get latest 6 published posts for quotes section
-        $latestPosts = Post::with(['author', 'categories'])
-            ->posts()
-            ->published()
-            ->latest('published_at')
-            ->limit(6)
-            ->get();
-
-        // Resolve thoughts via contract-based manager (decoupled)
-        $thoughts = collect();
-
-        if (feature('thoughts')) {
-            $thoughts = $thoughtsManager->resolve();
-        }
+        // Resolve all sections via service (clean architecture)
+        $hero = $dataService->getHeroData($settings);
+        $cta = $dataService->getCtaData($settings);
+        $thoughts = $dataService->getThoughts($settings);
+        $categoryOne = $dataService->getCategorySection($settings->show_category_one, $settings->category_one_id);
+        $categoryTwo = $dataService->getCategorySection($settings->show_category_two, $settings->category_two_id);
+        $khutab = $dataService->getKhutab($settings);
+        $releases = $dataService->getReleases($settings);
+        $latestPosts = $dataService->getLatestPosts($settings);
 
         // Set SEO via SeoManager
         $seoManager->forPage([
-            'title' => $settings->hero_title ?? config('app.name'),
-            'description' => $settings->hero_subtitle ?? config('branding.site_description', 'مرحباً بكم في موقعنا'),
+            'title' => $hero['title'],
+            'description' => $hero['subtitle'],
             'canonical' => url('/'),
             'type' => 'website',
-            'image' => $settings->hero_image 
-                ? (str_starts_with($settings->hero_image, 'http') 
-                    ? $settings->hero_image 
-                    : asset('storage/' . $settings->hero_image))
+            'image' => $hero['image']
+                ? (str_starts_with($hero['image'], 'http')
+                    ? $hero['image']
+                    : asset('storage/' . $hero['image']))
                 : null,
         ]);
 
-        return view('landing::front.index', compact('settings', 'latestPosts', 'thoughts'));
+        return view('landing::front.index', [
+            'settings' => $settings,
+            'hero' => $hero,
+            'cta' => $cta,
+            'thoughts' => $thoughts,
+            'categoryOne' => $categoryOne,
+            'categoryTwo' => $categoryTwo,
+            'khutab' => $khutab,
+            'releases' => $releases,
+            'latestPosts' => $latestPosts,
+        ]);
     }
 }
+
