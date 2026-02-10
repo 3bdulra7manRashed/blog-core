@@ -22,17 +22,6 @@
     ])
 @endif
 
-{{-- Khutab Section --}}
-@if($khutab['posts']->isNotEmpty())
-    @include('landing::front.partials.section-grid', [
-        'title'       => $khutab['category'] ? $khutab['category']->name : 'الخطب',
-        'subtitle'    => null,
-        'items'       => $khutab['posts'],
-        'viewAllUrl'  => Route::has('khutab.index') ? route('khutab.index') : null,
-        'viewAllText' => 'عرض جميع الخطب',
-    ])
-@endif
-
 {{-- Category Two Section --}}
 @if($categoryTwo['category'] && $categoryTwo['posts']->isNotEmpty())
     @include('landing::front.partials.section-grid', [
@@ -41,9 +30,23 @@
         'items'       => $categoryTwo['posts'],
         'viewAllUrl'  => route('category.show', $categoryTwo['category']->slug),
         'viewAllText' => 'عرض المزيد من ' . $categoryTwo['category']->name,
+        
+    ])
+@endif
+
+{{-- Khutab Section --}}
+@if($khutab['posts']->isNotEmpty())
+    @include('landing::front.partials.section-grid', [
+        'title'       => $khutab['category'] ? $khutab['category']->name : 'الخطب',
+        'subtitle'    => null,
+        'items'       => $khutab['posts'],
+        'viewAllUrl'  => Route::has('khutab.index') ? route('khutab.index') : null,
+        'viewAllText' => 'عرض جميع الخطب',
         'bgClass'     => 'bg-gray-50',
     ])
 @endif
+
+
 
 {{-- Releases Section --}}
 @if($releases->isNotEmpty())
