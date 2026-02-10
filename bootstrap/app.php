@@ -14,6 +14,16 @@ return Application::configure(basePath: dirname(__DIR__))
         web: __DIR__.'/../routes/web.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
+        then: function () {
+            // Load module routes with override capability
+            // Modules can override core routes when their feature flags are enabled
+            $modulesPath = base_path('Modules');
+            if (is_dir($modulesPath)) {
+                foreach (glob("{$modulesPath}/*/Routes/web.php") as $routeFile) {
+                    require $routeFile;
+                }
+            }
+        },
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([

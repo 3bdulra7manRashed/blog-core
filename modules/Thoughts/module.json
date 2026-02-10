@@ -1,0 +1,16 @@
+{
+    "name": "Thoughts",
+    "alias": "thoughts",
+    "description": "Thoughts and short content management module",
+    "version": "1.0.0",
+    "keywords": [
+        "thoughts",
+        "quotes",
+        "content"
+    ],
+    "priority": 0,
+    "providers": [
+        "Modules\\Thoughts\\Providers\\ThoughtsServiceProvider"
+    ],
+    "files": []
+}

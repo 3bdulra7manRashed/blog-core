@@ -10,4 +10,6 @@ return [
     App\Providers\CKEditorServiceProvider::class,
     Modules\Media\Providers\MediaServiceProvider::class,
     Modules\Books\Providers\BooksServiceProvider::class,
+    Modules\Landing\Providers\LandingServiceProvider::class,
+    Modules\Thoughts\Providers\ThoughtsServiceProvider::class,
 ];

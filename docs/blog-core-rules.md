@@ -48,6 +48,8 @@ Each module is a self-contained unit with its own Routes, Views, Migrations, and
 | **Contact** | Contact forms, messaging, notifications. | Core |
 | **Download** | Digital asset management and gated downloads. | Core |
 | **AdvancedSeo** | *(Legacy)* Integration layer for specific advanced tags. | Core |
+| **Landing** | Configurable landing page with hero section and dynamic content. | Core |
+| **Thoughts** | Short-form content (quotes, thoughts) with admin CRUD management. | Core |
 
 ### 3.2 Theme Architecture
 The system supports distinct themes for Public and Admin interfaces.
@@ -55,6 +57,55 @@ The system supports distinct themes for Public and Admin interfaces.
 *   **Admin Theme**: Controls the backend UI. Independently swappable.
 *   **Resolution Rule**: NEVER use hardcoded paths like `resources/views/themes/x`. Use the Theme View Finder or generic namespaced views.
 *   **Isolation**: Admin themes must implement the full Admin Contract (layout slots, components) to ensure compatibility.
+
+### 3.3 Module Route Override Architecture
+
+**Added**: 2026-02-08 | **Status**: Enforced
+
+Modules may override core routes when their feature flags are enabled, following strict modular boundaries.
+
+#### 3.3.1 Core Rules
+
+| Rule | Description |
+| :--- | :--- |
+| **Core Independence** | Core routes (`routes/web.php`) MUST NOT reference `\Modules\*` namespaces directly |
+| **Module Encapsulation** | Route override logic MUST reside entirely within the module's `Routes/web.php` |
+| **Feature-Gated Override** | Module routes MUST check their feature flag before registering overrides |
+| **Default Behavior** | Core routes define the default behavior; modules optionally override |
+
+#### 3.3.2 Implementation
+
+Module routes are loaded via `bootstrap/app.php`'s `then:` callback in `withRouting()`:
+
+```php
+->withRouting(
+    web: __DIR__.'/../routes/web.php',
+    then: function () {
+        foreach (glob(base_path('Modules/*/Routes/web.php')) as $routeFile) {
+            require $routeFile;
+        }
+    },
+)
+```
+
+This ensures:
+1. Core routes load first (default behavior)
+2. Module routes load after with override capability
+3. Core has no knowledge of which modules exist
+
+#### 3.3.3 Module Override Pattern
+
+```php
+// Modules/{Name}/Routes/web.php
+if (feature('module_name')) {
+    Route::get('/', [ModuleController::class, 'index'])
+        ->name('module.home');
+    
+    // Relocate overridden route if needed
+    Route::get('/original-path', [\App\Http\Controllers\CoreController::class, 'index'])
+        ->name('original.name');
+}
+```
 
 ---
 
@@ -485,6 +536,8 @@ The Newsletter module uses `$isPostPage` to conditionally hide the footer newsle
 
 | Date | Version | Change |
 | :--- | :--- | :--- |
+| 2026-02-08 | 2.6.0 | Added Thoughts module (§3.1): Admin CRUD for short-form content |
+| 2026-02-08 | 2.5.0 | Added Landing module (§3.1), Module Route Override Architecture (§3.3) |
 | 2026-02-07 | 2.4.0 | Added Public Layout Contract (§18): `$isPostPage` injection |
 | 2026-02-06 | 2.3.0 | Added Global Stats Contract (§17) |
 | 2026-02-06 | 2.2.0 | Added Theme Boundary Enforcement (§14), File Standards (§15), Admin Theme Contract (§16) |

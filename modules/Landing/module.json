@@ -1,0 +1,16 @@
+{
+    "name": "Landing",
+    "alias": "landing",
+    "description": "Configurable landing page with hero section and dynamic content",
+    "version": "1.0.0",
+    "keywords": [
+        "landing",
+        "homepage",
+        "hero"
+    ],
+    "priority": 100,
+    "providers": [
+        "Modules\\Landing\\Providers\\LandingServiceProvider"
+    ],
+    "files": []
+}
