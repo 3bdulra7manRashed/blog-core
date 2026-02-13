@@ -89,48 +89,14 @@
                 </div>
 
                 <!-- Thumbnail Box -->
-                <div class="bg-white p-4 rounded shadow">
-                    <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">الصورة البارزة</h3>
-                    <div class="space-y-3">
-                        <div class="relative border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-brand-accent transition-colors cursor-pointer"
-                            onclick="document.getElementById('thumbnail').click()">
-                            <div id="image-preview" class="hidden mb-2"><img src="" class="max-h-48 mx-auto rounded"></div>
-                            <div id="upload-placeholder">
-                                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none"
-                                    viewBox="0 0 48 48">
-                                    <path
-                                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                <p class="mt-1 text-sm text-gray-600">انقر لرفع صورة</p>
-                                <p class="text-xs text-gray-500">PNG, JPG (Max 3MB)</p>
-                            </div>
-                        </div>
-                        <input type="file" name="thumbnail" id="thumbnail" accept="image/*" class="hidden"
-                            onchange="previewImage(this)">
-
-                        <div>
-                            <label for="thumbnail_url"
-                                class="block text-xs font-medium text-gray-700 mb-1 flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-brand-accent flex-shrink-0"></span>
-                                أو رابط صورة خارجية
-                            </label>
-                            <input type="url" name="thumbnail_url" id="thumbnail_url" value="{{ old('thumbnail_url') }}"
-                                class="w-full px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent"
-                                placeholder="https://example.com/image.jpg" dir="ltr">
-                            <p class="mt-1 text-xs text-gray-500">
-                                رابط صورة خارجية (يُستخدم إذا لم ترفع ملفًا)
-                            </p>
-                        </div>
-
-                        @error('thumbnail')
-                            <p class="text-xs text-red-600">{{ $message }}</p>
-                        @enderror
-                        @error('thumbnail_url')
-                            <p class="text-xs text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
+                @include('theme::partials.thumbnail-field', [
+                    'model' => null,
+                    'uploadField' => 'thumbnail',
+                    'urlField' => 'thumbnail_url',
+                    'label' => 'الصورة البارزة',
+                    'currentImageUrl' => null,
+                    'currentImageRaw' => null,
+                ])
 
                 <!-- Publish Box (at bottom for better UX) -->
                 <div class="bg-white p-4 rounded shadow">

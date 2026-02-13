@@ -100,32 +100,48 @@ class Post extends Model implements Seoable
 
     public function getFeaturedImageUrlAttribute(): ?string
     {
-        // Priority 1: Uploaded file
-        if ($this->featured_image_path) {
-            // If it's already a full URL, force HTTPS and return
-            if (str_starts_with($this->featured_image_path, 'http')) {
-                // Force HTTPS for social sharing compatibility (WhatsApp, Facebook, etc.)
-                return str_replace('http://', 'https://', $this->featured_image_path);
-            }
-
-            // Get base URL from config (ensures HTTPS in production)
-            $baseUrl = config('app.url');
-
-            // Check if path already has 'storage/' prefix to avoid double storage/storage
-            if (str_starts_with($this->featured_image_path, 'storage/')) {
-                return $baseUrl . '/' . $this->featured_image_path;
-            }
-
-            // Otherwise, prepend storage path
-            return $baseUrl . '/storage/' . $this->featured_image_path;
+        if (!$this->featured_image_path) {
+            return null;
         }
 
-        // Priority 2: External thumbnail URL
+        // If it's already a full URL, force HTTPS and return
+        if (str_starts_with($this->featured_image_path, 'http')) {
+            // Force HTTPS for social sharing compatibility (WhatsApp, Facebook, etc.)
+            return str_replace('http://', 'https://', $this->featured_image_path);
+        }
+
+        // Get base URL from config (ensures HTTPS in production)
+        $baseUrl = config('app.url');
+
+        // Check if path already has 'storage/' prefix to avoid double storage/storage
+        if (str_starts_with($this->featured_image_path, 'storage/')) {
+            return $baseUrl . '/' . $this->featured_image_path;
+        }
+
+        // Otherwise, prepend storage path
+        return $baseUrl . '/storage/' . $this->featured_image_path;
+    }
+
+    /**
+     * Get resolved thumbnail URL with fallback chain:
+     * 1. Uploaded featured image (if exists)
+     * 2. External thumbnail URL
+     * 3. Default fallback image
+     */
+    public function getThumbnailResolvedAttribute(): string
+    {
+        // Priority 1: Uploaded file
+        if (!empty($this->featured_image_path)) {
+            return $this->featured_image_url;
+        }
+
+        // Priority 2: External URL
         if (!empty($this->thumbnail_url)) {
             return $this->thumbnail_url;
         }
 
-        return null;
+        // Priority 3: Default fallback
+        return asset(config('branding.default_og_image', 'images/og-default.jpg'));
     }
 
     /**

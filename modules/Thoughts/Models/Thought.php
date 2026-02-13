@@ -73,19 +73,36 @@ class Thought extends Model
      */
     public function getImageUrlAttribute(): ?string
     {
-        // Priority 1: Uploaded file
-        if ($this->image) {
-            if (str_starts_with($this->image, 'http')) {
-                return $this->image;
-            }
-            return asset('storage/' . $this->image);
+        if (!$this->image) {
+            return null;
         }
 
-        // Priority 2: External thumbnail URL
+        if (str_starts_with($this->image, 'http')) {
+            return $this->image;
+        }
+
+        return asset('storage/' . $this->image);
+    }
+
+    /**
+     * Get resolved thumbnail URL with fallback chain:
+     * 1. Uploaded image (if exists)
+     * 2. External thumbnail URL
+     * 3. Default fallback image
+     */
+    public function getThumbnailResolvedAttribute(): string
+    {
+        // Priority 1: Uploaded file
+        if (!empty($this->image)) {
+            return $this->image_url;
+        }
+
+        // Priority 2: External URL
         if (!empty($this->thumbnail_url)) {
             return $this->thumbnail_url;
         }
 
-        return null;
+        // Priority 3: Default fallback
+        return asset(config('branding.default_og_image', 'images/og-default.jpg'));
     }
 }

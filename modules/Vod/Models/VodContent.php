@@ -110,14 +110,8 @@ class VodContent extends Model implements Seoable
     {
         $siteDomain = config('branding.site_domain');
 
-        // Priority 1: Uploaded thumbnail
         if (!empty($this->thumbnail_path)) {
             return $this->normalizeImageUrl($this->thumbnail_path, $siteDomain);
-        }
-
-        // Priority 2: External thumbnail URL
-        if (!empty($this->thumbnail_url)) {
-            return $this->thumbnail_url;
         }
 
         return $siteDomain . '/' . config('branding.default_og_image');
@@ -129,5 +123,30 @@ class VodContent extends Model implements Seoable
     public function getSeoThumbnailUrl(): ?string
     {
         return $this->getSeoImage();
+    }
+
+    /**
+     * Get resolved thumbnail URL with fallback chain:
+     * 1. Uploaded thumbnail (if exists)
+     * 2. External thumbnail URL
+     * 3. Default fallback image
+     */
+    public function getThumbnailResolvedAttribute(): string
+    {
+        // Priority 1: Uploaded file
+        if (!empty($this->thumbnail_path)) {
+            if (str_starts_with($this->thumbnail_path, 'http')) {
+                return $this->thumbnail_path;
+            }
+            return asset('storage/' . $this->thumbnail_path);
+        }
+
+        // Priority 2: External URL
+        if (!empty($this->thumbnail_url)) {
+            return $this->thumbnail_url;
+        }
+
+        // Priority 3: Default fallback
+        return asset(config('branding.default_og_image', 'images/og-default.jpg'));
     }
 }

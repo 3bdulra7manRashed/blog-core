@@ -24,6 +24,8 @@ class CreateBookRequest extends FormRequest
             'slug' => 'nullable|string|max:255|unique:books,slug',
             'excerpt' => 'nullable|string',
             'description' => 'nullable|string',
+            'cover_file' => ['nullable', 'image', 'max:3072'],
+            'cover_url' => ['nullable', 'url'],
             'cover_image' => 'nullable|string',
             'external_url' => 'required|url',
             'published_at' => 'nullable|date',
