@@ -63,11 +63,11 @@
                     if (data.errors && data.errors.email) {
                         this.error = data.errors.email[0];
                     } else {
-                        this.error = data.message || 'حدث خطأ. يرجى المحاولة مرة أخرى.';
+                        this.error = data.message || 'حدث خطأ، يرجى المحاولة مجدداً.';
                     }
                 }
             } catch (err) {
-                this.error = 'حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.';
+                this.error = 'حدث خطأ في الاتصال، يرجى المحاولة مجدداً.';
             } finally {
                 this.loading = false;
             }
@@ -89,7 +89,7 @@
             </svg>
         </div>
         <h4 class="text-xl font-bold text-gray-900 mb-2">شكراً لاشتراكك! 🎉</h4>
-        <p class="text-gray-500 text-sm">ستصلك أحدث المقالات والنصائح مباشرة في بريدك.</p>
+        <p class="text-gray-500 text-sm">ستصلك أحدث المقالات مباشرةً إلى بريدك.</p>
     </div>
     
     {{-- ===================== --}}
@@ -117,7 +117,7 @@
                 {{-- Description (hidden in compact mode) --}}
                 @if($variant !== 'compact')
                     <p class="text-gray-500 text-sm leading-relaxed max-w-md mx-auto {{ $variant === 'horizontal' ? 'lg:mx-0' : '' }}">
-                        احصل على أحدث مقالات ونصائح ريادة الأعمال مباشرةً إلى بريدك الإلكتروني.
+                        احصل على أحدث المقالات والنصائح مباشرةً إلى بريدك.
                     </p>
                 @endif
             </div>

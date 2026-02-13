@@ -1,13 +1,10 @@
 {{-- Hero Section --}}
-<section class="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+<section class="relative min-h-[78.2vh] flex items-center justify-center overflow-hidden">
     {{-- Background Image or Gradient --}}
     @if($hero['image'])
         <div class="absolute inset-0 z-0">
-            <img
-                src="{{ str_starts_with($hero['image'], 'http') ? $hero['image'] : asset('storage/' . $hero['image']) }}"
-                alt="{{ $hero['title'] }}"
-                class="w-full h-full object-cover"
-            >
+            <img src="{{ str_starts_with($hero['image'], 'http') ? $hero['image'] : asset('storage/' . $hero['image']) }}"
+                alt="{{ $hero['title'] }}" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60"></div>
         </div>
     @else

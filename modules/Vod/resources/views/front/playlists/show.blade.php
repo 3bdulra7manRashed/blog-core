@@ -70,7 +70,7 @@
                     </article>
                 @empty
                     <div class="p-8 text-center bg-gray-50 rounded-xl border border-dashed border-gray-200">
-                        <p class="text-gray-500">لا توجد محتويات في هذه القائمة بعد.</p>
+                        <p class="text-gray-500">لا يوجد محتوى في هذه القائمة بعد.</p>
                     </div>
                 @endforelse
             </div>
@@ -114,7 +114,7 @@
 
                     <div class="border-t border-gray-200 pt-4 mt-2">
                         <div class="flex items-center justify-between text-sm text-gray-500">
-                            <span>عدد العناصر</span>
+                            <span>عدد الحلقات</span>
                             <span class="font-bold text-gray-900">{{ $playlist->items->count() }}</span>
                         </div>
                         <div class="flex items-center justify-between text-sm text-gray-500 mt-2">

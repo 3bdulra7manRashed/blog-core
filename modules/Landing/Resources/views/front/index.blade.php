@@ -17,7 +17,7 @@
         'subtitle'    => $categoryOne['category']->description,
         'items'       => $categoryOne['posts'],
         'viewAllUrl'  => route('category.show', $categoryOne['category']->slug),
-        'viewAllText' => 'عرض المزيد من ' . $categoryOne['category']->name,
+        'viewAllText' => 'المزيد من ' . $categoryOne['category']->name,
         'bgClass'     => 'bg-gray-50',
     ])
 @endif
@@ -29,7 +29,7 @@
         'subtitle'    => $categoryTwo['category']->description,
         'items'       => $categoryTwo['posts'],
         'viewAllUrl'  => route('category.show', $categoryTwo['category']->slug),
-        'viewAllText' => 'عرض المزيد من ' . $categoryTwo['category']->name,
+        'viewAllText' => 'المزيد من ' . $categoryTwo['category']->name,
         
     ])
 @endif
@@ -41,7 +41,7 @@
         'subtitle'    => null,
         'items'       => $khutab['posts'],
         'viewAllUrl'  => Route::has('khutab.index') ? route('khutab.index') : null,
-        'viewAllText' => 'عرض جميع الخطب',
+        'viewAllText' => 'جميع الخطب',
         'bgClass'     => 'bg-gray-50',
     ])
 @endif
@@ -57,10 +57,10 @@
 @if($latestPosts->isNotEmpty())
     @include('landing::front.partials.section-grid', [
         'title'       => 'أحدث المقالات',
-        'subtitle'    => 'اطلع على أحدث ما كتبته من مقالات ومواضيع',
+        'subtitle'    => 'تصفّح أحدث ما كُتب من مقالات ومواضيع',
         'items'       => $latestPosts,
         'viewAllUrl'  => route('home'),
-        'viewAllText' => 'عرض جميع المقالات',
+        'viewAllText' => 'جميع المقالات',
         'bgClass'     => 'bg-gray-50',
     ])
 @endif

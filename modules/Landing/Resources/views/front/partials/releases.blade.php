@@ -5,7 +5,7 @@
         {{-- Section Header --}}
         <div class="text-center mb-12">
             <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-primary mb-4">أحدث الإصدارات</h2>
-            <p class="text-gray-600 max-w-2xl mx-auto">تصفح أحدث الإصدارات والكتب المنشورة</p>
+            <p class="text-gray-600 max-w-2xl mx-auto">أحدث الكتب والإصدارات المتاحة</p>
         </div>
 
         {{-- Releases Grid --}}
