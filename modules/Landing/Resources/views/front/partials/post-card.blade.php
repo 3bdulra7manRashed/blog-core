@@ -44,12 +44,12 @@
             </p>
         @endif
 
-        <div class="flex items-center justify-between text-sm text-gray-500 pt-3 border-t border-gray-100">
-            <span>{{ $post->published_at->format('Y/m/d') }}</span>
+        <div class="flex items-center justify-between pt-3 border-t border-gray-100">
             <a href="{{ route('post.show', $post->slug) }}"
-                class="text-brand-accent hover:text-brand-primary font-medium transition-colors">
-                اقرأ المقال ←
+                class="inline-block px-6 py-2 rounded-full border border-brand-accent text-brand-accent font-medium hover:bg-brand-accent hover:text-white transition-all duration-300 text-sm">
+                اقرأ المقال
             </a>
+            <span class="text-sm text-gray-500">{{ $post->published_at->format('Y/m/d') }}</span>
         </div>
     </div>
 </article>

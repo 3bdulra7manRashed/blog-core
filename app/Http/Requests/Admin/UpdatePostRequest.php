@@ -31,6 +31,7 @@ class UpdatePostRequest extends FormRequest
             'content' => ['required', 'string'],
             'featured_image' => ['nullable', 'image', 'max:3072'],
             'featured_image_alt' => ['nullable', 'string', 'max:255'],
+            'thumbnail_url' => ['nullable', 'url'],
             'is_draft' => ['boolean'],
             'published_at' => ['nullable', 'date'],
             'categories' => ['nullable', 'array'],
@@ -50,6 +51,7 @@ class UpdatePostRequest extends FormRequest
             'content.required' => 'محتوى المقال مطلوب',
             'featured_image.image' => 'يجب أن يكون الملف صورة',
             'featured_image.max' => 'حجم الصورة يجب أن لا يتجاوز 3 ميجابايت',
+            'thumbnail_url.url' => 'رابط الصورة يجب أن يكون رابطاً صالحاً',
             'categories.*.exists' => 'القسم المحدد غير موجود',
             'tags.*.exists' => 'الوسم المحدد غير موجود',
         ];

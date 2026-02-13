@@ -23,6 +23,7 @@ class Post extends Model implements Seoable
         'content',
         'featured_image_path',
         'featured_image_alt',
+        'thumbnail_url',
         'is_draft',
         'published_at',
         'likes_count',
@@ -94,31 +95,37 @@ class Post extends Model implements Seoable
 
     public function isPublished(): bool
     {
-        return ! $this->is_draft && ! is_null($this->published_at) && $this->published_at->isPast();
+        return !$this->is_draft && !is_null($this->published_at) && $this->published_at->isPast();
     }
 
     public function getFeaturedImageUrlAttribute(): ?string
     {
-        if (!$this->featured_image_path) {
-            return null;
+        // Priority 1: Uploaded file
+        if ($this->featured_image_path) {
+            // If it's already a full URL, force HTTPS and return
+            if (str_starts_with($this->featured_image_path, 'http')) {
+                // Force HTTPS for social sharing compatibility (WhatsApp, Facebook, etc.)
+                return str_replace('http://', 'https://', $this->featured_image_path);
+            }
+
+            // Get base URL from config (ensures HTTPS in production)
+            $baseUrl = config('app.url');
+
+            // Check if path already has 'storage/' prefix to avoid double storage/storage
+            if (str_starts_with($this->featured_image_path, 'storage/')) {
+                return $baseUrl . '/' . $this->featured_image_path;
+            }
+
+            // Otherwise, prepend storage path
+            return $baseUrl . '/storage/' . $this->featured_image_path;
         }
-        
-        // If it's already a full URL, force HTTPS and return
-        if (str_starts_with($this->featured_image_path, 'http')) {
-            // Force HTTPS for social sharing compatibility (WhatsApp, Facebook, etc.)
-            return str_replace('http://', 'https://', $this->featured_image_path);
+
+        // Priority 2: External thumbnail URL
+        if (!empty($this->thumbnail_url)) {
+            return $this->thumbnail_url;
         }
-        
-        // Get base URL from config (ensures HTTPS in production)
-        $baseUrl = config('app.url');
-        
-        // Check if path already has 'storage/' prefix to avoid double storage/storage
-        if (str_starts_with($this->featured_image_path, 'storage/')) {
-            return $baseUrl . '/' . $this->featured_image_path;
-        }
-        
-        // Otherwise, prepend storage path
-        return $baseUrl . '/storage/' . $this->featured_image_path;
+
+        return null;
     }
 
     /**
@@ -131,34 +138,34 @@ class Post extends Model implements Seoable
         if (!empty($this->attributes['excerpt'])) {
             return $this->attributes['excerpt'];
         }
-        
+
         // If no content, return empty string
         if (empty($this->attributes['content'])) {
             return '';
         }
-        
+
         $content = $this->attributes['content'];
-        
+
         // Try to extract first paragraph
         if (preg_match('/<p[^>]*>(.*?)<\/p>/is', $content, $matches)) {
             $firstParagraph = $matches[1];
-            
+
             // Strip ALL HTML tags to get plain text
             $cleaned = strip_tags($firstParagraph);
-            
+
             // Remove extra whitespace and decode HTML entities
             $cleaned = html_entity_decode($cleaned, ENT_QUOTES, 'UTF-8');
             $cleaned = preg_replace('/\s+/', ' ', trim($cleaned));
-            
+
             // Limit to 250 characters
             return Str::limit($cleaned, 250, '...');
         }
-        
+
         // Fallback: return first 30 words with all tags stripped
         $plainText = strip_tags($content);
         $plainText = html_entity_decode($plainText, ENT_QUOTES, 'UTF-8');
         $plainText = preg_replace('/\s+/', ' ', trim($plainText));
-        
+
         return Str::words($plainText, 30, '...');
     }
 

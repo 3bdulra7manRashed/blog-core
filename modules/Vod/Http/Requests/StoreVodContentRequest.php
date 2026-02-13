@@ -19,7 +19,8 @@ class StoreVodContentRequest extends FormRequest
             'type' => ['required', 'in:video,audio'],
             'embed_code' => ['required', 'string'],
             'description' => ['nullable', 'string'],
-            'thumbnail' => ['nullable', 'image', 'max:2048'], // 2MB max
+            'thumbnail' => ['nullable', 'image', 'max:3072'], // 3MB max
+            'thumbnail_url' => ['nullable', 'url'],
             'status' => ['required', 'in:draft,published,archived'],
             'published_at' => ['nullable', 'date'],
         ];
@@ -32,6 +33,8 @@ class StoreVodContentRequest extends FormRequest
             'type.required' => 'يرجى اختيار النوع',
             'embed_code.required' => 'يرجى إدخال كود التضمين أو الرابط',
             'status.required' => 'يرجى تحديد الحالة',
+            'thumbnail.max' => 'حجم الصورة يجب أن لا يتجاوز 3 ميجابايت',
+            'thumbnail_url.url' => 'رابط الصورة يجب أن يكون رابطاً صالحاً',
         ];
     }
 }

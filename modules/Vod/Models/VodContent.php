@@ -23,6 +23,7 @@ class VodContent extends Model implements Seoable
         'embed_code',
         'description',
         'thumbnail_path',
+        'thumbnail_url',
         'status',
         'published_at',
         'views_count',
@@ -52,7 +53,7 @@ class VodContent extends Model implements Seoable
     public function scopePublished($query)
     {
         return $query->where('status', 'published')
-                     ->where('published_at', '<=', now());
+            ->where('published_at', '<=', now());
     }
 
     public function scopeVideos($query)
@@ -74,7 +75,7 @@ class VodContent extends Model implements Seoable
 
     public function getStatusLabelAttribute()
     {
-        return match($this->status) {
+        return match ($this->status) {
             'published' => 'منشور',
             'draft' => 'مسودة',
             'archived' => 'مؤرشف',
@@ -108,9 +109,15 @@ class VodContent extends Model implements Seoable
     public function getSeoImage(): ?string
     {
         $siteDomain = config('branding.site_domain');
-        
+
+        // Priority 1: Uploaded thumbnail
         if (!empty($this->thumbnail_path)) {
             return $this->normalizeImageUrl($this->thumbnail_path, $siteDomain);
+        }
+
+        // Priority 2: External thumbnail URL
+        if (!empty($this->thumbnail_url)) {
+            return $this->thumbnail_url;
         }
 
         return $siteDomain . '/' . config('branding.default_og_image');

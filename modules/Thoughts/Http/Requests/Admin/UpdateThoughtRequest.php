@@ -22,7 +22,8 @@ class UpdateThoughtRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:3072',
+            'thumbnail_url' => ['nullable', 'url'],
             'sort_order' => 'nullable|integer',
             'is_featured' => 'nullable|boolean',
             'published_at' => 'nullable|date',
@@ -41,7 +42,8 @@ class UpdateThoughtRequest extends FormRequest
             'content.required' => 'محتوى الخاطرة مطلوب',
             'content.string' => 'محتوى الخاطرة يجب أن يكون نصاً',
             'image.image' => 'الملف يجب أن يكون صورة',
-            'image.max' => 'حجم الصورة يجب ألا يتجاوز 2 ميجابايت',
+            'image.max' => 'حجم الصورة يجب ألا يتجاوز 3 ميجابايت',
+            'thumbnail_url.url' => 'رابط الصورة يجب أن يكون رابطاً صالحاً',
             'sort_order.integer' => 'ترتيب العرض يجب أن يكون رقماً صحيحاً',
         ];
     }

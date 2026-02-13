@@ -99,8 +99,25 @@
                             لأفضل نتائج محركات البحث: اكتب وصفاً يعبر عن الصورة واربطه بموضوع الخطبة الرئيسي.
                         </p>
                     </div>
+
+                    <div>
+                        <label for="thumbnail_url" class="block text-xs font-medium text-gray-700 mb-1 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-brand-accent flex-shrink-0"></span>
+                            أو رابط صورة خارجية
+                        </label>
+                        <input type="url" name="thumbnail_url" id="thumbnail_url" value="{{ old('thumbnail_url', $post->thumbnail_url) }}" 
+                               class="w-full px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent"
+                               placeholder="https://example.com/image.jpg"
+                               dir="ltr">
+                        <p class="mt-1 text-xs text-gray-500">
+                            رابط صورة خارجية (يُستخدم إذا لم ترفع ملفًا)
+                        </p>
+                    </div>
                     
                     @error('featured_image')
+                        <p class="text-xs text-red-600">{{ $message }}</p>
+                    @enderror
+                    @error('thumbnail_url')
                         <p class="text-xs text-red-600">{{ $message }}</p>
                     @enderror
                 </div>

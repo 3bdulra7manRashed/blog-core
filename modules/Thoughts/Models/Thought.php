@@ -22,6 +22,7 @@ class Thought extends Model
         'title',
         'content',
         'image',
+        'thumbnail_url',
         'sort_order',
         'is_published',
         'published_at',
@@ -62,8 +63,8 @@ class Thought extends Model
      */
     public function isPublished(): bool
     {
-        return $this->is_published 
-            && $this->published_at 
+        return $this->is_published
+            && $this->published_at
             && $this->published_at->isPast();
     }
 
@@ -72,14 +73,19 @@ class Thought extends Model
      */
     public function getImageUrlAttribute(): ?string
     {
-        if (!$this->image) {
-            return null;
+        // Priority 1: Uploaded file
+        if ($this->image) {
+            if (str_starts_with($this->image, 'http')) {
+                return $this->image;
+            }
+            return asset('storage/' . $this->image);
         }
 
-        if (str_starts_with($this->image, 'http')) {
-            return $this->image;
+        // Priority 2: External thumbnail URL
+        if (!empty($this->thumbnail_url)) {
+            return $this->thumbnail_url;
         }
 
-        return asset('storage/' . $this->image);
+        return null;
     }
 }
