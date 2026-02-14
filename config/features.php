@@ -19,14 +19,14 @@ return [
     'media_pages' => true,
     'media' => true, // Core File Library
     'vod' => [
-        'enabled' => true,
         'video' => true,
         'audio' => true,
         'playlists' => true,
     ],
-    'advanced_seo' => true,
-    'books' => true,
-    'khutab' => true,
-    'landing' => true,
-    'thoughts' => true,
+    'advanced_seo' => false,
+    'books' => false,
+    'khutab' => false,
+    'landing' => false,
+    'thoughts' => false,
+
 ];

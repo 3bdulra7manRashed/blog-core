@@ -11,8 +11,8 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        commands: __DIR__.'/../routes/console.php',
+        web: __DIR__ . '/../routes/web.php',
+        commands: __DIR__ . '/../routes/console.php',
         health: '/up',
         then: function () {
             // Load module routes with override capability
@@ -32,13 +32,15 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission' => RoleOrPermissionMiddleware::class,
             'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
             'superadmin' => \App\Http\Middleware\EnsureUserIsSuperAdmin::class,
+            'vod.feature' => \App\Http\Middleware\EnsureVodFeatureEnabled::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         // Theme-aware error page rendering
         // Resolution order:
-        // 1. resources/themes/{active_theme}/views/errors/{status}.blade.php
-        // 2. resources/views/errors/{status}.blade.php (Laravel default fallback)
+        // 1. Admin routes (/admin/*): resources/themes/admin/classic/views/errors/{status}.blade.php
+        // 2. Public routes: resources/themes/{active_theme}/views/errors/{status}.blade.php
+        // 3. Laravel default fallback: resources/views/errors/{status}.blade.php
         $exceptions->respond(function ($response, Throwable $e, Request $request) {
             // Only handle HTTP exceptions (404, 403, 419, 500, etc.)
             if (!($e instanceof HttpExceptionInterface)) {
@@ -46,22 +48,35 @@ return Application::configure(basePath: dirname(__DIR__))
             }
 
             $status = $e->getStatusCode();
-            
+
+            // ADMIN ROUTES: Use admin theme error pages
+            if ($request->is('admin/*')) {
+                $adminErrorView = "theme::errors.{$status}";
+
+                // Check if admin error view exists
+                if (view()->exists($adminErrorView)) {
+                    return response()->view($adminErrorView, [
+                        'exception' => $e,
+                    ], $status);
+                }
+            }
+
+            // PUBLIC ROUTES: Use public theme error pages
             // Get active theme from config
             $theme = config('theme.active', 'classic');
             $themeDirectory = config('theme.directory', 'themes');
-            
+
             // Build themed error view path
             $themedView = "errors.{$status}";
             $themedViewPath = resource_path("{$themeDirectory}/{$theme}/views/errors/{$status}.blade.php");
-            
+
             // If themed error view exists, render it
             if (file_exists($themedViewPath)) {
                 return response()->view($themedView, [
                     'exception' => $e,
                 ], $status);
             }
-            
+
             // Otherwise, let Laravel handle with default error views
             return $response;
         });

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,7 +11,8 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
@@ -26,7 +28,8 @@
             box-sizing: border-box;
         }
 
-        html, body {
+        html,
+        body {
             height: 100%;
         }
 
@@ -125,9 +128,12 @@
         }
 
         @keyframes pulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 box-shadow: 0 10px 40px rgba(195, 124, 84, 0.25);
             }
+
             50% {
                 box-shadow: 0 15px 50px rgba(195, 124, 84, 0.35);
             }
@@ -154,9 +160,12 @@
         }
 
         @keyframes float {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateY(0px);
             }
+
             50% {
                 transform: translateY(-8px);
             }
@@ -343,6 +352,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -353,20 +363,40 @@
             animation: slideUp 0.5s ease-out forwards;
         }
 
-        .delay-1 { animation-delay: 0.05s; opacity: 0; }
-        .delay-2 { animation-delay: 0.1s; opacity: 0; }
-        .delay-3 { animation-delay: 0.15s; opacity: 0; }
-        .delay-4 { animation-delay: 0.2s; opacity: 0; }
-        .delay-5 { animation-delay: 0.25s; opacity: 0; }
+        .delay-1 {
+            animation-delay: 0.05s;
+            opacity: 0;
+        }
+
+        .delay-2 {
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+
+        .delay-3 {
+            animation-delay: 0.15s;
+            opacity: 0;
+        }
+
+        .delay-4 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .delay-5 {
+            animation-delay: 0.25s;
+            opacity: 0;
+        }
 
         /* Safe area for notched devices */
-        @supports (padding: env(safe-area-inset-bottom)) {
+        @supports (padding: env(safe - area - inset - bottom)) {
             .page-wrapper {
                 padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
             }
         }
     </style>
 </head>
+
 <body>
     <!-- Decorative Background -->
     <div class="bg-decoration bg-decoration-1"></div>
@@ -407,13 +437,15 @@
             <div class="buttons-container animate-in delay-4 ">
                 <a href="{{ url('/') }}" class="btn btn-primary">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
                     <span>العودة للرئيسية</span>
                 </a>
                 <button onclick="history.back()" class="btn btn-secondary">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                     <span>الرجوع للخلف</span>
                 </button>
@@ -426,7 +458,7 @@
                     <a href="{{ url('/') }}">الصفحة الرئيسية</a>
                     <a href="{{ route('search') }}">البحث</a>
                     @if(feature('contact') && Route::has('contact'))
-                    <a href="{{ route('contact') }}">تواصل معي</a>
+                        <a href="{{ route('contact') }}">تواصل معي</a>
                     @endif
                     <a href="{{ route('about') }}">عني</a>
                 </div>
@@ -434,4 +466,5 @@
         </div>
     </div>
 </body>
+
 </html>

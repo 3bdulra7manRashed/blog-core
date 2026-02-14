@@ -1,6 +1,6 @@
 <?php
 
-if (! function_exists('setting')) {
+if (!function_exists('setting')) {
     /**
      * Get a setting value from the database.
      *
@@ -15,5 +15,17 @@ if (! function_exists('setting')) {
             $value = \Illuminate\Support\Facades\DB::table('settings')->where('key', $key)->value('value');
             return $value ?? $default;
         });
+    }
+}
+
+if (!function_exists('vod_enabled')) {
+    /**
+     * Check if VOD module is enabled (any sub-feature active)
+     *
+     * @return bool
+     */
+    function vod_enabled(): bool
+    {
+        return \App\Support\Feature::vodEnabled();
     }
 }

@@ -70,23 +70,54 @@
             <div class="w-full lg:w-1/3 space-y-6">
 
                 <!-- Type Box -->
+                @php
+                    $videoEnabled = (bool) config('features.vod.video');
+                    $audioEnabled = (bool) config('features.vod.audio');
+                @endphp
+
+                @if($videoEnabled || $audioEnabled)
                 <div class="bg-white p-4 rounded shadow">
                     <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">النوع</h3>
-                    <div class="space-y-2">
-                        <label
-                            class="flex items-center space-x-2 space-x-reverse cursor-pointer hover:bg-gray-50 p-1 rounded">
-                            <input type="radio" name="type" value="video" checked
-                                class="text-brand-accent h-4 w-4 focus:ring-brand-accent">
-                            <span class="text-sm text-gray-700 select-none">فيديو (Video)</span>
-                        </label>
-                        <label
-                            class="flex items-center space-x-2 space-x-reverse cursor-pointer hover:bg-gray-50 p-1 rounded">
-                            <input type="radio" name="type" value="audio"
-                                class="text-brand-accent h-4 w-4 focus:ring-brand-accent">
-                            <span class="text-sm text-gray-700 select-none">صوت (Audio)</span>
-                        </label>
-                    </div>
+
+                    {{-- Only Video Enabled --}}
+                    @if($videoEnabled && !$audioEnabled)
+                        <input type="hidden" name="type" value="video">
+                        <div class="text-sm text-gray-600 px-4 py-2 bg-gray-50 rounded-md border border-gray-200">
+                            فيديو (Video)
+                        </div>
+                    @endif
+
+                    {{-- Only Audio Enabled --}}
+                    @if($audioEnabled && !$videoEnabled)
+                        <input type="hidden" name="type" value="audio">
+                        <div class="text-sm text-gray-600 px-4 py-2 bg-gray-50 rounded-md border border-gray-200">
+                            صوت (Audio)
+                        </div>
+                    @endif
+
+                    {{-- Both Enabled --}}
+                    @if($videoEnabled && $audioEnabled)
+                        <div class="space-y-2">
+                            <label class="flex items-center space-x-2 space-x-reverse cursor-pointer hover:bg-gray-50 p-1 rounded">
+                                <input type="radio" name="type" value="video"
+                                    {{ old('type', 'video') === 'video' ? 'checked' : '' }}
+                                    class="text-brand-accent h-4 w-4 focus:ring-brand-accent">
+                                <span class="text-sm text-gray-700 select-none">فيديو (Video)</span>
+                            </label>
+                            <label class="flex items-center space-x-2 space-x-reverse cursor-pointer hover:bg-gray-50 p-1 rounded">
+                                <input type="radio" name="type" value="audio"
+                                    {{ old('type') === 'audio' ? 'checked' : '' }}
+                                    class="text-brand-accent h-4 w-4 focus:ring-brand-accent">
+                                <span class="text-sm text-gray-700 select-none">صوت (Audio)</span>
+                            </label>
+                        </div>
+                    @endif
+
+                    @error('type')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
+                @endif
 
                 <!-- Thumbnail Box -->
                 @include('theme::partials.thumbnail-field', [

@@ -11,16 +11,18 @@
                 والسلاسل</p>
 
             {{-- Tabs --}}
-            <div class="inline-flex rounded-lg bg-gray-100 p-1">
-                <a href="{{ $type === 'video' ? route('videos.index') : route('audios.index') }}"
-                    class="rounded-md px-6 py-2 text-sm font-bold transition-all {{ $currentTab !== 'playlists' ? 'bg-brand-accent text-brand-secondary shadow-sm' : 'text-gray-500 hover:text-gray-700' }}">
-                    {{ $type === 'video' ? 'كل الفيديوهات' : 'كل الصوتيات' }}
-                </a>
-                <a href="{{ ($type === 'video' ? route('videos.index') : route('audios.index')) . '?tab=playlists' }}"
-                    class="rounded-md px-6 py-2 text-sm font-bold transition-all {{ $currentTab === 'playlists' ? 'bg-brand-accent text-brand-secondary shadow-sm' : 'text-gray-500 hover:text-gray-700' }}">
-                    {{ $type === 'video' ? 'سلاسل الفيديو' : 'الألبومات الصوتية' }}
-                </a>
-            </div>
+            @if(config('features.vod.playlists'))
+                <div class="inline-flex rounded-lg bg-gray-100 p-1">
+                    <a href="{{ $type === 'video' ? route('videos.index') : route('audios.index') }}"
+                        class="rounded-md px-6 py-2 text-sm font-bold transition-all {{ $currentTab !== 'playlists' ? 'bg-brand-accent text-brand-secondary shadow-sm' : 'text-gray-500 hover:text-gray-700' }}">
+                        {{ $type === 'video' ? 'كل الفيديوهات' : 'كل الصوتيات' }}
+                    </a>
+                    <a href="{{ ($type === 'video' ? route('videos.index') : route('audios.index')) . '?tab=playlists' }}"
+                        class="rounded-md px-6 py-2 text-sm font-bold transition-all {{ $currentTab === 'playlists' ? 'bg-brand-accent text-brand-secondary shadow-sm' : 'text-gray-500 hover:text-gray-700' }}">
+                        {{ $type === 'video' ? 'سلاسل الفيديو' : 'الألبومات الصوتية' }}
+                    </a>
+                </div>
+            @endif
         </div>
 
         {{-- Content Grid --}}

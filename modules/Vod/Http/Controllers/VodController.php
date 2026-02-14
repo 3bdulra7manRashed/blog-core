@@ -14,6 +14,11 @@ class VodController extends Controller
     {
         $tab = $request->get('tab', 'videos');
 
+        // Prevent accessing playlists if feature disabled
+        if ($tab === 'playlists' && !config('features.vod.playlists')) {
+            abort(404);
+        }
+
         if ($tab === 'playlists') {
             $contents = VodPlaylist::where('type', 'video')
                 ->withCount('items')
@@ -39,6 +44,11 @@ class VodController extends Controller
     public function indexAudios(Request $request)
     {
         $tab = $request->get('tab', 'audios');
+
+        // Prevent accessing playlists if feature disabled
+        if ($tab === 'playlists' && !config('features.vod.playlists')) {
+            abort(404);
+        }
 
         if ($tab === 'playlists') {
             $contents = VodPlaylist::where('type', 'audio')
@@ -88,12 +98,14 @@ class VodController extends Controller
     {
         $playlist = VodPlaylist::where('slug', $slug)->firstOrFail();
 
-        $playlist->load(['items' => function ($query) {
-            $query->where('status', 'published');
-        }]);
+        $playlist->load([
+            'items' => function ($query) {
+                $query->where('status', 'published');
+            }
+        ]);
 
         // Explicitly set type based on playlist type used for breadcrumbs/layout
-        $type = $playlist->type; 
+        $type = $playlist->type;
 
         return view('vod::front.playlists.show', compact('playlist', 'type'));
     }

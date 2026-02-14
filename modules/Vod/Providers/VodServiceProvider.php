@@ -14,7 +14,8 @@ class VodServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        if (!config('features.vod.enabled')) {
+        // Load routes/views/migrations only if any VOD sub-feature is enabled
+        if (!vod_enabled()) {
             return;
         }
 

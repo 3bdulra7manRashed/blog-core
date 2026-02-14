@@ -13,6 +13,11 @@ class VodContentController extends Controller
 {
     public function index(Request $request)
     {
+        // Extra Protection: Ensure at least one content type is enabled
+        if (!config('features.vod.video') && !config('features.vod.audio')) {
+            abort(404);
+        }
+
         $query = VodContent::query()->latest();
 
         if ($request->filled('type')) {
@@ -41,7 +46,7 @@ class VodContentController extends Controller
     public function store(StoreVodContentRequest $request)
     {
         $data = $request->validated();
-        
+
         // Handle Thumbnail
         if ($request->hasFile('thumbnail')) {
             $data['thumbnail_path'] = $request->file('thumbnail')->store('vod/thumbnails', 'public');
@@ -88,7 +93,7 @@ class VodContentController extends Controller
         // Let's Keep Slug stable for now to avoid broken links unless we really want to change it.
         // OR: $data['slug'] = Str::slug($data['title']) ...
         // I will keep slug unchanged in this iteration to be safe.
-        unset($data['slug']); 
+        unset($data['slug']);
 
         $content->update($data);
 

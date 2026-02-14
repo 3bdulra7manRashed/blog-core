@@ -14,11 +14,14 @@ use Modules\Vod\Http\Controllers\Admin\VodContentController;
 */
 
 Route::prefix('vod')->name('vod.')->group(function () {
-    
-    // Manage Vod Contents (Video/Audio)
-    Route::resource('contents', VodContentController::class);
 
-    // Playlists
-    Route::resource('playlists', \Modules\Vod\Http\Controllers\Admin\VodPlaylistController::class);
+    // Manage Vod Contents (Video/Audio)
+    // Manage Vod Contents (Video/Audio) - Require at least one enabled
+    Route::resource('contents', VodContentController::class)
+        ->middleware('vod.feature:video,audio');
+
+    // Playlists (Protected by feature flag)
+    Route::resource('playlists', \Modules\Vod\Http\Controllers\Admin\VodPlaylistController::class)
+        ->middleware('vod.feature:playlists');
 
 });
