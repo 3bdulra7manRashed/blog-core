@@ -28,8 +28,11 @@ class VodServiceProvider extends ServiceProvider
             ->name('admin.')
             ->group(__DIR__ . '/../routes/admin.php');
 
-        // Load Views
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'vod');
+        // Load Views (Theme aware with fallback)
+        $this->loadViewsFrom([
+            resource_path('themes/' . config('theme.active', 'classic') . '/views'),
+            __DIR__ . '/../resources/views',
+        ], '');
 
         // Load Migrations
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');

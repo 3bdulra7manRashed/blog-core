@@ -33,7 +33,7 @@ class VodController extends Controller
                 ->paginate(12);
         }
 
-        return view('vod::front.index', [
+        return view('vod.front.index', [
             'contents' => $contents,
             'title' => 'مكتبة الفيديو',
             'type' => 'video',
@@ -64,7 +64,7 @@ class VodController extends Controller
                 ->paginate(12);
         }
 
-        return view('vod::front.index', [
+        return view('vod.front.index', [
             'contents' => $contents,
             'title' => 'مكتبة الصوتيات',
             'type' => 'audio',
@@ -91,7 +91,7 @@ class VodController extends Controller
         // Set SEO data via SeoManager (generates OpenGraph, Twitter, VideoObject/AudioObject JSON-LD)
         $seoManager->forModel($content);
 
-        return view('vod::front.show', compact('content'));
+        return view('vod.front.show', compact('content'));
     }
 
     public function showPlaylist($slug)
@@ -107,6 +107,6 @@ class VodController extends Controller
         // Explicitly set type based on playlist type used for breadcrumbs/layout
         $type = $playlist->type;
 
-        return view('vod::front.playlists.show', compact('playlist', 'type'));
+        return view('vod.front.playlists.show', compact('playlist', 'type'));
     }
 }
