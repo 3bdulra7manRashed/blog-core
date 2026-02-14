@@ -24,7 +24,7 @@ return [
     | Themes are located in: resources/themes/{active}/
     |
     */
-    'active' => env('THEME_ACTIVE', 'classic'),
+    'active' => env('ACTIVE_THEME', 'classic'),
     'admin_active' => env('THEME_ADMIN_ACTIVE', 'classic'),
 
     /*

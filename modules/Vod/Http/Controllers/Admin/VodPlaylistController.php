@@ -18,7 +18,7 @@ class VodPlaylistController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('vod::admin.playlists.index', compact('playlists'));
+        return view('admin.vod.playlists.index', compact('playlists'));
     }
 
     /**
@@ -28,7 +28,7 @@ class VodPlaylistController extends Controller
     {
         // Fetch published contents for selection
         $contents = VodContent::where('status', 'published')->latest()->get();
-        return view('vod::admin.playlists.create', compact('contents'));
+        return view('admin.vod.playlists.create', compact('contents'));
     }
 
     /**
@@ -68,7 +68,7 @@ class VodPlaylistController extends Controller
     {
         $contents = VodContent::where('status', 'published')->latest()->get();
         $playlist->load('items');
-        return view('vod::admin.playlists.edit', compact('playlist', 'contents'));
+        return view('admin.vod.playlists.edit', compact('playlist', 'contents'));
     }
 
     /**

@@ -29,3 +29,15 @@ if (!function_exists('vod_enabled')) {
         return \App\Support\Feature::vodEnabled();
     }
 }
+
+if (!function_exists('active_theme')) {
+    /**
+     * Get the currently active theme name.
+     *
+     * @return string
+     */
+    function active_theme(): string
+    {
+        return config('theme.active', 'classic');
+    }
+}

@@ -30,7 +30,7 @@ class VodServiceProvider extends ServiceProvider
 
         // Load Views (Theme aware with fallback)
         $this->loadViewsFrom([
-            resource_path('themes/' . config('theme.active', 'classic') . '/views'),
+            resource_path('themes/' . active_theme() . '/views'),
             __DIR__ . '/../resources/views',
         ], '');
 

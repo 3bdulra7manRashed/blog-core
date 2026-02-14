@@ -35,12 +35,12 @@ class VodContentController extends Controller
 
         $contents = $query->paginate(20)->withQueryString();
 
-        return view('vod::admin.contents.index', compact('contents'));
+        return view('admin.vod.contents.index', compact('contents'));
     }
 
     public function create()
     {
-        return view('vod::admin.contents.create');
+        return view('admin.vod.contents.create');
     }
 
     public function store(StoreVodContentRequest $request)
@@ -70,7 +70,7 @@ class VodContentController extends Controller
 
     public function edit(VodContent $content)
     {
-        return view('vod::admin.contents.edit', compact('content'));
+        return view('admin.vod.contents.edit', compact('content'));
     }
 
     public function update(StoreVodContentRequest $request, VodContent $content)
