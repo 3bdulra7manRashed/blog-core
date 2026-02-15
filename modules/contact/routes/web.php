@@ -13,7 +13,7 @@ use Modules\Contact\Http\Controllers\ContactController;
 |
 */
 
-Route::middleware('web')->group(function () {
+Route::middleware(['web', 'feature:contact'])->group(function () {
     Route::get('/contact', [ContactController::class, 'show'])->name('contact');
     Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 });
@@ -26,7 +26,7 @@ Route::middleware('web')->group(function () {
 
 use Modules\Contact\Http\Controllers\Admin\MessageController;
 
-Route::prefix('admin')->middleware(['web', 'auth', 'role:admin|moderator'])->name('admin.')->group(function () {
+Route::prefix('admin')->middleware(['web', 'auth', 'role:admin|moderator', 'feature:contact'])->name('admin.')->group(function () {
     Route::get('messages', [MessageController::class, 'index'])->name('messages.index');
     Route::get('messages/{message}', [MessageController::class, 'show'])->name('messages.show');
     Route::delete('messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');

@@ -31,8 +31,8 @@ class MessageController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhere('message', 'like', "%{$search}%");
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('message', 'like', "%{$search}%");
             });
         }
 
@@ -40,7 +40,7 @@ class MessageController extends Controller
         $unreadCount = ContactMessage::unreadCount();
         $totalCount = ContactMessage::count();
 
-        return view('admin.messages.index', compact('messages', 'unreadCount', 'totalCount'));
+        return view('admin.contact.messages.index', compact('messages', 'unreadCount', 'totalCount'));
     }
 
     /**
@@ -53,7 +53,7 @@ class MessageController extends Controller
             $message->markAsRead();
         }
 
-        return view('admin.messages.show', compact('message'));
+        return view('admin.contact.messages.show', compact('message'));
     }
 
     /**

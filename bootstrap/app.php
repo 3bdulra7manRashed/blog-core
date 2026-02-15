@@ -32,6 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission' => RoleOrPermissionMiddleware::class,
             'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
             'superadmin' => \App\Http\Middleware\EnsureUserIsSuperAdmin::class,
+            'feature' => \App\Http\Middleware\EnsureFeatureEnabled::class,
             'vod.feature' => \App\Http\Middleware\EnsureVodFeatureEnabled::class,
         ]);
     })

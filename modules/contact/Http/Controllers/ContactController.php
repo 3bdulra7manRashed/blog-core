@@ -29,7 +29,7 @@ class ContactController extends Controller
             ->orderBy('order_column')
             ->get();
 
-        return view('contact::contact', compact('recentPosts', 'categories'));
+        return view('contact.front.index', compact('recentPosts', 'categories'));
     }
 
     /**

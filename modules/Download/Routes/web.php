@@ -11,13 +11,13 @@ use Modules\Download\Http\Controllers\PublicDownloadController;
 */
 
 // Public Routes
-Route::middleware(['web'])->group(function () {
+Route::middleware(['web', 'feature:download'])->group(function () {
     Route::get('d/{slug}', [PublicDownloadController::class, 'download'])->name('downloads.public');
 });
 
 // Admin Routes
 Route::prefix('admin')
-    ->middleware(['web', 'auth', 'role:admin|moderator']) // Add web middleware to ensure session works
+    ->middleware(['web', 'auth', 'role:admin|moderator', 'feature:download']) // Add web middleware to ensure session works
     ->name('admin.')
     ->group(function () {
         Route::resource('downloads', DownloadController::class)->only(['index', 'store', 'destroy']);

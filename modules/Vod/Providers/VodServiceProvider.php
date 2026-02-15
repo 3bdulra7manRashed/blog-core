@@ -28,11 +28,9 @@ class VodServiceProvider extends ServiceProvider
             ->name('admin.')
             ->group(__DIR__ . '/../routes/admin.php');
 
-        // Load Views (Theme aware with fallback)
-        $this->loadViewsFrom([
-            resource_path('themes/' . active_theme() . '/views'),
-            __DIR__ . '/../resources/views',
-        ], '');
+        // Register Module Views path (Appends to global view paths)
+        // ThemeServiceProvider handles theme overrides via prependLocation()
+        $this->app['view']->addLocation(__DIR__ . '/../resources/views');
 
         // Load Migrations
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');

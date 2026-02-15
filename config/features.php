@@ -23,10 +23,10 @@ return [
         'audio' => true,
         'playlists' => true,
     ],
-    'advanced_seo' => false,
-    'books' => false,
-    'khutab' => false,
-    'landing' => false,
-    'thoughts' => false,
+    'advanced_seo' => true,
+    'books' => true,
+    'khutab' => true,
+    'landing' => true,
+    'thoughts' => true,
 
 ];

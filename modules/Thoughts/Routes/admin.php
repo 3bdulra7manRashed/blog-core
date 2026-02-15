@@ -16,7 +16,7 @@ use Modules\Thoughts\Http\Controllers\Admin\ThoughtController;
 if (feature('thoughts')) {
     Route::prefix('admin/thoughts')
         ->name('admin.thoughts.')
-        ->middleware(['web', 'auth', 'admin'])
+        ->middleware(['web', 'auth', 'admin', 'feature:thoughts'])
         ->group(function () {
             Route::get('/', [ThoughtController::class, 'index'])->name('index');
             Route::get('/create', [ThoughtController::class, 'create'])->name('create');

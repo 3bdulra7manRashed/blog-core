@@ -31,11 +31,8 @@ class ContactServiceProvider extends ServiceProvider
         // 2. Load Migrations
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-        // 3. Load Views
-        // Register 'contact' namespace for views (e.g. view('contact::contact'))
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'contact');
-        
-        // Add path to global view paths for admin views
-        View::addLocation(__DIR__ . '/../resources/views');
+        // 3. Register Module Views (Appends to global view paths)
+        // ThemeServiceProvider handles theme overrides via prependLocation()
+        $this->app['view']->addLocation(__DIR__ . '/../resources/views');
     }
 }

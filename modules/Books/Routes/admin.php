@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 if (feature('books')) {
     Route::prefix('admin/books')
         ->name('admin.books.')
-        ->middleware(['web', 'auth', 'admin'])
+        ->middleware(['web', 'auth', 'admin', 'feature:books'])
         ->group(function () {
             Route::get('/', [\Modules\Books\Http\Controllers\Admin\BookController::class, 'index'])->name('index');
             Route::get('/create', [\Modules\Books\Http\Controllers\Admin\BookController::class, 'create'])->name('create');

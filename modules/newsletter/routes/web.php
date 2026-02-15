@@ -12,7 +12,7 @@ use Modules\Newsletter\Http\Controllers\Admin\SubscriberController;
 */
 
 // Public Routes
-Route::middleware('web')->group(function() {
+Route::middleware(['web', 'feature:newsletter'])->group(function () {
     Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
     Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
         ->middleware('throttle:5,1')
@@ -20,7 +20,7 @@ Route::middleware('web')->group(function() {
 });
 
 // Admin Routes
-Route::middleware(['web', 'auth', 'role:admin|moderator'])
+Route::middleware(['web', 'auth', 'role:admin|moderator', 'feature:newsletter'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
