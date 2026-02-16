@@ -15,19 +15,19 @@ class MediaFactory extends Factory
 
     public function definition(): array
     {
-        $filename = fake()->lexify('writer-media-????') . '.jpg';
+        $filename = $this->faker->lexify('writer-media-????') . '.jpg';
 
         return [
             'user_id' => User::factory(),
             'filename' => $filename,
             'disk' => 'public',
             'path' => "media/{$filename}",
-            'size' => fake()->numberBetween(120_000, 1_200_000),
+            'size' => $this->faker->numberBetween(120_000, 1_200_000),
             'mime_type' => 'image/jpeg',
-            'caption' => fake()->sentence(6),
-            'alt_text' => fake()->sentence(4),
+            'caption' => $this->faker->sentence(6),
+            'alt_text' => $this->faker->sentence(4),
             'meta' => [
-                'original_url' => fake()->imageUrl(),
+                'original_url' => $this->faker->imageUrl(),
             ],
         ];
     }
