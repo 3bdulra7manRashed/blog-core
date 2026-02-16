@@ -14,7 +14,7 @@
 
         <!-- Hero Section -->
         <div class="text-center mb-16">
-            <h1 class="text-3xl font-serif font-bold text-brand-accent mb-4">عن {{ $admin->name }}</h1>
+            <h1 class="text-3xl font-serif font-bold text-brand-accent mb-4">عني</h1>
         </div>
 
         <!-- Centered Single Column Layout -->
