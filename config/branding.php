@@ -19,7 +19,8 @@ return [
     | The main name of the website displayed in the header, footer, and meta tags.
     |
     */
-    'site_name' => env('BRANDING_SITE_NAME', 'My Blog'),
+    'site_name' => env('BRANDING_SITE_NAME', env('APP_NAME', 'My Blog')),
+
 
     /*
     |--------------------------------------------------------------------------
