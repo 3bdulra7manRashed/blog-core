@@ -16,30 +16,30 @@ class PostFactory extends Factory
 
     public function definition(): array
     {
-        $title = $this->faker->sentence(6);
+        $title = fake()->sentence(6);
 
         return [
             'user_id' => User::factory(),
             'title' => $title,
-            'slug' => Str::slug($title) . '-' . $this->faker->unique()->numberBetween(1000, 9999),
-            'excerpt' => $this->faker->paragraph(),
-            'content' => collect($this->faker->paragraphs(mt_rand(4, 8)))
+            'slug' => Str::slug($title) . '-' . fake()->unique()->numberBetween(1000, 9999),
+            'excerpt' => fake()->paragraph(),
+            'content' => collect(fake()->paragraphs(mt_rand(4, 8)))
                 ->map(fn($paragraph) => "<p>{$paragraph}</p>")
                 ->implode("\n"),
-            'featured_image_path' => 'https://picsum.photos/1200/630?random=' . $this->faker->numberBetween(1, 1000),
-            'featured_image_alt' => $this->faker->sentence(6),
-            'is_draft' => $this->faker->boolean(30),
-            'published_at' => $this->faker->dateTimeBetween('-2 months', '+1 month'),
+            'featured_image_path' => 'https://picsum.photos/1200/630?random=' . fake()->numberBetween(1, 1000),
+            'featured_image_alt' => fake()->sentence(6),
+            'is_draft' => fake()->boolean(30),
+            'published_at' => fake()->dateTimeBetween('-2 months', '+1 month'),
             'meta' => [
                 'title' => $title,
-                'description' => $this->faker->sentence(12),
+                'description' => fake()->sentence(12),
             ],
         ];
     }
 
     public function drafted(): self
     {
-        return $this->state(fn () => [
+        return $this->state(fn() => [
             'is_draft' => true,
             'published_at' => null,
         ]);
@@ -47,10 +47,9 @@ class PostFactory extends Factory
 
     public function published(): self
     {
-        return $this->state(fn () => [
+        return $this->state(fn() => [
             'is_draft' => false,
             'published_at' => now(),
         ]);
     }
 }
-

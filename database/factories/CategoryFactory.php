@@ -15,14 +15,13 @@ class CategoryFactory extends Factory
 
     public function definition(): array
     {
-        $name = $this->faker->unique()->words(2, true);
+        $name = fake()->unique()->words(2, true);
 
         return [
             'name' => Str::title($name),
             'slug' => Str::slug($name),
-            'description' => $this->faker->optional()->paragraph(),
-            'order_column' => $this->faker->numberBetween(0, 10),
+            'description' => fake()->optional()->paragraph(),
+            'order_column' => fake()->numberBetween(0, 10),
         ];
     }
 }
-

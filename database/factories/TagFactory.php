@@ -15,7 +15,7 @@ class TagFactory extends Factory
 
     public function definition(): array
     {
-        $name = $this->faker->unique()->word();
+        $name = fake()->unique()->word();
 
         return [
             'name' => Str::title($name),
@@ -23,4 +23,3 @@ class TagFactory extends Factory
         ];
     }
 }
-
