@@ -10,42 +10,58 @@
 @section('og_type', 'profile')
 
 @section('content')
-    <div class="container mx-auto px-4 py-12" dir="rtl">
+    <div class="bg-white min-h-screen py-16 md:py-24" dir="rtl">
+        <div class="container mx-auto px-4 md:px-6 lg:px-8 max-w-6xl">
+            <!-- 2-Column Grid Layout: Right (Image) | Left (Text) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+                
+                <!-- 1st Column (Right): Profile Image Card -->
+                <div class="w-full max-w-md mx-auto lg:mx-0 lg:max-w-none">
+                    @if($admin->profile_photo_path)
+                        <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-gray-200 bg-white group">
+                            <!-- Portrait Aspect Ratio 4:5 -->
+                            <div class="aspect-[4/5] w-full relative overflow-hidden">
+                                <img src="{{ $admin->profile_photo_url }}" 
+                                     alt="{{ $admin->name }}" 
+                                     class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105">
+                                
+                                <!-- Subtle Gradient Overlay for Depth -->
+                                <div class="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-black/10 to-transparent opacity-60"></div>
+                            </div>
+                        </div>
+                    @else
+                        <!-- Fallback / Placeholder -->
+                        <div class="aspect-[4/5] w-full rounded-2xl bg-white border border-gray-100 shadow-xl flex items-center justify-center">
+                            <span class="text-gray-300">
+                                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+                            </span>
+                        </div>
+                    @endif
+                </div>
 
-        <!-- Hero Section -->
-        <div class="text-center mb-16">
-            <h1 class="text-3xl font-serif font-bold text-brand-accent mb-4">عني</h1>
-        </div>
+                <!-- 2nd Column (Left): Text Content -->
+                <div class="flex flex-col justify-center lg:py-6">
+                    <!-- Heading -->
+                    <h1 class="text-4xl md:text-5xl font-bold text-brand-accent mb-8 font-serif tracking-tight leading-tight text-center lg:text-start">
+                        عني
+                    </h1>
 
-        <!-- Centered Single Column Layout -->
-        <div class="max-w-4xl mx-auto">
-
-            @if($admin->profile_photo_path)
-                <!-- Profile Photo Section -->
-                <div class="mb-12">
-                    <div class="relative w-full aspect-video rounded-3xl overflow-hidden shadow-xl group">
-                        <img src="{{ $admin->profile_photo_url }}" alt="{{ $admin->name }}"
-                            class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105">
-                        <!-- Gradient Overlay -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent"></div>
+                    <!-- Dynamic Bio Content -->
+                    <div class="ckeditor-content text-gray-600 leading-relaxed text-lg">
+                        @if(!empty($admin->biography))
+                            {!! $admin->biography !!}
+                        @else
+                            <div class="p-8 bg-white/50 backdrop-blur rounded-xl border border-dashed border-gray-300 text-center text-gray-400 italic">
+                                لم يتم كتابة نبذة تعريفية بعد
+                            </div>
+                        @endif
                     </div>
                 </div>
-            @endif
 
-            <!-- Biography Content -->
-            <div class="ckeditor-content prose prose-lg max-w-none prose-headings:text-brand-accent prose-li:marker:text-brand-accent text-right"
-                dir="rtl">
-                @if(!empty($admin->biography))
-                    {!! $admin->biography !!}
-                @else
-                    <p class="text-gray-400 text-lg text-center py-12">
-                        لم يتم كتابة نبذة تعريفية بعد
-                    </p>
-                @endif
             </div>
-
         </div>
-
     </div>
 @endsection
 
