@@ -31,12 +31,12 @@ class DownloadServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../Routes/web.php');
 
         // 2. Load Migrations
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
         // 3. Load Views
         // Register 'download' namespace for views (e.g. view('download::admin.downloads.index'))
         $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'download');
-        
+
         // Add path to global view paths (optional, but good for overrides)
         // View::addLocation(__DIR__ . '/../Resources/views');
     }

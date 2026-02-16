@@ -19,7 +19,7 @@ class LandingServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
         // Note: Public web routes are loaded via bootstrap/app.php's 'then' callback
         // to enable proper route overriding when feature('landing') is enabled.
