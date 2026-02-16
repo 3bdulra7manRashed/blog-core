@@ -11,7 +11,31 @@
         </a>
     </div>
 
-    <form action="{{ route('admin.vod.contents.store') }}" method="POST" enctype="multipart/form-data" id="vod-form">
+    @if ($errors->any())
+        <div class="mb-6 bg-red-50 border-r-4 border-red-500 p-4 rounded shadow-sm">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="mr-3">
+                    <h3 class="text-sm font-medium text-red-800">
+                        توجد أخطاء في المدخلات
+                    </h3>
+                    <div class="mt-2 text-sm text-red-700">
+                        <ul class="list-disc list-inside space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <form action="{{ route('admin.vod.contents.store') }}" method="POST" enctype="multipart/form-data" id="vod-form" novalidate>
         @csrf
 
         <div class="flex flex-col lg:flex-row gap-6">
@@ -25,8 +49,10 @@
                         <label for="title" class="block text-sm font-medium text-gray-700 mb-2">العنوان</label>
                         <input type="text" name="title" id="title" value="{{ old('title') }}"
                             class="w-full px-4 py-3 text-xl font-bold border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-accent @error('title') border-red-500 @enderror"
-                            placeholder="أدخل العنوان هنا" required>
-                        @error('title') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                            placeholder="أدخل العنوان هنا">
+                        @error('title')
+                            <div class="mt-1 text-sm text-red-600 font-medium">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <!-- Slug -->
@@ -47,11 +73,13 @@
                         <label for="embed_code" class="block text-sm font-medium text-gray-700 mb-2">كود التضمين /
                             الرابط</label>
                         <textarea name="embed_code" id="embed_code" rows="3"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-accent font-mono text-sm"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-accent font-mono text-sm @error('embed_code') border-red-500 @enderror"
                             placeholder="<iframe...> or https://youtube.com/..."
                             dir="ltr">{{ old('embed_code') }}</textarea>
                         <p class="mt-1 text-xs text-gray-500">ضع كود التضمين (iframe) أو رابط الفيديو/الصوت.</p>
-                        @error('embed_code') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        @error('embed_code')
+                            <div class="mt-1 text-sm text-red-600 font-medium">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
 
@@ -62,7 +90,9 @@
                         @php $value = old('description'); @endphp
                         @ckeditor('description')
                     </div>
-                    @error('description') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    @error('description')
+                        <div class="mt-1 text-sm text-red-600 font-medium">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
 
@@ -114,7 +144,7 @@
                     @endif
 
                     @error('type')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <div class="mt-1 text-sm text-red-600 font-medium">{{ $message }}</div>
                     @enderror
                 </div>
                 @endif

@@ -85,7 +85,7 @@ class StoreVodContentRequest extends FormRequest
             // 6. External Thumbnail URL
             'thumbnail_url' => [
                 'nullable',
-                'required_without:thumbnail', // Ensure at least one thumbnail source
+                // required_without check is handled by 'thumbnail' field to avoid duplicate error messages
                 'url',
                 'regex:/\.(jpg|jpeg|png|webp)(\?.*)?$/i', // Must look like an image
             ],
@@ -158,7 +158,7 @@ class StoreVodContentRequest extends FormRequest
             'embed_code.url' => 'يجب أن يكون رابط الفيديو رابطاً صحيحاً.',
             'embed_code.regex' => 'يجب أن يكون الرابط من YouTube أو Vimeo فقط.',
             'thumbnail.required_without' => 'يجب إضافة صورة مصغرة (ملف أو رابط).',
-            'thumbnail_url.required_without' => 'يجب إضافة صورة مصغرة (ملف أو رابط).',
+            // 'thumbnail_url.required_without' => 'يجب إضافة صورة مصغرة (ملف أو رابط).', // Removed to avoid duplicate
             'thumbnail.max' => 'حجم الصورة يجب ألا يتجاوز 3 ميجابايت.',
             'thumbnail_url.regex' => 'رابط الصورة يجب أن يؤدي لملف صورة (jpg, png, webp).',
         ];
