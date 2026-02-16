@@ -23,8 +23,9 @@
             @if($admin->profile_photo_path)
                 <!-- Profile Photo Section -->
                 <div class="mb-12">
-                    <img src="{{ $admin->profile_photo_url }}" alt="{{ $admin->name }}"
-                        class="w-full h-[340px] object-cover rounded-2xl shadow-sm">
+                    <div class="w-full aspect-video rounded-2xl shadow-sm overflow-hidden">
+                        <img src="{{ $admin->profile_photo_url }}" alt="{{ $admin->name }}" class="w-full h-full object-cover">
+                    </div>
                 </div>
             @endif
 

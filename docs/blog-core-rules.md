@@ -105,6 +105,68 @@ Any public route without a `feature:` middleware is a **Critical Security Vulner
 
 ---
 
+## 11. Plan System & Feature Override Architecture
+
+The system implements a **Hybrid Plan + Feature Override** architecture. This allows features to be controlled primarily by a "Client Plan" (bundling multiple features) while maintaining the flexibility to manually override specific features via environment variables.
+
+### **1. System Modes**
+The architecture supports three distinct operating modes controlled by `.env`:
+
+#### **A) Plan Mode (Default)**
+*   `USE_PLAN_SYSTEM=true`
+*   `CLIENT_PLAN=basic|pro|business`
+*   Features are derived entirely from `config/plans.php` definitions for the active plan.
+
+#### **B) Plan + Override Mode**
+*   `USE_PLAN_SYSTEM=true`
+*   Specific features have explicit values in `.env` (e.g., `FEATURE_VOD_VIDEO=true`).
+*   The explicit env variable **overrides** the plan's default value.
+
+#### **C) Pure Feature Mode (Legacy/Dev)**
+*   `USE_PLAN_SYSTEM=false`
+*   Plans are ignored.
+*   Features are controlled solely by `FEATURE_XXX` environment variables.
+
+### **2. Override Precedence Logic**
+The `resolve_feature()` logic in `config/features.php` follows this strict decision order:
+
+| Priority | Condition | Source of Truth |
+|:--------:|-----------|-----------------|
+| **1** | `USE_PLAN_SYSTEM=false` | `FEATURE_XXX` env variable (Fallback: feature default) |
+| **2** | `USE_PLAN_SYSTEM=true` AND `FEATURE_XXX` is set | `FEATURE_XXX` env variable (Overrides Plan) |
+| **3** | `USE_PLAN_SYSTEM=true` AND `FEATURE_XXX` is empty | `config/plans.php` [Plan][Feature] |
+| **4** | Fallback | `false` |
+
+### **3. Architectural Rules**
+1.  **Definition Source:** Plans are strictly defined in `config/plans.php`.
+2.  **Resolution Source:** Features are strictly resolved in `config/features.php`.
+3.  **No Logic in Plans:** Plan arrays must contain only booleans. No conditional logic.
+4.  **No Cross-Module Refs:** Plans must not reference other modules directly; they map to feature keys.
+5.  **Strict Usage:**
+    *   **Controllers:** MUST use `config('features.xxx')`.
+    *   **Middleware:** MUST use `feature('xxx')` helper.
+    *   **Forbidden:** Using `env('CLIENT_PLAN')` or `env('FEATURE_...')` outside of config files.
+
+### **4. Backward Compatibility**
+To ensure stability across the modular monolith:
+*   **Config Structure:** `config('features.vod.video')` access remains unchanged.
+*   **Helper:** `feature('vod')` helper behaves exactly as before.
+*   **Middleware:** `Route::middleware('feature:vod')` continues to function without modification.
+*   **Service Providers:** Module `boot()` methods require no changes.
+
+### **5. Production Safety**
+*   **Caching:** `php artisan config:cache` MUST succeed. The resolver logic is compatible with configuration caching.
+*   **Plan Switching:** Changing `CLIENT_PLAN` in production requires `php artisan config:clear` to take effect if cached.
+*   **Immutable Env:** `.env` should not be writable by the web server (except via restricted admin tools).
+*   **Scope:** The plan system is currently **Installation-Level**. It applies to the entire running instance, not per-user or multi-tenant.
+
+### **6. Future SaaS Migration Path**
+*   **Database Migration:** The current array-based plan logic in `config/plans.php` can be swapped for a database-driven provider without changing correct application code.
+*   **Tenant Context:** The `resolve_feature` closure can be updated to accept a generic `Tenant` context in the future for multi-tenancy.
+*   **No Refactor needed:** Existing calls to `feature()` will seamlessly inherit the new logic.
+
+---
+
 ## ⚙ 6. Configuration & Naming Standards
 
 ### **Naming Conventions**
