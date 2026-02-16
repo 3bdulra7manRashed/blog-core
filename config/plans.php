@@ -11,6 +11,11 @@
 | Plans are referenced by the CLIENT_PLAN env variable.
 | Individual features can still be overridden via FEATURE_XXX env vars.
 |
+| IMPORTANT: This file is loaded by config/features.php at boot time.
+| It must NOT contain closures, env() calls, or dynamic require()s.
+| All values here are static booleans — the resolution happens in
+| config/features.php which is the only place env() is called.
+|
 */
 
 return [
@@ -26,9 +31,9 @@ return [
         'books' => false,
         'khutab' => false,
         'landing' => false,
-        'vod.video' => false,
-        'vod.audio' => false,
-        'vod.playlists' => false,
+        'vod_video' => false,
+        'vod_audio' => false,
+        'vod_playlists' => false,
     ],
 
     'pro' => [
@@ -42,9 +47,9 @@ return [
         'books' => false,
         'khutab' => true,
         'landing' => false,
-        'vod.video' => true,
-        'vod.audio' => true,
-        'vod.playlists' => false,
+        'vod_video' => true,
+        'vod_audio' => true,
+        'vod_playlists' => false,
     ],
 
     'business' => [
@@ -58,9 +63,9 @@ return [
         'books' => true,
         'khutab' => true,
         'landing' => true,
-        'vod.video' => true,
-        'vod.audio' => true,
-        'vod.playlists' => true,
+        'vod_video' => true,
+        'vod_audio' => true,
+        'vod_playlists' => true,
     ],
 
 ];

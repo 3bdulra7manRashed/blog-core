@@ -121,7 +121,7 @@ class User extends Authenticatable
      */
     public function isDeletedUserPlaceholder(): bool
     {
-        $deletedUserEmail = config('app.deleted_user_email', env('DELETED_USER_EMAIL', 'deleted-user@local'));
+        $deletedUserEmail = config('app.deleted_user_email', 'deleted-user@local');
         return $this->email === $deletedUserEmail;
     }
 }

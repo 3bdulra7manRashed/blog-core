@@ -5,8 +5,7 @@
 | Feature Flags
 |--------------------------------------------------------------------------
 |
-| This configuration file determines which experimental or optional
-| features are enabled for the application.
+| This configuration file determines which optional features are enabled.
 |
 | RESOLUTION PRECEDENCE:
 |
@@ -16,67 +15,77 @@
 |
 | 2) If USE_PLAN_SYSTEM=false:
 |    - Only FEATURE_XXX env vars are used (pure feature flags mode)
-|    - The $default fallback applies if FEATURE_XXX is not set
+|    - All features default to false unless explicitly enabled
 |
-| Access patterns remain unchanged:
+| CACHE SAFETY:
+|    - No closures (config:cache requires serializable arrays)
+|    - All env() calls are in THIS file only (the Laravel convention)
+|    - No dynamic require() — plans are loaded once at the top
+|    - After `php artisan config:cache`, env() is never called again;
+|      the cached array is returned directly.
+|
+| Access patterns:
 |    config('features.newsletter')
 |    config('features.vod.video')
 |    feature('newsletter')
 |
 */
 
-$usePlanSystem = env('USE_PLAN_SYSTEM', true);
-$plan = env('CLIENT_PLAN', 'basic');
+// ── Read control variables ──────────────────────────────────────────────────
+$usePlanSystem = (bool) env('USE_PLAN_SYSTEM', true);
+$planName = env('CLIENT_PLAN', 'basic');
 
-/**
- * Resolve a feature flag value.
- *
- * When the plan system is active, the plan value is loaded first,
- * then any explicit FEATURE_XXX env var takes priority.
- *
- * When the plan system is disabled, only FEATURE_XXX env vars are used.
- *
- * @param  bool   $usePlanSystem  Whether the plan system is active
- * @param  string $plan           The active plan name
- * @param  string $key            Dot-notation feature key (e.g. 'vod.video')
- * @param  bool   $default        Fallback if neither plan nor env is set
- * @return bool
- */
-$resolve = function (bool $usePlanSystem, string $plan, string $key, bool $default = false): bool {
-    $envKey = 'FEATURE_' . strtoupper(str_replace('.', '_', $key));
+// ── Load plan defaults (static array, no closures) ──────────────────────────
+$plans = require __DIR__ . '/plans.php';
+$planData = $plans[$planName] ?? $plans['basic'];
+
+// ── Resolver: plan value → env override ─────────────────────────────────────
+// For each feature we check: if a FEATURE_XXX env var is set it wins,
+// otherwise the plan default is used.  When the plan system is off,
+// the fallback is always `false`.
+
+$resolve = static function (string $key, bool $default = false) use ($usePlanSystem, $planData): bool {
+    // Build the env var name: 'vod_video' → 'FEATURE_VOD_VIDEO'
+    $envKey = 'FEATURE_' . strtoupper($key);
 
     if (!$usePlanSystem) {
         return (bool) env($envKey, $default);
     }
 
-    // Load the plan value from config/plans.php (using flat dot-key lookup)
-    $plans = require __DIR__ . '/plans.php';
-    $planData = $plans[$plan] ?? [];
     $planValue = $planData[$key] ?? $default;
 
     return (bool) env($envKey, $planValue);
 };
 
+// ── Build the final config array (returned & cached by Laravel) ─────────────
+
 return [
 
-    'plan' => $plan,
+    // Plan metadata
+    'use_plan_system' => $usePlanSystem,
+    'plan' => $planName,
 
-    'newsletter' => $resolve($usePlanSystem, $plan, 'newsletter'),
-    'contact' => $resolve($usePlanSystem, $plan, 'contact'),
-    'download' => $resolve($usePlanSystem, $plan, 'download'),
-    'manage_admins' => $resolve($usePlanSystem, $plan, 'manage_admins'),
-    'seo' => env('FEATURE_SEO', true), // Basic SEO (Core — always available)
-    'media_pages' => $resolve($usePlanSystem, $plan, 'media_pages'),
-    'media' => env('FEATURE_MEDIA', true), // Core File Library — always available
+    // Core (always-on, but still overridable via env)
+    'seo' => (bool) env('FEATURE_SEO', true),
+    'media' => (bool) env('FEATURE_MEDIA', true),
+
+    // Plan-controlled features
+    'newsletter' => $resolve('newsletter'),
+    'contact' => $resolve('contact'),
+    'download' => $resolve('download'),
+    'manage_admins' => $resolve('manage_admins'),
+    'advanced_seo' => $resolve('advanced_seo'),
+    'media_pages' => $resolve('media_pages'),
+    'thoughts' => $resolve('thoughts'),
+    'books' => $resolve('books'),
+    'khutab' => $resolve('khutab'),
+    'landing' => $resolve('landing'),
+
+    // VOD sub-features
     'vod' => [
-        'video' => $resolve($usePlanSystem, $plan, 'vod.video'),
-        'audio' => $resolve($usePlanSystem, $plan, 'vod.audio'),
-        'playlists' => $resolve($usePlanSystem, $plan, 'vod.playlists'),
+        'video' => $resolve('vod_video'),
+        'audio' => $resolve('vod_audio'),
+        'playlists' => $resolve('vod_playlists'),
     ],
-    'advanced_seo' => $resolve($usePlanSystem, $plan, 'advanced_seo'),
-    'books' => $resolve($usePlanSystem, $plan, 'books'),
-    'khutab' => $resolve($usePlanSystem, $plan, 'khutab'),
-    'landing' => $resolve($usePlanSystem, $plan, 'landing'),
-    'thoughts' => $resolve($usePlanSystem, $plan, 'thoughts'),
 
 ];

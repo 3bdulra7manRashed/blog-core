@@ -19,7 +19,7 @@ class UserController extends Controller
     public function __construct()
     {
         // Safety Fallback: Ensure feature is enabled
-        if (! feature('manage_admins')) {
+        if (!feature('manage_admins')) {
             abort(404);
         }
     }
@@ -30,15 +30,15 @@ class UserController extends Controller
     public function index(Request $request)
     {
         Gate::authorize('manage-users');
-        
+
         // Get the deleted user placeholder email to exclude from listing
-        $deletedUserEmail = config('app.deleted_user_email', env('DELETED_USER_EMAIL', 'deleted-user@local'));
-        
+        $deletedUserEmail = config('app.deleted_user_email', 'deleted-user@local');
+
         // Show all users including soft-deleted for super-admins, but exclude the placeholder
         $query = User::with('roles')
             ->withTrashed()
             ->where('email', '!=', $deletedUserEmail);
-        
+
         // Filter by status if requested
         if ($request->has('status')) {
             match ($request->status) {
@@ -47,9 +47,9 @@ class UserController extends Controller
                 default => null,
             };
         }
-        
+
         $users = $query->latest('created_at')->paginate(15)->withQueryString();
-        
+
         return view('admin.users.index', compact('users'));
     }
 
@@ -59,7 +59,7 @@ class UserController extends Controller
     public function create(): View
     {
         Gate::authorize('manage-users');
-        
+
         return view('admin.users.create');
     }
 
@@ -172,7 +172,7 @@ class UserController extends Controller
         }
 
         // Get the placeholder user
-        $deletedUserEmail = config('app.deleted_user_email', env('DELETED_USER_EMAIL', 'deleted-user@local'));
+        $deletedUserEmail = config('app.deleted_user_email', 'deleted-user@local');
         $placeholder = User::withTrashed()->firstWhere('email', $deletedUserEmail);
 
         // Additional protection: Prevent deleting the "deleted user" placeholder

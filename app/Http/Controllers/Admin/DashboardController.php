@@ -18,7 +18,7 @@ class DashboardController extends Controller
         $totalPosts = Post::count();
         $totalPublished = Post::published()->count();
         $totalDrafts = Post::where('is_draft', true)->count();
-        $deletedUserEmail = config('app.deleted_user_email', env('DELETED_USER_EMAIL', 'deleted-user@local'));
+        $deletedUserEmail = config('app.deleted_user_email', 'deleted-user@local');
         $totalUsers = User::where('email', '!=', $deletedUserEmail)->count();
         $totalCategories = Category::count();
         $totalTags = Tag::count();
@@ -61,11 +61,11 @@ class DashboardController extends Controller
         for ($i = 5; $i >= 0; $i--) {
             $date = now()->subMonths($i);
             $monthName = $date->translatedFormat('M Y'); // e.g., "Nov 2024"
-            
+
             $count = Post::whereYear('created_at', $date->year)
                 ->whereMonth('created_at', $date->month)
                 ->count();
-            
+
             $months[] = $monthName;
             $counts[] = $count;
         }
