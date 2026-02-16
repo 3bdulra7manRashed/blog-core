@@ -2,7 +2,7 @@
 
 namespace Modules\Contact\Http\Controllers;
 
-use App\Mail\ContactMessage as ContactMail;
+use Modules\Contact\Mail\ContactMessage as ContactMail;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
