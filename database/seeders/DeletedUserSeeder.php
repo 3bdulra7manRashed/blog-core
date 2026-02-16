@@ -11,7 +11,7 @@ class DeletedUserSeeder extends Seeder
 {
     public function run(): void
     {
-        $email = env('DELETED_USER_EMAIL', 'deleted-user@local');
+        $email = config('app.deleted_user_email', 'deleted-user@local');
 
         // Check if placeholder exists (including soft-deleted)
         $user = User::withTrashed()->firstWhere('email', $email);
@@ -37,4 +37,3 @@ class DeletedUserSeeder extends Seeder
         }
     }
 }
-

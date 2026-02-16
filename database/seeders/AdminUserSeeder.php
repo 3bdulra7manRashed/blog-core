@@ -6,16 +6,17 @@ use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 use Spatie\Permission\Models\Role;
 
 class AdminUserSeeder extends Seeder
 {
     public function run(): void
     {
-        // Use env values with hardcoded defaults for the main admin
-        $name = env('ADMIN_NAME', 'Saleh Alshehri');
-        $email = env('ADMIN_EMAIL', 'admin@alshehri.com');
-        $password = env('ADMIN_PASSWORD', 'password');
+        // Use config values (cache-safe) with hardcoded defaults for the main admin
+        $name = config('app.admin_name', 'Saleh Alshehri');
+        $email = config('app.admin_email', 'admin@alshehri.com');
+        $password = config('app.admin_password', 'password');
 
         // Ensure admin role exists
         $role = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
@@ -47,11 +48,13 @@ class AdminUserSeeder extends Seeder
             $user->assignRole($role);
         }
 
-        // Ensure the Site Owner setting points to this admin user (Safe Identity)
-        \Illuminate\Support\Facades\DB::table('settings')->updateOrInsert(
-            ['key' => 'site_owner_user_id'],
-            ['value' => $user->id]
-        );
+        // Ensure the Site Owner setting points to this admin user (Safe — skip if settings table missing)
+        if (Schema::hasTable('settings')) {
+            \Illuminate\Support\Facades\DB::table('settings')->updateOrInsert(
+                ['key' => 'site_owner_user_id'],
+                ['value' => $user->id]
+            );
+        }
 
         $this->command->info("✓ Admin user '{$name}' (ID: {$user->id}) created/updated with Role: Admin, Super Admin: Yes, Site Owner: Sync");
     }

@@ -10,8 +10,14 @@ return new class extends Migration {
      */
     public function up(): void
     {
+        if (!Schema::hasTable('vod_contents')) {
+            return;
+        }
+
         Schema::table('vod_contents', function (Blueprint $table) {
-            $table->string('thumbnail_url')->nullable()->after('thumbnail_path');
+            if (!Schema::hasColumn('vod_contents', 'thumbnail_url')) {
+                $table->string('thumbnail_url')->nullable()->after('thumbnail_path');
+            }
         });
     }
 
@@ -20,8 +26,14 @@ return new class extends Migration {
      */
     public function down(): void
     {
+        if (!Schema::hasTable('vod_contents')) {
+            return;
+        }
+
         Schema::table('vod_contents', function (Blueprint $table) {
-            $table->dropColumn('thumbnail_url');
+            if (Schema::hasColumn('vod_contents', 'thumbnail_url')) {
+                $table->dropColumn('thumbnail_url');
+            }
         });
     }
 };

@@ -112,7 +112,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         // App\Providers\EventServiceProvider::class,
         // App\Providers\RouteServiceProvider::class, // Laravel 11 handles routes via bootstrap/app.php usually
-        
+
         /*
          * Module Service Providers...
          */
@@ -140,7 +140,12 @@ return [
     | Custom Configuration
     |--------------------------------------------------------------------------
     */
-    
+
     'deleted_user_email' => env('DELETED_USER_EMAIL', 'deleted-user@local'),
+
+    // Admin seeder credentials (used by AdminUserSeeder)
+    'admin_name' => env('ADMIN_NAME', 'Saleh Alshehri'),
+    'admin_email' => env('ADMIN_EMAIL', 'admin@alshehri.com'),
+    'admin_password' => env('ADMIN_PASSWORD', 'password'),
 
 ];
