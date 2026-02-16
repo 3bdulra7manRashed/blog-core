@@ -1,4 +1,5 @@
 services:
+
   # =============================================================================
   # WEB APPLICATION
   # =============================================================================
@@ -10,37 +11,49 @@ services:
     restart: unless-stopped
     working_dir: /var/www/html
     volumes:
-      # Use named volumes so permissions from the image (user "unit") are preserved
       - storage:/var/www/html/storage
       - bootstrap_cache:/var/www/html/bootstrap/cache
     depends_on:
       mysql:
         condition: service_healthy
+
     environment:
-      # Coolify magic variables (auto-provided by Coolify)
+      # Coolify
       - SERVICE_FQDN_APP
       - SERVICE_PASSWORD_MYSQLROOT
-      # Laravel core configuration
+
+      # Application
+      - APP_NAME=${APP_NAME:-Blog Core}
       - APP_ENV=${APP_ENV:-production}
       - APP_DEBUG=${APP_DEBUG:-false}
-      - APP_KEY=${APP_KEY:-}
-      - APP_NAME=${APP_NAME:-Laravel}
+      - APP_KEY=${APP_KEY}
       - APP_URL=https://${SERVICE_FQDN_APP}
-      - APP_MAINTENANCE_DRIVER=${APP_MAINTENANCE_DRIVER:-file}
-      # Database configuration
+      - FRONTEND_URL=https://${SERVICE_FQDN_APP}
+      - APP_TIMEZONE=${APP_TIMEZONE:-UTC}
+      - APP_LOCALE=${APP_LOCALE:-ar}
+      - APP_FALLBACK_LOCALE=${APP_FALLBACK_LOCALE:-en}
+      - THEME_ACTIVE=${THEME_ACTIVE:-classic}
+
+      # Logging
+      - LOG_CHANNEL=${LOG_CHANNEL:-stack}
+      - LOG_LEVEL=${LOG_LEVEL:-warning}
+
+      # Database (unchanged)
       - DB_CONNECTION=mysql
       - DB_HOST=mysql
       - DB_PORT=3306
       - DB_DATABASE=${DB_DATABASE:-laravel}
       - DB_USERNAME=${DB_USERNAME:-laravel}
       - DB_PASSWORD=${SERVICE_PASSWORD_MYSQLROOT}
-      # Cache & Session
-      - CACHE_STORE=${CACHE_STORE:-file}
+
+      # Cache / Session / Queue
+      - CACHE_DRIVER=${CACHE_DRIVER:-file}
       - SESSION_DRIVER=${SESSION_DRIVER:-file}
-      - FILESYSTEM_DISK=${FILESYSTEM_DISK:-public}
-      # Queue configuration
+      - SESSION_LIFETIME=${SESSION_LIFETIME:-120}
       - QUEUE_CONNECTION=${QUEUE_CONNECTION:-database}
-      # Mail configuration (System/Transactional)
+      - FILESYSTEM_DISK=${FILESYSTEM_DISK:-public}
+
+      # Mail (System)
       - MAIL_MAILER=${MAIL_MAILER:-smtp}
       - MAIL_HOST=${MAIL_HOST}
       - MAIL_PORT=${MAIL_PORT:-587}
@@ -49,23 +62,55 @@ services:
       - MAIL_ENCRYPTION=${MAIL_ENCRYPTION:-tls}
       - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS}
       - MAIL_FROM_NAME=${MAIL_FROM_NAME}
-      # Newsletter Mailer (Bulk Campaigns)
+
+      # Newsletter Mail
       - NEWSLETTER_MAILER=${NEWSLETTER_MAILER:-newsletter}
-      - NEWSLETTER_MAIL_HOST=${NEWSLETTER_MAIL_HOST:-}
+      - NEWSLETTER_MAIL_HOST=${NEWSLETTER_MAIL_HOST}
       - NEWSLETTER_MAIL_PORT=${NEWSLETTER_MAIL_PORT:-587}
-      - NEWSLETTER_MAIL_USERNAME=${NEWSLETTER_MAIL_USERNAME:-}
-      - NEWSLETTER_MAIL_PASSWORD=${NEWSLETTER_MAIL_PASSWORD:-}
+      - NEWSLETTER_MAIL_USERNAME=${NEWSLETTER_MAIL_USERNAME}
+      - NEWSLETTER_MAIL_PASSWORD=${NEWSLETTER_MAIL_PASSWORD}
       - NEWSLETTER_MAIL_ENCRYPTION=${NEWSLETTER_MAIL_ENCRYPTION:-tls}
+
+      # Admin Seeder
+      - ADMIN_NAME=${ADMIN_NAME}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+
+      # Plan System
+      - USE_PLAN_SYSTEM=${USE_PLAN_SYSTEM:-true}
+      - CLIENT_PLAN=${CLIENT_PLAN:-basic}
+
+      # Feature Flags
+      - FEATURE_CONTACT=${FEATURE_CONTACT}
+      - FEATURE_NEWSLETTER=${FEATURE_NEWSLETTER}
+      - FEATURE_DOWNLOAD=${FEATURE_DOWNLOAD}
+      - FEATURE_MANAGE_ADMINS=${FEATURE_MANAGE_ADMINS}
+      - FEATURE_ADVANCED_SEO=${FEATURE_ADVANCED_SEO}
+      - FEATURE_MEDIA_PAGES=${FEATURE_MEDIA_PAGES}
+      - FEATURE_THOUGHTS=${FEATURE_THOUGHTS}
+      - FEATURE_BOOKS=${FEATURE_BOOKS}
+      - FEATURE_KHUTAB=${FEATURE_KHUTAB}
+      - FEATURE_LANDING=${FEATURE_LANDING}
+      - FEATURE_VOD_VIDEO=${FEATURE_VOD_VIDEO}
+      - FEATURE_VOD_AUDIO=${FEATURE_VOD_AUDIO}
+      - FEATURE_VOD_PLAYLISTS=${FEATURE_VOD_PLAYLISTS}
+
+      # Core Always-On
+      - FEATURE_SEO=${FEATURE_SEO:-true}
+      - FEATURE_MEDIA=${FEATURE_MEDIA:-true}
+
       # reCAPTCHA
-      - RECAPTCHA_SITE_KEY=${RECAPTCHA_SITE_KEY:-}
-      - RECAPTCHA_SECRET_KEY=${RECAPTCHA_SECRET_KEY:-}
-      # Admin User
-      - ADMIN_NAME=${ADMIN_NAME:-}
-      - ADMIN_EMAIL=${ADMIN_EMAIL:-}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-}
-      # Proxy/Trusted proxy settings for Coolify
+      - RECAPTCHA_SITE_KEY=${RECAPTCHA_SITE_KEY}
+      - RECAPTCHA_SECRET_KEY=${RECAPTCHA_SECRET_KEY}
+      - RECAPTCHA_THRESHOLD=${RECAPTCHA_THRESHOLD:-0.5}
+
+      # Deleted user fallback
+      - DELETED_USER_EMAIL=${DELETED_USER_EMAIL:-deleted-user@local}
+
+      # Proxy
       - TRUSTED_PROXIES=*
       - TRUST_PROXY=true
+
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8000/up || exit 1"]
       interval: 30s
@@ -73,11 +118,10 @@ services:
       retries: 3
       start_period: 40s
 
+
   # =============================================================================
   # QUEUE WORKER
   # =============================================================================
-  # Processes background jobs: newsletter campaigns, notifications, etc.
-  # Uses the same image as the app but runs queue:work instead of web server
   worker:
     build:
       context: .
@@ -85,10 +129,8 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME:-laravel-blog}-worker
     restart: always
     working_dir: /var/www/html
-    # Override the default command to run queue worker
     command: php artisan queue:work database --tries=3 --timeout=90 --sleep=3 --max-jobs=1000 --max-time=3600
     volumes:
-      # Share the same volumes as main app
       - storage:/var/www/html/storage
       - bootstrap_cache:/var/www/html/bootstrap/cache
     depends_on:
@@ -96,47 +138,30 @@ services:
         condition: service_healthy
       app:
         condition: service_healthy
+
     environment:
-      # Same environment as app service
       - SERVICE_FQDN_APP
       - SERVICE_PASSWORD_MYSQLROOT
       - APP_ENV=${APP_ENV:-production}
-      - APP_DEBUG=${APP_DEBUG:-false}
-      - APP_KEY=${APP_KEY:-}
-      - APP_NAME=${APP_NAME:-Laravel}
-      - APP_URL=https://${SERVICE_FQDN_APP}
-      # Database configuration
+      - APP_KEY=${APP_KEY}
       - DB_CONNECTION=mysql
       - DB_HOST=mysql
       - DB_PORT=3306
       - DB_DATABASE=${DB_DATABASE:-laravel}
       - DB_USERNAME=${DB_USERNAME:-laravel}
       - DB_PASSWORD=${SERVICE_PASSWORD_MYSQLROOT}
-      # Queue configuration (must be database)
       - QUEUE_CONNECTION=database
-      # Cache & Session
-      - CACHE_STORE=${CACHE_STORE:-file}
+      - CACHE_DRIVER=${CACHE_DRIVER:-file}
       - FILESYSTEM_DISK=${FILESYSTEM_DISK:-public}
-      # Mail configuration (System/Transactional)
       - MAIL_MAILER=${MAIL_MAILER:-smtp}
       - MAIL_HOST=${MAIL_HOST}
       - MAIL_PORT=${MAIL_PORT:-587}
       - MAIL_USERNAME=${MAIL_USERNAME}
       - MAIL_PASSWORD=${MAIL_PASSWORD}
       - MAIL_ENCRYPTION=${MAIL_ENCRYPTION:-tls}
-      - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS}
-      - MAIL_FROM_NAME=${MAIL_FROM_NAME}
-      # Newsletter Mailer (Bulk Campaigns)
-      - NEWSLETTER_MAILER=${NEWSLETTER_MAILER:-newsletter}
-      - NEWSLETTER_MAIL_HOST=${NEWSLETTER_MAIL_HOST:-}
-      - NEWSLETTER_MAIL_PORT=${NEWSLETTER_MAIL_PORT:-587}
-      - NEWSLETTER_MAIL_USERNAME=${NEWSLETTER_MAIL_USERNAME:-}
-      - NEWSLETTER_MAIL_PASSWORD=${NEWSLETTER_MAIL_PASSWORD:-}
-      - NEWSLETTER_MAIL_ENCRYPTION=${NEWSLETTER_MAIL_ENCRYPTION:-tls}
-    # No healthcheck needed for worker (it's a long-running process)
 
   # =============================================================================
-  # MYSQL DATABASE
+  # MYSQL DATABASE (UNCHANGED)
   # =============================================================================
   mysql:
     image: mysql:8.0

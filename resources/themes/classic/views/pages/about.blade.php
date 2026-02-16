@@ -23,8 +23,11 @@
             @if($admin->profile_photo_path)
                 <!-- Profile Photo Section -->
                 <div class="mb-12">
-                    <div class="w-full aspect-video rounded-2xl shadow-sm overflow-hidden">
-                        <img src="{{ $admin->profile_photo_url }}" alt="{{ $admin->name }}" class="w-full h-full object-cover">
+                    <div class="relative w-full aspect-video rounded-3xl overflow-hidden shadow-xl group">
+                        <img src="{{ $admin->profile_photo_url }}" alt="{{ $admin->name }}"
+                            class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105">
+                        <!-- Gradient Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent"></div>
                     </div>
                 </div>
             @endif
