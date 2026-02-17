@@ -49,7 +49,7 @@
                     </h1>
 
                     <!-- Dynamic Bio Content -->
-                    <div class="ckeditor-content text-gray-600 leading-relaxed text-lg">
+                    <div class="ckeditor-content text-gray-600 leading-relaxed text-lg text-justify">
                         @if(!empty($admin->biography))
                             {!! $admin->biography !!}
                         @else
