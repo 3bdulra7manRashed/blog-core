@@ -5,7 +5,7 @@
 @section('content')
 <div class="mb-6 flex items-center justify-between">
     <h1 class="text-3xl font-serif font-bold text-brand-primary">الحملات البريدية</h1>
-    <a href="{{ route('admin.campaigns.create') }}" class="flex items-center px-4 py-2 bg-brand-accent text-white rounded-md hover:bg-amber-700 hover:text-white transition-colors shadow-sm">
+    <a href="{{ route('admin.campaigns.create') }}" class="flex items-center px-4 py-2 bg-brand-accent text-white rounded-md hover:bg-[#2f5c8f] hover:text-white transition-colors shadow-sm">
         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
         </svg>
@@ -178,7 +178,7 @@
                                 </svg>
                                 <p class="text-gray-500 text-lg mb-2">لا توجد حملات بريدية</p>
                                 <p class="text-gray-400 text-sm mb-4">ابدأ بإنشاء أول حملة بريدية لإرسالها للمشتركين</p>
-                                <a href="{{ route('admin.campaigns.create') }}" class="flex items-center px-4 py-2 bg-brand-accent text-white rounded-md hover:bg-amber-700 hover:text-white transition-colors shadow-sm">
+                                <a href="{{ route('admin.campaigns.create') }}" class="flex items-center px-4 py-2 bg-brand-accent text-white rounded-md hover:bg-[#2f5c8f] hover:text-white transition-colors shadow-sm">
                                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                                     </svg>
@@ -195,7 +195,7 @@
 
 <!-- Pagination -->
 @if($campaigns->hasPages())
-    <div class="mt-6" dir="ltr">
+    <div class="mt-6" >
         {{ $campaigns->links() }}
     </div>
 @endif

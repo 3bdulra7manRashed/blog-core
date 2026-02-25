@@ -16,7 +16,7 @@
         <div class="w-full lg:w-2/3 space-y-6">
             <!-- Hero Section Settings -->
             <div class="bg-white p-6 rounded-lg shadow">
-                <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b">قسم الترحيب (Hero)</h2>
+                <h2 class="text-xl font-bold text-[#1F3A6E] mb-4 pb-2 border-b">قسم الترحيب (Hero)</h2>
                 
                 <!-- Hero Title -->
                 <div class="mb-4">
@@ -55,7 +55,7 @@
         <div class="w-full lg:w-1/3 space-y-6">
             <!-- Hero Image -->
             <div class="bg-white p-4 rounded-lg shadow">
-                <h3 class="text-lg font-bold text-gray-800 mb-4">صورة الخلفية</h3>
+                <h3 class="text-lg font-bold text-[#1F3A6E] mb-4">صورة الخلفية</h3>
                 
                 <!-- Current Image Preview -->
                 @if($settings->hero_image)
@@ -103,7 +103,7 @@
 
             <!-- Display Options -->
             <div class="bg-white p-4 rounded-lg shadow">
-                <h3 class="text-lg font-bold text-gray-800 mb-4">خيارات العرض</h3>
+                <h3 class="text-lg font-bold text-[#1F3A6E] mb-4">خيارات العرض</h3>
                 
                 <div class="flex items-center">
                     <input 
@@ -124,7 +124,7 @@
             <div class="bg-white p-4 rounded-lg shadow">
                 <button 
                     type="submit" 
-                    class="w-full px-6 py-3 bg-brand-accent text-white rounded-lg hover:bg-amber-600 transition-colors font-medium"
+                    class="w-full px-6 py-3 bg-brand-accent text-white rounded-lg hover:bg-[#2f5c8f] transition-colors font-medium"
                 >
                     حفظ الإعدادات
                 </button>

@@ -88,7 +88,7 @@
             
             <!-- Actions Box -->
             <div class="bg-white p-4 rounded shadow">
-                <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">نشر</h3>
+                <h3 class="font-bold text-[#1F3A6E] mb-4 border-b pb-2">نشر</h3>
                 <div class="pt-2">
                     <button type="submit" class="w-full px-6 py-2 bg-brand-primary text-white rounded hover:bg-opacity-90 shadow-sm transition-colors font-medium">
                         تحديث القائمة

@@ -16,9 +16,9 @@
 
     <style>
         :root {
-            --brand-primary: #1f1f1f;
-            --brand-secondary: #f5f0ea;
-            --brand-accent: #c37c54;
+            --brand-primary: #1F3A6E;
+            --brand-secondary: #F8FAFC;
+            --brand-accent: #3B75B0;
             --brand-muted: #6f6f6f;
         }
 
@@ -117,13 +117,13 @@
         .icon-container {
             width: 70px;
             height: 70px;
-            background: linear-gradient(135deg, var(--brand-accent) 0%, #d4956f 100%);
+            background: linear-gradient(135deg, var(--brand-accent) 0%, #6FA8DC 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 1.5rem;
-            box-shadow: 0 10px 40px rgba(195, 124, 84, 0.25);
+            box-shadow: 0 10px 40px rgba(59, 117, 176, 0.25);
             animation: pulse 2s ease-in-out infinite;
         }
 
@@ -131,11 +131,11 @@
 
             0%,
             100% {
-                box-shadow: 0 10px 40px rgba(195, 124, 84, 0.25);
+                box-shadow: 0 10px 40px rgba(59, 117, 176, 0.25);
             }
 
             50% {
-                box-shadow: 0 15px 50px rgba(195, 124, 84, 0.35);
+                box-shadow: 0 15px 50px rgba(59, 117, 176, 0.35);
             }
         }
 
@@ -220,14 +220,14 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--brand-primary) 0%, #333 100%);
+            background: linear-gradient(135deg, var(--brand-primary) 0%, #2f5c8f 100%);
             color: white;
-            box-shadow: 0 4px 20px rgba(31, 31, 31, 0.25);
+            box-shadow: 0 4px 20px rgba(31, 58, 110, 0.25);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(31, 31, 31, 0.35);
+            box-shadow: 0 8px 30px rgba(31, 58, 110, 0.35);
         }
 
         .btn-secondary {
@@ -389,7 +389,9 @@
         }
 
         /* Safe area for notched devices */
-        @supports (padding: env(safe - area - inset - bottom)) {
+        @supports
+        (padding: env(safe - area - inset - bottom))
+            {
             .page-wrapper {
                 padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
             }

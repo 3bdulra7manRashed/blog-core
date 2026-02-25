@@ -180,7 +180,7 @@
                                     
                                     <!-- Content -->
                                     <div class="p-4">
-                                        <h3 class="font-bold text-gray-800 text-sm line-clamp-2 mb-2 group-hover:text-brand-primary transition-colors">
+                                        <h3 class="font-bold text-[#1F3A6E] text-sm line-clamp-2 mb-2 group-hover:text-brand-primary transition-colors">
                                             {{ $post->title }}
                                         </h3>
                                         <div class="flex items-center gap-2 text-xs text-gray-500">
@@ -204,7 +204,7 @@
             
             <!-- Campaign Info Card -->
             <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
-                <h3 class="font-bold text-gray-800 mb-4 text-sm">معلومات الحملة</h3>
+                <h3 class="font-bold text-[#1F3A6E] mb-4 text-sm">معلومات الحملة</h3>
                 
                 <div class="space-y-3">
                     <!-- Status Badge -->

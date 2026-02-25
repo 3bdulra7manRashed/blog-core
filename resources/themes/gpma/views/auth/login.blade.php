@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,9 +15,9 @@
 
     <style>
         :root {
-            --brand-primary: #1f1f1f;
-            --brand-secondary: #f5f0ea;
-            --brand-accent: #c37c54;
+            --brand-primary: #1F3A6E;
+            --brand-secondary: #F8FAFC;
+            --brand-accent: #3B75B0;
             --brand-muted: #6f6f6f;
         }
 
@@ -76,7 +77,7 @@
         .logo a {
             font-size: 1.25rem;
             font-weight: 800;
-            color: var(--brand-primary);
+            color: #1F3A6E;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
@@ -288,8 +289,15 @@
 
         /* Animation */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .animate-in {
@@ -297,6 +305,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="bg-decoration bg-decoration-1"></div>
     <div class="bg-decoration bg-decoration-2"></div>
@@ -323,9 +332,9 @@
 
                     <div class="form-group">
                         <label for="email" class="form-label">البريد الإلكتروني</label>
-                        <input id="email" class="form-input @error('email') input-error @enderror" type="email" name="email" 
-                               value="{{ old('email') }}" autofocus 
-                               autocomplete="username" placeholder="example@email.com" dir="ltr">
+                        <input id="email" class="form-input @error('email') input-error @enderror" type="email"
+                            name="email" value="{{ old('email') }}" autofocus autocomplete="username"
+                            placeholder="example@email.com" dir="ltr">
                         @error('email')
                             <p class="form-error">{{ $message }}</p>
                         @enderror
@@ -333,8 +342,8 @@
 
                     <div class="form-group">
                         <label for="password" class="form-label">كلمة المرور</label>
-                        <input id="password" class="form-input @error('password') input-error @enderror" type="password" name="password"
-                               autocomplete="current-password" placeholder="••••••••" dir="ltr">
+                        <input id="password" class="form-input @error('password') input-error @enderror" type="password"
+                            name="password" autocomplete="current-password" placeholder="••••••••" dir="ltr">
                         @error('password')
                             <p class="form-error">{{ $message }}</p>
                         @enderror
@@ -353,7 +362,8 @@
                     <button type="submit" class="btn">
                         <span>تسجيل الدخول</span>
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                         </svg>
                     </button>
                 </form>
@@ -362,7 +372,8 @@
             <div class="back-home">
                 <a href="{{ url('/') }}">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                     <span>العودة للرئيسية</span>
                 </a>
@@ -370,4 +381,5 @@
         </div>
     </div>
 </body>
+
 </html>

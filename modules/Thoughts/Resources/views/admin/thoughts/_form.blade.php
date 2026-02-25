@@ -44,7 +44,7 @@
 
         <!-- Sort Order -->
         <div class="bg-white p-4 rounded shadow">
-            <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">ترتيب العرض</h3>
+            <h3 class="font-bold text-[#1F3A6E] mb-4 border-b pb-2">ترتيب العرض</h3>
             <div>
                 <label for="sort_order" class="block text-sm font-medium text-gray-700 mb-1">الترتيب</label>
                 <input type="number" name="sort_order" id="sort_order" 
@@ -60,7 +60,7 @@
 
         <!-- Featured Toggle -->
         <div class="bg-white p-4 rounded shadow">
-            <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">خيارات إضافية</h3>
+            <h3 class="font-bold text-[#1F3A6E] mb-4 border-b pb-2">خيارات إضافية</h3>
             <label class="flex items-center cursor-pointer">
                 <input type="checkbox" name="is_featured" value="1" 
                        {{ old('is_featured', $thought?->is_featured) ? 'checked' : '' }}

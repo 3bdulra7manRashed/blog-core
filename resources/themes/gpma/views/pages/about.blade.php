@@ -44,7 +44,7 @@
                 <!-- 2nd Column (Left): Text Content -->
                 <div class="flex flex-col justify-center lg:py-6">
                     <!-- Heading -->
-                    <h1 class="text-4xl md:text-5xl font-bold text-brand-accent mb-8 font-serif tracking-tight leading-tight text-center lg:text-start">
+                    <h1 class="text-4xl md:text-5xl font-bold text-[#1F3A6E] mb-8 font-serif tracking-tight leading-tight text-center lg:text-start">
                         عني
                     </h1>
 
@@ -89,7 +89,7 @@
         .ckeditor-content h4,
         .ckeditor-content h5,
         .ckeditor-content h6 {
-            color: #c37c54;
+            color: #3B75B0;
             font-weight: 700;
             margin-top: 1.5em;
             margin-bottom: 0.8em;
@@ -148,21 +148,21 @@
 
         /* Blockquotes */
         .ckeditor-content blockquote {
-            border-right: 4px solid #c37c54;
+            border-right: 4px solid #3B75B0;
             border-left: none;
             margin: 2em 0;
             padding: 1.5em 2em;
             background: #f5f0ea;
             border-radius: 0.5rem;
             font-style: italic;
-            color: #1f1f1f;
+            color: #1F3A6E;
             position: relative;
         }
 
         .ckeditor-content blockquote::before {
             content: '"';
             font-size: 4rem;
-            color: #c37c54;
+            color: #3B75B0;
             opacity: 0.3;
             position: absolute;
             top: -0.5rem;
@@ -178,7 +178,7 @@
 
         /* Links */
         .ckeditor-content a {
-            color: #c37c54;
+            color: #3B75B0;
             text-decoration: underline;
             transition: color 0.2s;
         }
@@ -191,7 +191,7 @@
         .ckeditor-content strong,
         .ckeditor-content b {
             font-weight: 700;
-            color: #1f1f1f;
+            color: #1F3A6E;
         }
 
         .ckeditor-content em,
@@ -217,7 +217,7 @@
         .ckeditor-content table th {
             background: #f9fafb;
             font-weight: 600;
-            color: #1f1f1f;
+            color: #1F3A6E;
         }
 
         .ckeditor-content table td {
@@ -260,7 +260,7 @@
             border-radius: 0.25rem;
             font-family: 'Courier New', monospace;
             font-size: 0.9em;
-            color: #1f1f1f;
+            color: #1F3A6E;
         }
 
         .ckeditor-content pre {

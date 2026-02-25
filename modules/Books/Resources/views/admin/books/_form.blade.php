@@ -72,7 +72,7 @@
 
         <!-- External URL (Buy Link) -->
         <div class="bg-white p-4 rounded shadow">
-            <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">رابط الشراء</h3>
+            <h3 class="font-bold text-[#1F3A6E] mb-4 border-b pb-2">رابط الشراء</h3>
             <div>
                 <label for="external_url" class="block text-sm font-medium text-gray-700 mb-2">الرابط الخارجي</label>
                 <input type="url" name="external_url" id="external_url" value="{{ old('external_url', $book?->external_url) }}" 

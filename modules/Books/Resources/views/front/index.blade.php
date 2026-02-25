@@ -62,7 +62,7 @@
 
             <!-- Pagination -->
             @if($books->hasPages())
-                <div class="mt-8" dir="ltr">
+                <div class="mt-8" >
                     {{ $books->links() }}
                 </div>
             @endif

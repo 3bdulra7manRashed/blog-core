@@ -5,7 +5,7 @@
 @section('content')
 <div class="mb-6 flex items-center justify-between">
     <h1 class="text-3xl font-serif font-bold text-brand-primary">الكتب</h1>
-    <a href="{{ route('admin.books.create') }}" class="flex items-center px-4 py-2 bg-brand-accent text-white hover:bg-amber-700 hover:text-white rounded-md hover:bg-opacity-90 transition-colors shadow-sm hover:shadow-md">
+    <a href="{{ route('admin.books.create') }}" class="flex items-center px-4 py-2 bg-brand-accent text-white hover:bg-[#2f5c8f] hover:text-white rounded-md hover:bg-opacity-90 transition-colors shadow-sm hover:shadow-md">
         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
         </svg>
@@ -23,7 +23,7 @@
             <option value="published" {{ request('status') === 'published' ? 'selected' : '' }}>منشور</option>
             <option value="archived" {{ request('status') === 'archived' ? 'selected' : '' }}>مؤرشف</option>
         </select>
-        <button type="submit" class="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800 whitespace-nowrap">تصفية</button>
+        <button type="submit" class="px-4 py-2 bg-[#1F3A6E] text-white rounded-md hover:bg-[#15274d] whitespace-nowrap">تصفية</button>
         @if(request()->hasAny(['search', 'status']))
             <a href="{{ route('admin.books.index') }}" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 text-center whitespace-nowrap">مسح</a>
         @endif
@@ -128,7 +128,7 @@
 
 <!-- Pagination -->
 @if($books->hasPages())
-    <div class="mt-6" dir="ltr">
+    <div class="mt-6" >
         {{ $books->links() }}
     </div>
 @endif

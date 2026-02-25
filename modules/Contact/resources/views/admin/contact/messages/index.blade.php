@@ -7,7 +7,7 @@
     {{-- Header --}}
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">الرسائل</h1>
+            <h1 class="text-2xl font-bold text-[#1F3A6E]">الرسائل</h1>
             <p class="text-gray-500 mt-1">إدارة رسائل نموذج التواصل ({{ $totalCount }} رسالة، {{ $unreadCount }} غير مقروءة)</p>
         </div>
         
@@ -40,8 +40,7 @@
                 <option value="read" {{ request('filter') === 'read' ? 'selected' : '' }}>مقروءة</option>
             </select>
             
-            {{-- Filter Button --}}
-            <button type="submit" class="px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800 whitespace-nowrap font-medium transition-colors">
+            <button type="submit" class="px-6 py-2 bg-[#1F3A6E] text-white rounded-md hover:bg-[#15274d] whitespace-nowrap font-medium transition-colors">
                 تطبيق
             </button>
             
@@ -71,7 +70,7 @@
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @foreach($messages as $message)
-                            <tr class="cursor-pointer hover:bg-amber-50/50 transition-colors {{ !$message->is_read ? 'bg-blue-50/50' : '' }}"
+                            <tr class="cursor-pointer hover:bg-[#2f5c8f]/10 transition-colors {{ !$message->is_read ? 'bg-blue-50/50' : '' }}"
                                 onclick="window.location='{{ route('admin.messages.show', $message) }}'">
                                 {{-- Status --}}
                                 <td class="px-6 py-4 whitespace-nowrap text-center">
@@ -90,7 +89,7 @@
                                 {{-- Sender Info --}}
                                 <td class="px-6 py-4 text-center">
                                     <div class="flex items-center justify-center">
-                                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-brand-accent to-amber-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-brand-accent to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
                                             {{ mb_substr($message->name, 0, 1) }}
                                         </div>
                                         <div class="mr-3">
@@ -152,7 +151,7 @@
                 <svg class="w-16 h-16 mx-auto text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                 </svg>
-                <h3 class="mt-4 text-lg font-medium text-gray-900">لا توجد رسائل</h3>
+                <h3 class="mt-4 text-lg font-medium text-[#1F3A6E]">لا توجد رسائل</h3>
                 <p class="mt-2 text-gray-500">
                     @if(request('filter') || request('search'))
                         لم يتم العثور على رسائل تطابق البحث

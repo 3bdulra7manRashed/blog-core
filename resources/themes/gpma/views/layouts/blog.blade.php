@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="theme-color" content="#c37c54">
+    <meta name="theme-color" content="#3B75B0">
     <meta name="googlebot" content="index, follow">
 
     {{-- Google Search Console Verification --}}
@@ -51,7 +51,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     {{-- Scripts --}}
-    @vite(['resources/themes/classic/assets/css/app.css', 'resources/themes/classic/assets/js/app.js'])
+    @vite(['resources/themes/' . config('theme.active', 'classic') . '/assets/css/app.css', 'resources/themes/' . config('theme.active', 'classic') . '/assets/js/app.js'])
 
     {{-- Alpine.js --}}
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -201,7 +201,7 @@
                 <!-- Right: Logo (Dark Text + Orange Dot) -->
                 <a href="{{ route('home') }}" class="flex items-center gap-2 group">
                     {{-- The Text (Dark) - FIRST --}}
-                    <span class="text-gray-900 font-serif font-bold text-2xl md:text-4xl tracking-tight">
+                    <span class="text-[#1F3A6E] font-serif font-bold text-2xl md:text-4xl tracking-tight">
                         {{ config('branding.site_name') }}
                     </span>
                     {{-- The Orange Dot - SECOND (appears on left in RTL) --}}

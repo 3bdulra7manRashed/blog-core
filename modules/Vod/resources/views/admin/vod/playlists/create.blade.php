@@ -58,7 +58,7 @@
         <div class="w-full lg:w-1/3 space-y-6">
              <!-- Type Selector (New Layout) -->
              <div class="bg-white rounded shadow p-4">
-                <h3 class="font-bold text-gray-800 mb-3 border-b pb-2">نوع القائمة</h3>
+                <h3 class="font-bold text-[#1F3A6E] mb-3 border-b pb-2">نوع القائمة</h3>
                 <div class="space-y-2">
                     <label class="flex items-center space-x-3 space-x-reverse cursor-pointer">
                         <input type="radio" name="type" value="video" x-model="type" class="form-radio h-5 w-5 text-brand-primary focus:ring-brand-accent">
@@ -75,7 +75,7 @@
             <!-- Media Selection Card (Priority 1) -->
             <div class="bg-white rounded shadow border-t-4 border-brand-accent overflow-hidden">
                 <div class="px-4 py-3 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
-                    <h3 class="font-bold text-gray-800">محتوى القائمة</h3>
+                    <h3 class="font-bold text-[#1F3A6E]">محتوى القائمة</h3>
                     <span class="text-xs bg-gray-200 px-2 py-0.5 rounded text-gray-600">{{ $contents->count() }} متاح</span>
                 </div>
                 
@@ -112,7 +112,7 @@
 
             <!-- Publish Box (Priority 2) -->
             <div class="bg-white p-4 rounded shadow sticky top-6">
-                <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">نشر</h3>
+                <h3 class="font-bold text-[#1F3A6E] mb-4 border-b pb-2">نشر</h3>
                 <div class="pt-2">
                     <button type="submit" class="w-full px-6 py-2.5 bg-brand-primary text-white rounded hover:bg-opacity-90 shadow-sm transition-colors font-bold flex items-center justify-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>

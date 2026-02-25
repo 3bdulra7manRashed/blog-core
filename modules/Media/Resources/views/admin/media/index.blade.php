@@ -21,12 +21,12 @@ use Illuminate\Support\Str;
                           file:rounded-lg file:border-0 
                           file:text-sm file:font-semibold 
                           file:bg-brand-accent file:text-white 
-                          hover:file:bg-amber-700 file:cursor-pointer">
+                          hover:file:bg-[#2f5c8f] file:cursor-pointer">
             @error('file')
                 <p class="text-red-500 text-sm mt-1" role="alert">{{ $message }}</p>
             @enderror
         </div>
-        <button type="submit" class="flex items-center justify-center px-4 py-2 bg-brand-accent text-white rounded-lg hover:bg-amber-700 transition-colors shadow-sm hover:shadow-md whitespace-nowrap">
+        <button type="submit" class="flex items-center justify-center px-4 py-2 bg-brand-accent text-white rounded-lg hover:bg-[#2f5c8f] transition-colors shadow-sm hover:shadow-md whitespace-nowrap">
             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
             </svg>
@@ -113,7 +113,7 @@ use Illuminate\Support\Str;
 </div>
 
 @if($media->hasPages())
-    <div class="mt-8" dir="ltr">
+    <div class="mt-8" >
         {{ $media->links() }}
     </div>
 @endif

@@ -61,7 +61,7 @@
         
         <!-- Publish Box -->
         <div class="bg-white p-4 rounded shadow">
-            <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">النشر</h3>
+            <h3 class="font-bold text-[#1F3A6E] mb-4 border-b pb-2">النشر</h3>
             
             <div class="mb-4">
                 <label for="status" class="block text-sm font-medium text-gray-700 mb-2">الحالة</label>
@@ -89,7 +89,7 @@
 
         <!-- Format Box (Replaces Categories) -->
         <div class="bg-white p-4 rounded shadow">
-            <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">النوع</h3>
+            <h3 class="font-bold text-[#1F3A6E] mb-4 border-b pb-2">النوع</h3>
             <div class="space-y-2">
                 <label class="flex items-center space-x-2 space-x-reverse cursor-pointer hover:bg-gray-50 p-1 rounded">
                     <input type="radio" name="type" value="video" 
@@ -108,7 +108,7 @@
 
         <!-- Thumbnail Box (Copied from Featured Image) -->
         <div class="bg-white p-4 rounded shadow">
-            <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">الصورة البارزة</h3>
+            <h3 class="font-bold text-[#1F3A6E] mb-4 border-b pb-2">الصورة البارزة</h3>
             <div class="space-y-3">
                 <div class="relative border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-brand-accent transition-colors cursor-pointer" onclick="document.getElementById('thumbnail').click()">
                     

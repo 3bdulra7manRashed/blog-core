@@ -107,7 +107,7 @@
 
                 @if($videoEnabled || $audioEnabled)
                 <div class="bg-white p-4 rounded shadow">
-                    <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">النوع</h3>
+                    <h3 class="font-bold text-[#1F3A6E] mb-4 border-b pb-2">النوع</h3>
 
                     {{-- Only Video Enabled --}}
                     @if($videoEnabled && !$audioEnabled)
@@ -161,7 +161,7 @@
 
                 <!-- Publish Box (at bottom for better UX) -->
                 <div class="bg-white p-4 rounded shadow">
-                    <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">النشر</h3>
+                    <h3 class="font-bold text-[#1F3A6E] mb-4 border-b pb-2">النشر</h3>
 
                     <div class="mb-4">
                         <label for="published_at" class="block text-sm font-medium text-gray-700 mb-2">تاريخ النشر</label>

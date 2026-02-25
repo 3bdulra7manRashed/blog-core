@@ -13,7 +13,7 @@
                 </svg>
             </div>
             <div>
-                <h1 class="text-3xl font-serif font-bold text-gray-900 mb-1">مكتبة الملفات</h1>
+                <h1 class="text-3xl font-serif font-bold text-[#1F3A6E] mb-1">مكتبة الملفات</h1>
                 <p class="text-gray-500 text-sm">إدارة الملفات وروابط التحميل المباشرة</p>
             </div>
         </div>
@@ -23,7 +23,7 @@
     <div class="bg-white rounded-xl shadow-sm ring-1 ring-gray-200 p-6 mb-8">
         <div class="flex items-center justify-between mb-6 border-b border-gray-100 pb-4">
             <div>
-                <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+                <h2 class="text-lg font-bold text-[#1F3A6E] flex items-center gap-2">
                     <span class="w-1.5 h-6 bg-brand-accent rounded-full inline-block"></span>
                     رفع ملف جديد
                 </h2>
@@ -69,7 +69,7 @@
 
             <!-- Submit Button -->
             <div class="w-full md:w-auto">
-                <button type="submit" class="w-full md:w-auto h-[44px] inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-bold rounded-lg text-white bg-brand-accent hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent transition-all shadow-sm">
+                <button type="submit" class="w-full md:w-auto h-[44px] inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-bold rounded-lg text-white bg-brand-accent hover:bg-[#2f5c8f] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent transition-all shadow-sm">
                     <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
                     </svg>
@@ -82,7 +82,7 @@
     <!-- Files List -->
     <div class="bg-white rounded-xl shadow-sm ring-1 ring-gray-200 overflow-hidden">
         <div class="border-b border-gray-100 px-6 py-4 flex items-center justify-between bg-gray-50/50">
-            <h3 class="text-base font-bold text-gray-900">الملفات المرفوعة</h3>
+            <h3 class="text-base font-bold text-[#1F3A6E]">الملفات المرفوعة</h3>
             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                 {{ $downloads->count() }} ملف
             </span>
@@ -229,7 +229,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                     </svg>
                 </div>
-                <h3 class="text-lg font-medium text-gray-900 mb-1">المكتبة فارغة</h3>
+                <h3 class="text-lg font-medium text-[#1F3A6E] mb-1">المكتبة فارغة</h3>
                 <p class="text-gray-500 text-sm max-w-xs mx-auto">لم يتم رفع أي ملفات بعد. استخدم النموذج أعلاه لإضافة أول ملف.</p>
             </div>
         @endif
