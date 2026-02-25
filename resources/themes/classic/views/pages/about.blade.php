@@ -44,7 +44,7 @@
                 <!-- 2nd Column (Left): Text Content -->
                 <div class="flex flex-col justify-center lg:py-6">
                     <!-- Heading -->
-                    <h1 class="text-4xl md:text-5xl font-bold text-brand-accent mb-8 font-serif tracking-tight leading-tight text-center lg:text-start">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-8 font-serif tracking-tight leading-tight text-center lg:text-start">
                         عني
                     </h1>
 
