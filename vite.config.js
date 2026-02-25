@@ -24,7 +24,18 @@ export default defineConfig(({ mode }) => {
     ];
 
     // Filter paths to only include existing files (prevents Vite compilation failure)
-    const inputAssets = [...themeAssets, ...adminAssets].filter((assetPath) => {
+    const inputAssets = [...new Set([
+        ...themeAssets,
+        ...adminAssets,
+        'resources/css/app.css',
+        'resources/js/app.js',
+        'resources/themes/classic/assets/css/app.css',
+        'resources/themes/classic/assets/js/app.js',
+        'resources/themes/gpma/assets/css/app.css',
+        'resources/themes/gpma/assets/js/app.js',
+        'resources/themes/admin/gpma/assets/css/app.css',
+        'resources/themes/admin/gpma/assets/js/app.js'
+    ])].filter((assetPath) => {
         return fs.existsSync(path.resolve(process.cwd(), assetPath));
     });
 
