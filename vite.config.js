@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
 
     // 2. Retrieve active themes, defaulting to 'classic' if not explicitly defined
     const activeTheme = env.ACTIVE_THEME || 'classic';
-    const adminActiveTheme = env.THEME_ADMIN_ACTIVE || 'classic';
+    const adminActiveTheme = env.ACTIVE_THEME_ADMIN || 'classic';
 
     // 3. Define the expected paths dynamically based on active themes
     const themeAssets = [

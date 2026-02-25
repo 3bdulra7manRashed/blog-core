@@ -25,7 +25,7 @@ return [
     |
     */
     'active' => env('ACTIVE_THEME', 'classic'),
-    'admin_active' => env('THEME_ADMIN_ACTIVE', 'classic'),
+    'admin_active' => env('ACTIVE_THEME_ADMIN', 'classic'),
 
     /*
     |--------------------------------------------------------------------------
