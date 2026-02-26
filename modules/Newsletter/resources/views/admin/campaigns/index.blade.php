@@ -5,7 +5,7 @@
 @section('content')
 <div class="mb-6 flex items-center justify-between">
     <h1 class="text-3xl font-serif font-bold text-brand-primary">الحملات البريدية</h1>
-    <a href="{{ route('admin.campaigns.create') }}" class="flex items-center px-4 py-2 bg-brand-accent text-white rounded-md hover:bg-[#2f5c8f] hover:text-white transition-colors shadow-sm">
+    <a href="{{ route('admin.campaigns.create') }}" class="flex items-center px-4 py-2 bg-brand-accent text-white rounded-md hover:bg-teal-700 hover:text-white transition-colors shadow-sm">
         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
         </svg>
@@ -133,7 +133,7 @@
                         
                         {{-- Actions --}}
                         <td class="px-4 md:px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
-                            <div class="flex items-center gap-2 justify-center flex-wrap">
+                            <div class="flex items-center justify-center gap-2">
                                 {{-- Edit Button (only for drafts) --}}
                                 @if($campaign->isDraft())
                                     <a href="{{ route('admin.campaigns.edit', $campaign) }}" 
@@ -150,7 +150,7 @@
                                 @endif
                                 
                                 {{-- Delete Button --}}
-                                <form action="{{ route('admin.campaigns.destroy', $campaign) }}" method="POST" class="inline">
+                                <form action="{{ route('admin.campaigns.destroy', $campaign) }}" method="POST" class="inline-flex items-center m-0 p-0">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" 
@@ -178,7 +178,7 @@
                                 </svg>
                                 <p class="text-gray-500 text-lg mb-2">لا توجد حملات بريدية</p>
                                 <p class="text-gray-400 text-sm mb-4">ابدأ بإنشاء أول حملة بريدية لإرسالها للمشتركين</p>
-                                <a href="{{ route('admin.campaigns.create') }}" class="flex items-center px-4 py-2 bg-brand-accent text-white rounded-md hover:bg-[#2f5c8f] hover:text-white transition-colors shadow-sm">
+                                <a href="{{ route('admin.campaigns.create') }}" class="flex items-center px-4 py-2 bg-brand-accent text-white rounded-md hover:bg-teal-700 hover:text-white transition-colors shadow-sm">
                                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                                     </svg>

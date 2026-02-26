@@ -121,7 +121,7 @@
                                 {{-- Actions (with stopPropagation to prevent row click) --}}
                                 <td class="px-6 py-4 whitespace-nowrap text-center" onclick="event.stopPropagation()">
                                     <div class="flex items-center justify-center gap-2">
-                                        <form action="{{ route('admin.messages.destroy', $message) }}" method="POST" class="inline">
+                                        <form action="{{ route('admin.messages.destroy', $message) }}" method="POST" class="inline-flex items-center m-0 p-0">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="js-confirm inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 text-xs font-medium rounded-lg hover:bg-red-100 transition-colors"

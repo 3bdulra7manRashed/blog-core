@@ -136,7 +136,8 @@
                                             </path>
                                         </svg>
                                     </a>
-                                    <form action="{{ route('admin.thoughts.destroy', $thought) }}" method="POST" class="inline"
+                                    <form action="{{ route('admin.thoughts.destroy', $thought) }}" method="POST"
+                                        class="inline-flex items-center m-0 p-0"
                                         onsubmit="return confirm('هل أنت متأكد من حذف هذه الخاطرة؟')">
                                         @csrf
                                         @method('DELETE')
@@ -172,7 +173,7 @@
 
     <!-- Pagination -->
     @if($thoughts->hasPages())
-        <div class="mt-6" >
+        <div class="mt-6">
             {{ $thoughts->links() }}
         </div>
     @endif

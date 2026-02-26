@@ -17,12 +17,12 @@ export default {
         extend: {
             colors: {
                 brand: {
-                    primary: 'var(--writer-primary, #1f1f1f)',
-                    secondary: 'var(--writer-secondary, #f5f0ea)',
-                    accent: 'var(--brand-accent, #c37c54)',
-                    'accent-hover': 'var(--brand-accent-hover, #a86844)',
-                    'accent-soft': 'var(--brand-accent-soft, rgba(195, 124, 84, 0.1))',
-                    muted: 'var(--writer-muted, #6f6f6f)',
+                    primary: 'var(--writer-primary, #0F766E)',
+                    secondary: 'var(--writer-secondary, #f0fdfa)',
+                    accent: 'var(--brand-accent, #14B8A6)',
+                    'accent-hover': 'var(--brand-accent-hover, #0d9488)',
+                    'accent-soft': 'var(--brand-accent-soft, rgba(20, 184, 166, 0.1))',
+                    muted: 'var(--writer-muted, #64748b)',
                 },
             },
             fontFamily: {

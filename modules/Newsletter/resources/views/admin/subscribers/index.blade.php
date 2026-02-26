@@ -119,7 +119,7 @@
 
             <!-- Submit Button -->
             <div class="w-full md:w-auto">
-                <button type="submit" class="w-full md:w-auto h-[44px] inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-bold rounded-lg text-white bg-brand-accent hover:bg-[#2f5c8f] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent transition-all shadow-sm">
+                <button type="submit" class="w-full md:w-auto h-[44px] inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-bold rounded-lg text-white bg-brand-accent hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent transition-all shadow-sm">
                     <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
@@ -200,7 +200,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap align-middle">
                                     <div class="flex items-center justify-end gap-2">
                                         {{-- Toggle Status Button --}}
-                                        <form action="{{ route('admin.subscribers.toggle', $subscriber) }}" method="POST" class="inline-block">
+                                        <form action="{{ route('admin.subscribers.toggle', $subscriber) }}" method="POST" class="inline-flex items-center m-0 p-0">
                                             @csrf
                                             @method('PATCH')
                                             @if($subscriber->is_active)
@@ -225,7 +225,7 @@
                                         </form>
 
                                         {{-- Delete Button --}}
-                                        <form action="{{ route('admin.subscribers.destroy', $subscriber) }}" method="POST" class="inline-block"
+                                        <form action="{{ route('admin.subscribers.destroy', $subscriber) }}" method="POST" class="inline-flex items-center m-0 p-0"
                                               onsubmit="return confirm('هل أنت متأكد من حذف هذا المشترك نهائياً؟')">
                                             @csrf
                                             @method('DELETE')

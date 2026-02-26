@@ -71,7 +71,7 @@
         }
 
         .iti__country.iti__highlight {
-            background-color: rgba(195, 124, 84, 0.15);
+            background-color: rgba(20, 184, 166, 0.15);
         }
 
         .iti__country-name {
@@ -198,7 +198,7 @@
 
         <!-- Header -->
         <div class="text-center mb-12">
-            <h1 class="text-3xl font-serif font-bold text-gray-900 mb-4">تواصل معي</h1>
+            <h1 class="text-3xl font-serif font-bold text-[var(--brand-primary)] mb-4">تواصل معي</h1>
             <p class="text-gray-500 text-lg max-w-2xl mx-auto">
                 يسعدني تواصلكم في أي وقت.
             </p>

@@ -6,7 +6,7 @@
     <div class="container mx-auto px-4 max-w-5xl py-8">
         <!-- Page Header -->
         <div class="mb-8">
-            <h1 class="text-3xl font-serif font-bold text-brand-primary">الإصدارات</h1>
+            <h1 class="text-3xl font-serif font-bold text-[var(--brand-primary)]">الإصدارات</h1>
             <p class="text-gray-600 mt-2">مجموعة الكتب والإصدارات المتاحة</p>
         </div>
 
@@ -35,7 +35,7 @@
 
                         <!-- Content -->
                         <div class="p-4">
-                            <h2 class="text-lg font-bold text-brand-primary mb-2 line-clamp-2">
+                            <h2 class="text-lg font-bold text-[var(--brand-primary)] mb-2 line-clamp-2">
                                 <a href="{{ route('books.show', $book->slug) }}" class="hover:text-brand-accent transition-colors">
                                     {{ $book->title }}
                                 </a>
@@ -62,7 +62,7 @@
 
             <!-- Pagination -->
             @if($books->hasPages())
-                <div class="mt-8" >
+                <div class="mt-8">
                     {{ $books->links() }}
                 </div>
             @endif

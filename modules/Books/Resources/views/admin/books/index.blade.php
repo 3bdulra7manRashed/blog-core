@@ -5,7 +5,7 @@
 @section('content')
 <div class="mb-6 flex items-center justify-between">
     <h1 class="text-3xl font-serif font-bold text-brand-primary">الكتب</h1>
-    <a href="{{ route('admin.books.create') }}" class="flex items-center px-4 py-2 bg-brand-accent text-white hover:bg-[#2f5c8f] hover:text-white rounded-md hover:bg-opacity-90 transition-colors shadow-sm hover:shadow-md">
+    <a href="{{ route('admin.books.create') }}" class="flex items-center px-4 py-2 bg-brand-accent text-white hover:bg-teal-700 hover:text-white rounded-md hover:bg-opacity-90 transition-colors shadow-sm hover:shadow-md">
         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
         </svg>
@@ -23,7 +23,7 @@
             <option value="published" {{ request('status') === 'published' ? 'selected' : '' }}>منشور</option>
             <option value="archived" {{ request('status') === 'archived' ? 'selected' : '' }}>مؤرشف</option>
         </select>
-        <button type="submit" class="px-4 py-2 bg-[#1F3A6E] text-white rounded-md hover:bg-[#15274d] whitespace-nowrap">تصفية</button>
+        <button type="submit" class="px-4 py-2 bg-brand-primary text-white rounded-md hover:bg-[#0d9488] transition-colors duration-200 whitespace-nowrap">تصفية</button>
         @if(request()->hasAny(['search', 'status']))
             <a href="{{ route('admin.books.index') }}" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 text-center whitespace-nowrap">مسح</a>
         @endif
@@ -93,14 +93,14 @@
                             {{ $book->published_at ? $book->published_at->format('Y/m/d') : '-' }}
                         </td>
                         <td class="px-4 md:px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
-                            <div class="flex items-center gap-2 justify-center flex-wrap">
+                            <div class="flex items-center justify-center gap-2">
                                 <a href="{{ route('admin.books.edit', $book) }}" class="inline-flex items-center px-3 py-1.5 bg-blue-50 text-blue-700 rounded-md hover:bg-blue-100 hover:text-blue-800 font-medium text-xs transition-colors duration-200">
                                     <svg class="w-3.5 h-3.5 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                     </svg>
                                     تعديل
                                 </a>
-                                <form action="{{ route('admin.books.destroy', $book) }}" method="POST" class="inline">
+                                <form action="{{ route('admin.books.destroy', $book) }}" method="POST" class="inline-flex items-center m-0 p-0">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="js-confirm inline-flex items-center px-3 py-1.5 bg-red-50 text-red-700 rounded-md hover:bg-red-100 hover:text-red-800 font-medium text-xs transition-colors duration-200"

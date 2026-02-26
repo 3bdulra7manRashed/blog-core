@@ -1,4 +1,4 @@
-@extends('layouts.blog')
+﻿@extends('layouts.blog')
 
 @section('title', $title)
 
@@ -6,7 +6,7 @@
     <div class="container mx-auto px-4 py-12 max-w-6xl">
         {{-- Header Section --}}
         <div class="mb-12 flex flex-col items-center justify-center text-center">
-            <h1 class="mb-2 text-4xl font-bold text-brand-primary">{{ $title }}</h1>
+            <h1 class="mb-2 text-4xl font-bold text-[var(--brand-primary)]">{{ $title }}</h1>
             <p class="mb-8 text-lg text-gray-500">أحدث {{ $type === 'video' ? 'المقاطع المرئية' : 'المقاطع الصوتية' }}
                 والسلاسل</p>
 
@@ -61,7 +61,7 @@
                                 class="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                                 <div
                                     class="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 shadow-lg transform scale-90 transition-transform duration-300 group-hover:scale-100">
-                                    <svg class="h-5 w-5 text-brand-primary ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                                    <svg class="h-5 w-5 text-[var(--brand-primary)] ml-0.5" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M8 5v14l11-7z"></path>
                                     </svg>
                                 </div>
@@ -77,7 +77,7 @@
                         {{-- Content --}}
                         <div class="flex flex-col gap-1">
                             <h3
-                                class="text-lg font-bold leading-snug text-brand-primary line-clamp-2 group-hover:text-brand-accent transition-colors">
+                                class="text-lg font-bold leading-snug text-[var(--brand-primary)] line-clamp-2 group-hover:text-brand-accent transition-colors">
                                 <a href="{{ $route }}">{{ $title }}</a>
                             </h3>
                             <div class="flex items-center gap-2 text-sm text-gray-500">
