@@ -40,7 +40,7 @@
                 <option value="read" {{ request('filter') === 'read' ? 'selected' : '' }}>مقروءة</option>
             </select>
             
-            <button type="submit" class="px-6 py-2 bg-[#1F3A6E] text-white rounded-md hover:bg-[#15274d] whitespace-nowrap font-medium transition-colors">
+            <button type="submit" class="px-4 py-2 bg-brand-primary text-white rounded-md hover:bg-[#0d9488] transition-colors duration-200 whitespace-nowrap">
                 تطبيق
             </button>
             
