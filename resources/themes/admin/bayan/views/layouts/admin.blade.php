@@ -95,12 +95,16 @@
             class="fixed top-0 right-0 z-50 h-screen bg-white border-l border-gray-200 shadow-lg w-64 min-w-[16rem] max-w-[16rem] transform translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out overflow-y-auto">
             <div class="p-6 pt-6 md:pt-6">
                 {{-- Admin Logo (Dark Text + Teal Dot) --}}
-                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 group mb-6">
-                    <span class="text-gray-900 font-serif font-bold text-lg tracking-tight whitespace-nowrap">
-                        {{ config('app.name') }}
-                    </span>
-                    <span
-                        class="w-2.5 h-2.5 bg-brand-accent rounded-full inline-block group-hover:scale-110 transition-transform"></span>
+                <a href="{{ url('/') }}" target="_blank" class="flex items-center justify-center gap-2 py-4 mb-6">
+                    @if(config('branding.site_logo'))
+                        <img src="{{ Storage::url(config('branding.site_logo')) }}" alt="{{ config('branding.site_name') }}"
+                            class="h-8 w-auto object-contain">
+                    @else
+                        <span class="w-2 h-2 rounded-full bg-[var(--brand-primary)]"></span>
+                        <span class="text-gray-900 font-bold text-lg tracking-tight">
+                            {{ config('branding.site_name') }}
+                        </span>
+                    @endif
                 </a>
                 <nav class="space-y-2">
                     <a href="{{ route('admin.dashboard') }}"
