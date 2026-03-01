@@ -48,7 +48,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::patch('/profile/bio', [ProfileController::class, 'updateBio'])->name('profile.updateBio');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
+
     // CKEditor image upload route
     Route::post('/ckeditor/upload', [\App\Http\Controllers\CkeditorController::class, 'upload'])->name('ckeditor.upload');
 });
@@ -60,6 +60,12 @@ Route::prefix('admin')->middleware(['auth', 'role:admin|moderator'])->name('admi
     Route::resource('posts', \App\Http\Controllers\Admin\PostController::class);
     Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class)->except(['show']);
     Route::resource('tags', \App\Http\Controllers\Admin\TagController::class)->except(['show']);
+
+    // Global Settings (Feature-Gated to Business Tier like Landing)
+    if (feature('general_settings')) {
+        Route::get('/settings/general', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.general');
+        Route::put('/settings/general', [\App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.general.update');
+    }
 
     // Static Pages (About)
     Route::get('/about', [\App\Http\Controllers\Admin\PageController::class, 'edit'])->name('about.edit');
@@ -74,8 +80,8 @@ Route::prefix('admin')->middleware(['auth', 'role:admin|moderator'])->name('admi
 
     // Landing Settings Admin Routes (Feature-gated)
     if (feature('landing')) {
-        Route::get('landing/settings', [\App\Http\Controllers\Admin\LandingSettingsController::class, 'edit'])->name('landing.settings.edit');
-        Route::put('landing/settings', [\App\Http\Controllers\Admin\LandingSettingsController::class, 'update'])->name('landing.settings.update');
+        Route::get('settings/landing', [\App\Http\Controllers\Admin\LandingSettingsController::class, 'edit'])->name('settings.landing.edit');
+        Route::put('settings/landing', [\App\Http\Controllers\Admin\LandingSettingsController::class, 'update'])->name('settings.landing.update');
     }
 
 });
@@ -105,4 +111,4 @@ if (feature('manage_admins')) {
     });
 }
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

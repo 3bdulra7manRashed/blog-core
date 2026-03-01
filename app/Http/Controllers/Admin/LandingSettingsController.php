@@ -47,7 +47,7 @@ class LandingSettingsController extends Controller
         $settings->update($data);
 
         return redirect()
-            ->route('admin.landing.settings.edit')
+            ->route('admin.settings.landing.edit')
             ->with('success', 'تم حفظ إعدادات الصفحة الرئيسية بنجاح');
     }
 

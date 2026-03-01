@@ -34,6 +34,7 @@ return [
         'vod_video' => false,
         'vod_audio' => false,
         'vod_playlists' => false,
+        'general_settings' => false,
     ],
 
     'pro' => [
@@ -50,6 +51,7 @@ return [
         'vod_video' => true,
         'vod_audio' => true,
         'vod_playlists' => false,
+        'general_settings' => false,
     ],
 
     'business' => [
@@ -66,6 +68,7 @@ return [
         'vod_video' => true,
         'vod_audio' => true,
         'vod_playlists' => true,
+        'general_settings' => true,
     ],
 
 ];

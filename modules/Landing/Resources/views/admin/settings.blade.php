@@ -7,7 +7,7 @@
     <h1 class="text-3xl font-serif font-bold text-brand-primary">إعدادات الصفحة الرئيسية</h1>
 </div>
 
-<form action="{{ route('admin.landing.settings.update') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('admin.settings.landing.update') }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     

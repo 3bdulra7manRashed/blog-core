@@ -29,10 +29,22 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Runtime Configuration Override: Bridge .env and Database Settings
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('settings')) {
+                config([
+                    'branding.site_name' => setting('site_name', config('branding.site_name')),
+                    'branding.site_logo' => setting('site_logo', config('branding.site_logo', null)),
+                ]);
+            }
+        } catch (\Exception $e) {
+            // Silently ignore during migrations or when DB is not ready
+        }
+
         // Share sidebar data with both sidebar partial and blog layout (for mobile menu)
         View::composer(['partials.sidebar', 'layouts.blog'], function ($view) {
             // Guard against running queries if the database is not set up
-            if (! \Illuminate\Support\Facades\Schema::hasTable('posts')) {
+            if (!\Illuminate\Support\Facades\Schema::hasTable('posts')) {
                 $view->with([
                     'mostLikedPosts' => collect(),
                     'mostReadPosts' => collect(),

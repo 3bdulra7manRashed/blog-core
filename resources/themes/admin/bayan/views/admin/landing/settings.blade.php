@@ -25,7 +25,7 @@
     </div>
 @endif
 
-<form action="{{ route('admin.landing.settings.update') }}" method="POST">
+<form action="{{ route('admin.settings.landing.update') }}" method="POST">
     @csrf
     @method('PUT')
 
