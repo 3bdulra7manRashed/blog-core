@@ -58,7 +58,7 @@
 
                             {{-- Play Overlay --}}
                             <div
-                                class="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                                class="absolute inset-0 flex items-center justify-center bg-brand-primary/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                                 <div
                                     class="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 shadow-lg transform scale-90 transition-transform duration-300 group-hover:scale-100">
                                     <svg class="h-5 w-5 text-[var(--brand-primary)] ml-0.5" fill="currentColor" viewBox="0 0 24 24">
@@ -69,7 +69,7 @@
 
                             {{-- 16:9 Badge --}}
                             <div
-                                class="absolute bottom-2 right-2 rounded bg-black/70 px-1.5 py-0.5 text-[10px] font-bold text-white">
+                                class="absolute bottom-2 right-2 rounded bg-brand-primary/70 px-1.5 py-0.5 text-[10px] font-bold text-white">
                                 16:9
                             </div>
                         </a>

@@ -108,7 +108,7 @@
                     <x-feature-link feature="manage_admins" route="admin.users.index" class="px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors text-sm font-medium">
                         إلغاء
                     </x-feature-link>
-                    <button type="submit" class="px-6 py-2 bg-brand-primary text-white rounded hover:bg-opacity-90 transition-colors text-sm font-medium shadow-sm">
+                    <button type="submit" class="px-6 py-2 bg-[#0F766E] text-white rounded hover:bg-[#0d9488] transition-colors duration-200 text-sm font-medium shadow-sm">
                         إنشاء المستخدم
                     </button>
                 </div>

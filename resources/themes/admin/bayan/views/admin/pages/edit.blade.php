@@ -46,7 +46,7 @@
             <!-- Actions -->
             <div class="bg-white p-4 rounded shadow">
                 <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">نشر التغييرات</h3>
-                <button type="submit" class="w-full px-6 py-2 bg-brand-primary text-white rounded hover:bg-opacity-90 transition-colors text-sm font-medium shadow-sm">
+                <button type="submit" class="w-full px-6 py-2 bg-[#0F766E] text-white rounded hover:bg-[#0d9488] transition-colors duration-200 text-sm font-medium shadow-sm">
                     حفظ التغييرات
                 </button>
             </div>

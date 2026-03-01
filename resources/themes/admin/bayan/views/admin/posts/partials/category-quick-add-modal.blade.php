@@ -1,5 +1,5 @@
 <!-- Add Category Modal -->
-<div id="categoryModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden items-center justify-center z-50" style="display: none;">
+<div id="categoryModal" class="fixed inset-0 bg-brand-primary bg-opacity-50 hidden items-center justify-center z-50" style="display: none;">
     <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 transform transition-all">
         <!-- Modal Header -->
         <div class="flex items-center justify-between p-5 border-b border-gray-200">

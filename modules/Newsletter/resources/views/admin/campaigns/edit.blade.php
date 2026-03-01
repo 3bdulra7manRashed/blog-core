@@ -254,7 +254,7 @@
                 <div class="space-y-3">
                     <!-- Primary Button: Save Changes -->
                     <button type="submit" 
-                            class="w-full px-6 py-3.5 bg-brand-accent text-white rounded-xl hover:bg-brand-accent-hover transition-all font-bold shadow-md hover:shadow-lg flex items-center justify-center gap-2 group">
+                            class="w-full px-6 py-3.5 bg-brand-primary text-white rounded-xl hover:bg-[#0d9488] transition-colors duration-200 font-bold shadow-md hover:shadow-lg flex items-center justify-center gap-2 group">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>

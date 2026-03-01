@@ -124,7 +124,7 @@
             <div class="bg-white p-4 rounded-lg shadow">
                 <button 
                     type="submit" 
-                    class="w-full px-6 py-3 bg-brand-accent text-white rounded-lg hover:bg-[#2f5c8f] transition-colors font-medium"
+                    class="w-full px-6 py-3 bg-brand-primary text-white rounded-lg hover:bg-[#0d9488] transition-colors duration-200 font-medium"
                 >
                     حفظ الإعدادات
                 </button>

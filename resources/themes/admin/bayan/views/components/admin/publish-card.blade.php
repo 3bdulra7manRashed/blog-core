@@ -26,7 +26,7 @@
         <button type="submit"
                 name="action"
                 value="publish"
-                class="px-6 py-2 bg-black text-white rounded text-sm">
+                class="px-6 py-2 bg-brand-primary text-white rounded text-sm hover:bg-[#0d9488] transition-colors duration-200">
             نشر الآن
         </button>
     </div>

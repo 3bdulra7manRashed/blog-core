@@ -283,7 +283,7 @@
                                 class="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent"
                                 dir="ltr">
                             <button type="submit"
-                                class="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-black transition-colors flex items-center gap-1.5 text-sm font-medium flex-shrink-0">
+                                class="px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-primary transition-colors flex items-center gap-1.5 text-sm font-medium flex-shrink-0">
                                 <svg class="w-4 h-4 -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
@@ -346,7 +346,7 @@
                     <!-- Confirmation Modal -->
                     <div x-show="showModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4"
                         @keydown.escape.window="showModal = false">
-                        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="showModal = false"></div>
+                        <div class="absolute inset-0 bg-brand-primary/60 backdrop-blur-sm" @click="showModal = false"></div>
                         <div class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden z-10">
                             <div class="bg-gradient-to-r from-brand-accent to-blue-500 h-1.5"></div>
                             <div class="p-6">

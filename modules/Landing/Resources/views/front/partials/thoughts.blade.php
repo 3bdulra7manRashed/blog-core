@@ -32,7 +32,7 @@
 
 {{-- Story Modal --}}
 <div id="storyModal"
-    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm p-0 sm:p-4 transition-opacity duration-300 opacity-0"
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-brand-primary/50 backdrop-blur-sm p-0 sm:p-4 transition-opacity duration-300 opacity-0"
     style="will-change: opacity;">
 
     {{-- Modal Card --}}

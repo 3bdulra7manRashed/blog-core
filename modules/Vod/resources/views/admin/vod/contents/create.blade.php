@@ -180,7 +180,7 @@
                             حفظ كمسودة
                         </button>
                         <button type="submit" onclick="document.getElementById('status_input').value='published'"
-                            class="px-6 py-2 bg-brand-primary text-white rounded hover:bg-opacity-90 transition-colors text-sm font-medium shadow-sm">
+                            class="px-6 py-2 bg-[#0F766E] text-white rounded hover:bg-[#0d9488] transition-colors duration-200 text-sm font-medium shadow-sm">
                             نشر الآن
                         </button>
                     </div>

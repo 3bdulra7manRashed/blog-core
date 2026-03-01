@@ -15,7 +15,7 @@
             @if($unreadCount > 0)
                 <form action="{{ route('admin.messages.mark-all-read') }}" method="POST">
                     @csrf
-                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-brand-accent text-white text-sm font-medium rounded-lg hover:bg-opacity-90 transition-colors">
+                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-brand-primary text-white text-sm font-medium rounded-lg hover:bg-[#0d9488] transition-colors duration-200">
                         <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>

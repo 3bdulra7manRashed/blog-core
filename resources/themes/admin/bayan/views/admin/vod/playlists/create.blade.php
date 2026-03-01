@@ -39,7 +39,7 @@
 
         <div class="bg-gray-50 px-6 py-4 flex items-center justify-end gap-3">
              <a href="{{ route('admin.vod.playlists.index') }}" class="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium">إلغاء</a>
-            <button type="submit" class="px-6 py-2 bg-brand-primary text-white rounded-md hover:bg-opacity-90 transition-colors font-medium">
+            <button type="submit" class="px-6 py-2 bg-[#0F766E] text-white rounded-md hover:bg-[#0d9488] transition-colors duration-200 font-medium">
                 حفظ
             </button>
         </div>
