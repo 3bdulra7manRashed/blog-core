@@ -5,13 +5,9 @@
 @section('content')
     <div class="mb-6 flex items-center justify-between">
         <h1 class="text-3xl font-serif font-bold text-brand-primary">الخواطر</h1>
-        <a href="{{ route('admin.thoughts.create') }}"
-            class="flex items-center px-4 py-2 bg-brand-accent text-white hover:bg-[#2f5c8f] hover:text-white rounded-md hover:bg-opacity-90 transition-colors shadow-sm hover:shadow-md">
-            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
+        <x-admin.primary-button href="{{ route('admin.thoughts.create') }}">
             خاطرة جديدة
-        </a>
+        </x-admin.primary-button>
     </div>
 
     <!-- Filters -->

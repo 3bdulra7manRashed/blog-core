@@ -24,6 +24,10 @@ export default {
                     'accent-soft': 'var(--brand-accent-soft, rgba(20, 184, 166, 0.1))',
                     muted: 'var(--writer-muted, #64748b)',
                 },
+                surface: {
+                    tint: '#F0F9F8',
+                    hover: '#E6F5F4',
+                },
             },
             fontFamily: {
                 sans: ['"Cairo"', ...defaultTheme.fontFamily.sans],

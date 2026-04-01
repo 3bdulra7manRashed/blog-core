@@ -1,30 +1,43 @@
-{{-- Hero Section --}}
-<section class="relative min-h-[78.2vh] flex items-center justify-center overflow-hidden">
-    {{-- Background Image or Gradient --}}
+{{-- Hero Section — Asymmetric Layout --}}
+<section class="relative min-h-[60vh] lg:min-h-[calc(100vh-5rem)] flex items-center overflow-hidden">
+
+    {{-- Background Image (anchored right so person stays visible) --}}
     @if($hero['image'])
         <div class="absolute inset-0 z-0">
             <img src="{{ str_starts_with($hero['image'], 'http') ? $hero['image'] : asset('storage/' . $hero['image']) }}"
-                alt="{{ $hero['title'] }}" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60"></div>
+                alt="{{ $hero['title'] }}" class="w-full h-full object-cover object-right md:object-[80%_center]">
         </div>
-    @else
-        <div class="absolute inset-0 z-0 bg-gradient-to-br from-brand-primary via-brand-secondary to-brand-accent"></div>
     @endif
 
-    {{-- Content --}}
-    <div class="relative z-10 container mx-auto px-4 text-center max-w-4xl py-16">
-        <h1 class="text-4xl md:text-6xl font-serif font-bold text-white mb-6 leading-tight drop-shadow-lg">
-            {{ $hero['title'] }}
-        </h1>
-
-        @if($hero['subtitle'])
-            <p class="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow">
-                {{ $hero['subtitle'] }}
-            </p>
+    {{-- Directional Gradient Overlay (RTL: transparent on right → solid dark on left) --}}
+    <div class="absolute inset-0 z-[1]
+        @if($hero['image'])
+            bg-gradient-to-l from-transparent via-[#0F5D56]/95 to-[#0F766E]
+        @else
+            bg-gradient-to-br from-brand-primary via-brand-secondary to-brand-accent
         @endif
+    "></div>
 
-        {{-- CTA Buttons --}}
-        @include('landing::front.partials.cta')
+    {{-- Content Container — pushed to RTL-left (visual right in LTR) --}}
+    <div class="container mx-auto px-6 relative z-10 flex items-center justify-end h-full py-16 lg:py-0">
+        <div class="w-full md:w-3/5 lg:w-1/2 text-right">
+
+            {{-- Title --}}
+            <h1
+                class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-5 leading-tight drop-shadow-lg">
+                {{ $hero['title'] }}
+            </h1>
+
+            {{-- Subtitle --}}
+            @if($hero['subtitle'])
+                <p class="text-base md:text-lg lg:text-xl text-white/80 leading-relaxed mb-8 max-w-xl whitespace-pre-line">
+                    {{ $hero['subtitle'] }}
+                </p>
+            @endif
+
+            {{-- CTA Button --}}
+            @include('landing::front.partials.cta')
+        </div>
     </div>
 
     {{-- Scroll Indicator --}}

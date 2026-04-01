@@ -1,17 +1,13 @@
-﻿@extends('theme::layouts.admin')
+@extends('theme::layouts.admin')
 
 @section('title', 'الأقسام')
 
 @section('content')
     <div class="mb-6 flex items-center justify-between">
         <h1 class="text-3xl font-serif font-bold text-brand-primary">الأقسام</h1>
-        <a href="{{ route('admin.categories.create') }}"
-            class="flex items-center px-4 py-2 bg-brand-accent text-white hover:bg-teal-700 hover:text-white rounded-md hover:bg-opacity-90 transition-colors shadow-sm hover:shadow-md">
-            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
+        <x-admin.primary-button href="{{ route('admin.categories.create') }}">
             إضافة قسم جديد
-        </a>
+        </x-admin.primary-button>
     </div>
 
     <div class="bg-white rounded-lg shadow overflow-hidden">

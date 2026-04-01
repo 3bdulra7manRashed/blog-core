@@ -1,6 +1,6 @@
 {{-- Reusable Post Card Component for Landing Page --}}
 <article
-    class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300 group">
+    class="bg-surface-tint hover:bg-surface-hover rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 group">
     {{-- Featured Image --}}
     @if($post->featured_image_url)
         <a href="{{ route('post.show', $post->slug) }}" class="block aspect-video overflow-hidden">

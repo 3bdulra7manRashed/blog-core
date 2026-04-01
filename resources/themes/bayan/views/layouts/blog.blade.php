@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
@@ -93,8 +93,8 @@
                 <div class="flex-1 flex justify-start">
                     <a href="{{ route('home') }}" class="flex items-center gap-2 group">
                         @if(config('branding.site_logo'))
-                            <img src="{{ Storage::url(config('branding.site_logo')) }}"
-                                alt="{{ config('branding.site_name') }}" class="h-10 w-auto object-contain">
+                            <img src="{{ config('branding.site_logo') }}" alt="{{ config('branding.site_name') }}"
+                                class="w-14 h-14 rounded-full object-cover border border-gray-200">
                         @else
                             <span class="text-[var(--brand-primary)] font-serif font-bold text-2xl tracking-tight">
                                 {{ config('branding.site_name') }}
@@ -158,20 +158,22 @@
                 <!-- ═══ Left Column: Icons & Actions (flex-1, justify-end) ═══ -->
                 <div class="flex-1 hidden lg:flex justify-end items-center gap-4">
                     <!-- Search Form -->
-                    <div class="relative flex items-center" id="search-container">
-                        <form id="search-form" action="{{ route('search') }}" method="GET"
-                            class="flex items-center flex-row-reverse transition-all duration-300">
-                            <button type="button" id="search-toggle"
-                                class="text-gray-500 hover:text-[var(--brand-primary)] transition-colors z-10">
+                    <div class="flex items-center" x-data="{ searchOpen: false }" @click.outside="searchOpen = false" @keydown.escape.window="searchOpen = false">
+                        <form action="{{ route('search') }}" method="GET"
+                            class="flex items-center flex-row-reverse transition-all duration-300"
+                            :class="searchOpen ? 'gap-3' : 'gap-0'">
+                            <button type="button" @click="searchOpen = !searchOpen; if(searchOpen) $nextTick(() => $refs.searchInput.focus())"
+                                class="text-gray-500 hover:text-[var(--brand-primary)] transition-colors flex-shrink-0">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                                 </svg>
                             </button>
-                            <div id="search-input-wrapper"
-                                class="w-0 overflow-hidden transition-all duration-300 ease-in-out">
-                                <input type="text" name="q" placeholder="ابحث هنا..."
-                                    class="w-48 px-3 py-1 text-sm border-b border-gray-300 focus:border-[var(--brand-primary)] focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 mr-2 text-right dir-rtl">
+                            <div class="overflow-hidden transition-all duration-300 ease-in-out"
+                                :class="searchOpen ? 'w-48 lg:w-56 opacity-100' : 'w-0 opacity-0'">
+                                <input type="text" name="q" placeholder="ابحث هنا..." x-ref="searchInput"
+                                    @keydown.enter="if($refs.searchInput.value.trim()) $el.closest('form').submit()"
+                                    class="w-full px-3 py-1.5 text-sm border-b border-gray-300 focus:border-[var(--brand-primary)] focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 text-right">
                             </div>
                         </form>
                     </div>
@@ -700,34 +702,8 @@
         overlay?.addEventListener('click', toggleSidebar);
 
         // --- 1. SEARCH LOGIC ---
-        const searchToggle = document.getElementById('search-toggle');
-        const searchInputWrapper = document.getElementById('search-input-wrapper');
-        const searchContainer = document.getElementById('search-container');
-        const searchForm = document.getElementById('search-form'); // Select the form
-
-        searchToggle?.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (searchInputWrapper.classList.contains('w-0')) {
-                // OPEN
-                searchInputWrapper.classList.remove('w-0');
-                searchInputWrapper.classList.add('w-48');
-                searchForm.classList.add('gap-3'); // Add Gap
-                setTimeout(() => searchInputWrapper.querySelector('input').focus(), 300);
-            } else {
-                // CLOSE
-                searchInputWrapper.classList.remove('w-48');
-                searchInputWrapper.classList.add('w-0');
-                searchForm.classList.remove('gap-3'); // Remove Gap
-            }
-        });
-
-        document.addEventListener('click', (e) => {
-            if (searchContainer && !searchContainer.contains(e.target) && !searchInputWrapper.classList.contains('w-0')) {
-                searchInputWrapper.classList.remove('w-48');
-                searchInputWrapper.classList.add('w-0');
-                searchForm.classList.remove('gap-3'); // Remove Gap
-            }
-        });
+        // Search is now fully managed by Alpine.js (x-data in the header template).
+        // No vanilla JS needed here.
 
         // --- 2. STICKY MENU LOGIC ---
         const stickyMenuBtn = document.getElementById('sticky-menu-btn');
