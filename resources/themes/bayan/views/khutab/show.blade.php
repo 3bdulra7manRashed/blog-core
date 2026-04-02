@@ -165,7 +165,8 @@
 {{-- ============================================================ --}}
 @section('content')
 <!-- Reading Progress Bar (GPU-Optimized) -->
-<div id="reading-progress-bar" class="fixed top-17 md:top-12 right-0 left-0 h-1.5 bg-brand-accent z-50" style="transform: scaleX(0); transform-origin: right; will-change: transform; backface-visibility: hidden;"></div>
+<div id="reading-progress-bar" class="fixed top-20 left-0 right-0 h-1 bg-[#14B8A6] z-40 transition-all duration-150"
+    style="transform: scaleX(0); transform-origin: right; will-change: transform; backface-visibility: hidden;"></div>
 
 <article>
     <!-- Post Header -->
@@ -235,8 +236,8 @@
             </div>
 
             <!-- Share Buttons -->
-            <div class="mb-10">
-                @include('partials.share-buttons', ['post' => $post, 'route' => 'khutab.show'])
+            <div class="mb-10 border-t border-gray-100 pt-8">
+                @include('partials.share-buttons', ['post' => $post, 'route' => 'khutab.show', 'hideReadMore' => true])
             </div>
 
             <!-- Author Bio Card -->
@@ -356,54 +357,41 @@
     (function() {
         const progressBar = document.getElementById('reading-progress-bar');
         if (!progressBar) return;
-        
+
         let ticking = false;
-        let lastScrollY = 0;
-        let lastScrollHeight = 0;
-        let lastClientHeight = 0;
-        
-        function cacheDimensions() {
-            lastScrollHeight = document.documentElement.scrollHeight;
-            lastClientHeight = document.documentElement.clientHeight;
-        }
-        
+
         function updateProgressBar() {
-            const scrollTop = lastScrollY;
-            const maxScroll = lastScrollHeight - lastClientHeight;
-            
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            const maxScroll = scrollHeight - clientHeight;
+
             if (maxScroll <= 0) {
                 progressBar.style.transform = 'scaleX(0)';
+                ticking = false;
                 return;
             }
-            
+
             const progress = Math.min(1, Math.max(0, scrollTop / maxScroll));
             progressBar.style.transform = `scaleX(${progress})`;
             ticking = false;
         }
-        
+
         function onScroll() {
-            lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
-            
             if (!ticking) {
                 requestAnimationFrame(updateProgressBar);
                 ticking = true;
             }
         }
-        
-        cacheDimensions();
-        lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+        // Initial render
         updateProgressBar();
-        
+
+        // Passive scroll listener for better performance
         window.addEventListener('scroll', onScroll, { passive: true });
-        
-        let resizeTimeout;
-        window.addEventListener('resize', function() {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(function() {
-                cacheDimensions();
-                onScroll();
-            }, 100);
-        }, { passive: true });
+
+        // Also update on resize (viewport height changes)
+        window.addEventListener('resize', onScroll, { passive: true });
     })();
 
     // Like Button Toggle

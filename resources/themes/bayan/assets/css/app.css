@@ -310,43 +310,185 @@
 }
 
 /* ============================================================
-   🏢 ADMIN PANEL — Sakkal Majalla Typography Compensation
-   Global scaling for the admin panel to accommodate the
-   smaller optical baseline of the Sakkal Majalla font.
+   🔤 SAKKAL MAJALLA — Global Typography Compensation
+   Comprehensive scaling to accommodate the smaller optical
+   baseline of the Sakkal Majalla font across ALL views.
    ============================================================ */
 
-/* Admin Table Headers: text-xs → text-base */
+/* ----------------------------------------------------------
+   1. ADMIN PANEL (scoped to .bg-gray-100 body)
+   ---------------------------------------------------------- */
+
+/* 1a. Admin Table Headers: text-xs → text-base */
 .bg-gray-100 table thead th,
 .bg-gray-100 table th {
-    font-size: 1rem;       /* text-base (was text-xs) */
-    line-height: 1.625;    /* leading-relaxed */
+    font-size: 1rem;
+    line-height: 1.625;
 }
 
-/* Admin Table Data Cells: text-sm → text-lg */
+/* 1b. Admin Table Data Cells: text-sm → text-lg */
 .bg-gray-100 table tbody td {
-    font-size: 1.125rem;   /* text-lg (was text-sm) */
-    line-height: 1.625;    /* leading-relaxed */
+    font-size: 1.125rem;
+    line-height: 1.625;
 }
 
-/* Admin Status Badges: text-xs → text-sm */
+/* 1c. Admin Status Badges in Tables: text-xs → text-sm */
 .bg-gray-100 table .rounded-full {
-    font-size: 0.875rem;   /* text-sm (was text-xs) */
+    font-size: 0.875rem;
 }
 
-/* Admin Page Titles: text-3xl → text-4xl */
+/* 1d. Admin Page Titles: text-3xl → text-4xl */
 .bg-gray-100 h1.text-3xl {
-    font-size: 2.25rem;    /* text-4xl */
+    font-size: 2.25rem;
     line-height: 1.4;
 }
 
-/* Admin Table Action Buttons: text-xs → text-sm */
+/* 1e. Admin Table Action Buttons: text-xs → text-sm */
 .bg-gray-100 table td .inline-flex {
-    font-size: 0.875rem;   /* text-sm (was text-xs) */
+    font-size: 0.875rem;
 }
 
-/* Admin Filter Inputs & Selects */
-.bg-gray-100 form input[type="text"],
-.bg-gray-100 form select,
-.bg-gray-100 form button[type="submit"] {
-    font-size: 1rem;       /* text-base */
+/* ----------------------------------------------------------
+   2. ADMIN FORMS (Labels, Inputs, Selects, Textareas)
+   ---------------------------------------------------------- */
+
+/* 2a. Form Labels: text-sm → text-lg */
+.bg-gray-100 label {
+    font-size: 1.125rem;
+    line-height: 1.625;
+}
+
+/* 2b. Text Inputs, Selects, Textareas: scale to text-lg */
+.bg-gray-100 input[type="text"],
+.bg-gray-100 input[type="email"],
+.bg-gray-100 input[type="password"],
+.bg-gray-100 input[type="url"],
+.bg-gray-100 input[type="number"],
+.bg-gray-100 input[type="search"],
+.bg-gray-100 input[type="date"],
+.bg-gray-100 input[type="datetime-local"],
+.bg-gray-100 select,
+.bg-gray-100 textarea {
+    font-size: 1.125rem;
+    line-height: 1.625;
+}
+
+/* 2c. Form Helper Texts: text-xs → text-sm */
+.bg-gray-100 .text-xs.text-gray-500,
+.bg-gray-100 p.text-xs {
+    font-size: 0.875rem;
+}
+
+/* 2d. Form Validation Errors: text-sm → text-base */
+.bg-gray-100 .text-red-600,
+.bg-gray-100 .text-red-500 {
+    font-size: 1rem;
+}
+
+/* 2e. Checkbox & Radio Labels: text-sm → text-base */
+.bg-gray-100 label span {
+    font-size: 1rem;
+}
+
+/* 2f. Quick-Add Buttons: text-xs → text-sm */
+.bg-gray-100 button.text-xs,
+.bg-gray-100 a.text-xs {
+    font-size: 0.875rem;
+}
+
+/* 2g. Form Section Headings (card headers): scale up */
+.bg-gray-100 .bg-white h3 {
+    font-size: 1.25rem;
+    line-height: 1.625;
+}
+
+/* 2h. Form Submit/Cancel Buttons: text-base → text-lg */
+.bg-gray-100 form button[type="submit"],
+.bg-gray-100 form a.px-4 {
+    font-size: 1.125rem;
+}
+
+/* 2i. Back/Return Links: scale up */
+.bg-gray-100 a.border.border-gray-300 {
+    font-size: 1.125rem;
+}
+
+/* 2j. URL Prefix Spans in Slug Fields */
+.bg-gray-100 span.text-sm[dir="ltr"],
+.bg-gray-100 .bg-gray-50.border span {
+    font-size: 0.875rem;
+}
+
+/* ----------------------------------------------------------
+   3. ADMIN MODALS & ALERTS
+   ---------------------------------------------------------- */
+
+/* 3a. Confirmation Modal Title: text-xl → text-2xl */
+#site-confirm-title {
+    font-size: 1.5rem;
+    line-height: 1.4;
+}
+
+/* 3b. Confirmation Modal Message: default → text-lg */
+#site-confirm-message {
+    font-size: 1.125rem;
+    line-height: 1.625;
+}
+
+/* 3c. Confirmation Modal Input */
+#site-confirm-input {
+    font-size: 1.125rem;
+}
+
+/* 3d. Confirmation Modal Help & Error: text-sm → text-base */
+#site-confirm-help,
+#site-confirm-error {
+    font-size: 1rem;
+}
+
+/* 3e. Modal Buttons: scale up */
+#site-confirm-ok,
+#site-confirm-cancel {
+    font-size: 1.125rem;
+}
+
+/* 3f. Flash Alert Messages: ensure readable */
+.bg-gray-100 [role="alert"] p {
+    font-size: 1.125rem;
+    line-height: 1.625;
+}
+
+/* ----------------------------------------------------------
+   4. FRONTEND — Footer & Misc Small Text
+   ---------------------------------------------------------- */
+
+/* 4a. Footer Copyright: text-sm → text-base */
+footer .text-sm.text-gray-500 {
+    font-size: 1rem;
+}
+
+/* 4b. Footer "تابعني" label: text-sm → text-base */
+footer .text-sm.font-medium.text-gray-400 {
+    font-size: 1rem;
+}
+
+/* 4c. Newsletter form elements */
+footer input[type="email"],
+footer button[type="submit"] {
+    font-size: 1.125rem;
+}
+
+/* ----------------------------------------------------------
+   5. GLOBAL — Pagination, Small UI Labels
+   ---------------------------------------------------------- */
+
+/* 5a. Pagination links */
+nav[role="navigation"] span,
+nav[role="navigation"] a {
+    font-size: 1rem;
+}
+
+/* 5b. Global placeholder scaling */
+.bg-gray-100 ::placeholder {
+    font-size: inherit;
 }

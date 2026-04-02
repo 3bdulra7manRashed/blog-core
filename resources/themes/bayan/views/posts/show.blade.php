@@ -272,8 +272,8 @@
             </div>
 
             <!-- Share Buttons -->
-            <div class="mb-10">
-                @include('partials.share-buttons', ['post' => $post])
+            <div class="mb-10 border-t border-gray-100 pt-8">
+                @include('partials.share-buttons', ['post' => $post, 'hideReadMore' => true])
             </div>
 
             <!-- Author Bio Card -->
@@ -413,61 +413,39 @@
             if (!progressBar) return;
 
             let ticking = false;
-            let lastScrollY = 0;
-            let lastScrollHeight = 0;
-            let lastClientHeight = 0;
-
-            // Cache dimensions on resize
-            function cacheDimensions() {
-                lastScrollHeight = document.documentElement.scrollHeight;
-                lastClientHeight = document.documentElement.clientHeight;
-            }
 
             function updateProgressBar() {
-                // Use cached dimensions for better performance
-                const scrollTop = lastScrollY;
-                const maxScroll = lastScrollHeight - lastClientHeight;
+                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight;
+                const clientHeight = document.documentElement.clientHeight;
+                const maxScroll = scrollHeight - clientHeight;
 
                 if (maxScroll <= 0) {
                     progressBar.style.transform = 'scaleX(0)';
+                    ticking = false;
                     return;
                 }
 
-                // Calculate progress as 0-1 for scaleX
                 const progress = Math.min(1, Math.max(0, scrollTop / maxScroll));
-
-                // Use GPU-accelerated transform instead of width
                 progressBar.style.transform = `scaleX(${progress})`;
-
                 ticking = false;
             }
 
             function onScroll() {
-                lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
-
                 if (!ticking) {
                     requestAnimationFrame(updateProgressBar);
                     ticking = true;
                 }
             }
 
-            // Initial setup
-            cacheDimensions();
-            lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+            // Initial render
             updateProgressBar();
 
             // Passive scroll listener for better performance
             window.addEventListener('scroll', onScroll, { passive: true });
 
-            // Recache dimensions on resize with debounce
-            let resizeTimeout;
-            window.addEventListener('resize', function () {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(function () {
-                    cacheDimensions();
-                    onScroll();
-                }, 100);
-            }, { passive: true });
+            // Also update on resize (viewport height changes)
+            window.addEventListener('resize', onScroll, { passive: true });
         })();
 
         // Like Button Toggle

@@ -109,46 +109,46 @@
                 <div class="flex-none hidden lg:flex justify-center gap-6 lg:gap-8">
                     <nav class="flex gap-6 lg:gap-8 items-center">
                         <a href="{{ route('home') }}"
-                            class="text-xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('home') || request()->routeIs('post.*') || request()->routeIs('category.*') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
+                            class="text-2xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('home') || request()->routeIs('post.*') || request()->routeIs('category.*') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
                             المقالات
                         </a>
 
                         @if(feature('vod.video'))
                             <a href="{{ route('videos.index') }}"
-                                class="text-xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('videos.*') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
+                                class="text-2xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('videos.*') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
                                 مكتبة الفيديو
                             </a>
                         @endif
 
                         @if(feature('vod.audio'))
                             <a href="{{ route('audios.index') }}"
-                                class="text-xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('audios.*') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
+                                class="text-2xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('audios.*') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
                                 الصوتيات
                             </a>
                         @endif
 
                         @if(feature('books') && ($hasBooks ?? false))
                             <a href="{{ route('books.index') }}"
-                                class="text-xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('books.*') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
+                                class="text-2xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('books.*') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
                                 الإصدارات
                             </a>
                         @endif
 
                         @if(feature('khutab'))
                             <a href="{{ route('khutab.index') }}"
-                                class="text-xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('khutab.*') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
+                                class="text-2xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('khutab.*') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
                                 الخطب
                             </a>
                         @endif
 
                         <a href="{{ route('about') }}"
-                            class="text-xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('about') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
+                            class="text-2xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('about') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
                             عني
                         </a>
 
                         @if(feature('contact') && Route::has('contact'))
                             <a href="{{ route('contact') }}"
-                                class="text-xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('contact') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
+                                class="text-2xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('contact') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
                                 تواصل معي
                             </a>
                         @endif

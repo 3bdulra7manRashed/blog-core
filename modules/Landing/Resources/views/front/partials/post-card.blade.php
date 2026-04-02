@@ -24,7 +24,7 @@
         @if($post->categories->count() > 0)
             <div class="flex flex-wrap gap-2 mb-3">
                 @foreach($post->categories->take(2) as $category)
-                    <span class="text-sm font-medium text-brand-accent bg-brand-accent/10 px-2 py-1 rounded">
+                    <span class="text-base font-medium text-brand-accent bg-brand-accent/10 px-2 py-1 rounded">
                         {{ $category->name }}
                     </span>
                 @endforeach
@@ -32,21 +32,21 @@
         @endif
 
         <h3
-            class="text-2xl font-serif font-bold text-brand-primary mb-3 leading-relaxed line-clamp-2 group-hover:text-brand-accent transition-colors">
+            class="text-3xl font-serif font-bold text-brand-primary mb-3 leading-snug line-clamp-2 group-hover:text-brand-accent transition-colors">
             <a href="{{ route('post.show', $post->slug) }}">
                 {{ $post->title }}
             </a>
         </h3>
 
         @if($post->excerpt)
-            <p class="text-gray-600 text-base leading-relaxed mb-4 line-clamp-3">
+            <p class="text-gray-600 text-xl leading-loose mb-4 line-clamp-2">
                 {{ $post->excerpt }}
             </p>
         @endif
 
         <div class="flex items-center justify-between pt-3 border-t border-gray-100">
             <a href="{{ route('post.show', $post->slug) }}"
-                class="inline-block px-6 py-2 rounded-full border border-brand-accent text-brand-accent font-medium hover:bg-brand-accent hover:text-white transition-all duration-300 text-base">
+                class="inline-block px-6 py-2 rounded-full border border-brand-accent text-brand-accent font-medium hover:bg-brand-accent hover:text-white transition-all duration-300 text-lg">
                 اقرأ المقال
             </a>
             <span class="text-base text-gray-500">{{ $post->published_at->format('Y/m/d') }}</span>
