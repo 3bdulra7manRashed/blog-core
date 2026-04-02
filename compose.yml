@@ -113,24 +113,35 @@ services:
       - USE_PLAN_SYSTEM=${USE_PLAN_SYSTEM:-true}
       - CLIENT_PLAN=${CLIENT_PLAN:-basic}
 
-      # Feature Flags
-      - FEATURE_CONTACT=${FEATURE_CONTACT}
-      - FEATURE_NEWSLETTER=${FEATURE_NEWSLETTER}
-      - FEATURE_DOWNLOAD=${FEATURE_DOWNLOAD}
-      - FEATURE_MANAGE_ADMINS=${FEATURE_MANAGE_ADMINS}
-      - FEATURE_ADVANCED_SEO=${FEATURE_ADVANCED_SEO}
-      - FEATURE_MEDIA_PAGES=${FEATURE_MEDIA_PAGES}
+      # ==========================================
+      # FEATURE FLAGS
+      # ==========================================
+      
+      # --- Core Features ---
+      - FEATURE_SEO=${FEATURE_SEO:-true}
+      - FEATURE_MEDIA=${FEATURE_MEDIA:-true}
+
+      # --- Content Modules ---
       - FEATURE_THOUGHTS=${FEATURE_THOUGHTS}
       - FEATURE_BOOKS=${FEATURE_BOOKS}
       - FEATURE_KHUTAB=${FEATURE_KHUTAB}
-      - FEATURE_LANDING=${FEATURE_LANDING}
+
+      # --- Media & VOD Modules ---
+      - FEATURE_MEDIA_PAGES=${FEATURE_MEDIA_PAGES}
       - FEATURE_VOD_VIDEO=${FEATURE_VOD_VIDEO}
       - FEATURE_VOD_AUDIO=${FEATURE_VOD_AUDIO}
       - FEATURE_VOD_PLAYLISTS=${FEATURE_VOD_PLAYLISTS}
 
-      # Core Always-On
-      - FEATURE_SEO=${FEATURE_SEO:-true}
-      - FEATURE_MEDIA=${FEATURE_MEDIA:-true}
+      # --- Marketing & Engagement Modules ---
+      - FEATURE_NEWSLETTER=${FEATURE_NEWSLETTER}
+      - FEATURE_CONTACT=${FEATURE_CONTACT}
+      - FEATURE_LANDING=${FEATURE_LANDING}
+      - FEATURE_DOWNLOAD=${FEATURE_DOWNLOAD}
+
+      # --- Administrative & System Modules ---
+      - FEATURE_MANAGE_ADMINS=${FEATURE_MANAGE_ADMINS}
+      - FEATURE_ADVANCED_SEO=${FEATURE_ADVANCED_SEO}
+      - FEATURE_GENERAL_SETTINGS=${FEATURE_GENERAL_SETTINGS}
 
       # reCAPTCHA
       - RECAPTCHA_SITE_KEY=${RECAPTCHA_SITE_KEY}
