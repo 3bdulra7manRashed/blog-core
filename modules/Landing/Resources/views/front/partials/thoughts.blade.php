@@ -21,7 +21,7 @@
                         </div>
 
                     </div>
-                    <span class="text-xs mt-2 text-center line-clamp-2">
+                    <span class="text-sm mt-2 text-center line-clamp-2">
                         {{ $thought->title }}
                     </span>
                 </div>
@@ -59,13 +59,13 @@
 
         {{-- Story Title --}}
         <div class="p-8 border-b text-center">
-            <h3 id="storyTitle" class="text-3xl sm:text-4xl font-serif font-bold text-brand-primary"></h3>
+            <h3 id="storyTitle" class="text-4xl sm:text-5xl font-serif font-bold text-brand-primary"></h3>
         </div>
 
         {{-- Story Content --}}
         <div id="storyBody" class="p-8 sm:p-10 overflow-y-auto" style="max-height: 70vh;">
             <div id="storyContent"
-                class="text-lg sm:text-xl text-gray-700 leading-loose text-center prose prose-lg max-w-none mx-auto">
+                class="text-xl sm:text-2xl text-gray-700 leading-loose text-center prose prose-2xl max-w-none mx-auto">
             </div>
         </div>
 

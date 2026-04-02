@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
@@ -101,14 +101,14 @@
                             class="w-12 h-12 rounded-full object-cover border border-gray-200">
                     @else
                         <span class="w-2 h-2 rounded-full bg-[var(--brand-primary)]"></span>
-                        <span class="text-gray-900 font-bold text-lg tracking-tight">
+                        <span class="text-gray-900 font-bold text-xl tracking-tight">
                             {{ config('branding.site_name') }}
                         </span>
                     @endif
                 </a>
                 <nav class="space-y-2">
                     <a href="{{ route('admin.dashboard') }}"
-                        class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.dashboard') ? 'bg-brand-accent  text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                        class="flex items-center px-4 py-2.5 text-lg leading-relaxed rounded-md transition-colors {{ request()->routeIs('admin.dashboard') ? 'bg-brand-accent  text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
@@ -118,7 +118,7 @@
                     </a>
 
                     <a href="{{ route('admin.posts.index') }}"
-                        class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.posts.*') ? 'bg-brand-accent  text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                        class="flex items-center px-4 py-2.5 text-lg leading-relaxed rounded-md transition-colors {{ request()->routeIs('admin.posts.*') ? 'bg-brand-accent  text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
@@ -128,7 +128,7 @@
                     </a>
 
                     <x-feature-link feature="khutab" route="admin.khutab.index"
-                        class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.khutab.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                        class="flex items-center px-4 py-2.5 text-lg leading-relaxed rounded-md transition-colors {{ request()->routeIs('admin.khutab.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
@@ -138,7 +138,7 @@
                     </x-feature-link>
 
                     <a href="{{ route('admin.categories.index') }}"
-                        class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.categories.*') ? 'bg-brand-accent  text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                        class="flex items-center px-4 py-2.5 text-lg leading-relaxed rounded-md transition-colors {{ request()->routeIs('admin.categories.*') ? 'bg-brand-accent  text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z">
@@ -148,7 +148,7 @@
                     </a>
 
                     <a href="{{ route('admin.tags.index') }}"
-                        class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.tags.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                        class="flex items-center px-4 py-2.5 text-lg leading-relaxed rounded-md transition-colors {{ request()->routeIs('admin.tags.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path>
@@ -157,7 +157,7 @@
                     </a>
 
                     <a href="{{ route('admin.media.library.index') }}"
-                        class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.media.library.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                        class="flex items-center px-4 py-2.5 text-lg leading-relaxed rounded-md transition-colors {{ request()->routeIs('admin.media.library.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
@@ -169,7 +169,7 @@
                     @if(vod_enabled())
                         @if(config('features.vod.video') || config('features.vod.audio'))
                             <x-feature-link feature="vod" route="admin.vod.contents.index"
-                                class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.vod.contents.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                                class="flex items-center px-4 py-2.5 text-lg leading-relaxed rounded-md transition-colors {{ request()->routeIs('admin.vod.contents.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
                                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z">
@@ -182,7 +182,7 @@
                         @endif
                         @if(config('features.vod.playlists'))
                             <x-feature-link feature="vod" route="admin.vod.playlists.index"
-                                class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.vod.playlists.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                                class="flex items-center px-4 py-2.5 text-lg leading-relaxed rounded-md transition-colors {{ request()->routeIs('admin.vod.playlists.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
                                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
@@ -192,7 +192,7 @@
                         @endif
                     @endif
                     <x-feature-link feature="books" route="admin.books.index"
-                        class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.books.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                        class="flex items-center px-4 py-2.5 text-lg leading-relaxed rounded-md transition-colors {{ request()->routeIs('admin.books.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
@@ -201,7 +201,7 @@
                         الكتب
                     </x-feature-link>
                     <x-feature-link feature="download" route="admin.downloads.index"
-                        class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.downloads.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                        class="flex items-center px-4 py-2.5 text-lg leading-relaxed rounded-md transition-colors {{ request()->routeIs('admin.downloads.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
@@ -210,7 +210,7 @@
                         الملفات والمرفقات
                     </x-feature-link>
                     <x-feature-link feature="thoughts" route="admin.thoughts.index"
-                        class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.thoughts.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                        class="flex items-center px-4 py-2.5 text-lg leading-relaxed rounded-md transition-colors {{ request()->routeIs('admin.thoughts.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z">
@@ -243,7 +243,7 @@
 
                     {{-- Newsletter Campaigns Menu Item --}}
                     <x-feature-link feature="newsletter" route="admin.campaigns.index"
-                        class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.campaigns.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                        class="flex items-center px-4 py-2.5 text-lg leading-relaxed rounded-md transition-colors {{ request()->routeIs('admin.campaigns.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2 -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
@@ -253,7 +253,7 @@
 
                     {{-- Newsletter Subscribers Menu Item --}}
                     <x-feature-link feature="newsletter" route="admin.subscribers.index"
-                        class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.subscribers.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                        class="flex items-center px-4 py-2.5 text-lg leading-relaxed rounded-md transition-colors {{ request()->routeIs('admin.subscribers.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M17 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
@@ -266,9 +266,9 @@
                     @if(feature('manage_admins'))
                         @can('manage-users')
                             <div class="pt-4 border-t border-gray-200 mt-4">
-                                <p class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">إدارة خاصة</p>
+                                <p class="px-4 py-2 text-sm font-semibold text-gray-500 uppercase">إدارة خاصة</p>
                                 <x-feature-link feature="manage_admins" route="admin.users.index"
-                                    class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.users.*') ? 'bg-brand-accent  text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                                    class="flex items-center px-4 py-2.5 text-lg leading-relaxed rounded-md transition-colors {{ request()->routeIs('admin.users.*') ? 'bg-brand-accent  text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
                                     <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
@@ -277,7 +277,7 @@
                                     المديرين
                                 </x-feature-link>
                                 <x-feature-link feature="landing" route="admin.settings.landing.edit"
-                                    class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.settings.landing.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                                    class="flex items-center px-4 py-2.5 text-lg leading-relaxed rounded-md transition-colors {{ request()->routeIs('admin.settings.landing.*') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
                                     <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
@@ -286,7 +286,7 @@
                                     الصفحة الرئيسية
                                 </x-feature-link>
                                 <x-feature-link feature="general_settings" route="admin.settings.general"
-                                    class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.settings.general') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                                    class="flex items-center px-4 py-2.5 text-lg leading-relaxed rounded-md transition-colors {{ request()->routeIs('admin.settings.general') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
                                     <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
@@ -304,7 +304,7 @@
                     <div class="pt-4 border-t border-gray-200 mt-4">
                         {{-- Profile Link - visible to all authenticated users --}}
                         <a href="{{ route('profile.edit') }}"
-                            class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('profile.edit') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                            class="flex items-center px-4 py-2.5 text-lg leading-relaxed rounded-md transition-colors {{ request()->routeIs('profile.edit') ? 'bg-brand-accent text-white hover:text-white hover:bg-teal-700' : 'text-gray-700 hover:bg-gray-100' }}">
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>

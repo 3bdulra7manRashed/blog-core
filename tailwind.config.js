@@ -30,8 +30,8 @@ export default {
                 },
             },
             fontFamily: {
-                sans: ['"Cairo"', ...defaultTheme.fontFamily.sans],
-                serif: ['"Cairo"', ...defaultTheme.fontFamily.serif],
+                sans: ['"Sakkal Majalla"', '"Cairo"', ...defaultTheme.fontFamily.sans],
+                serif: ['"Sakkal Majalla"', '"Cairo"', ...defaultTheme.fontFamily.serif],
             },
             maxWidth: {
                 prose: '70ch',

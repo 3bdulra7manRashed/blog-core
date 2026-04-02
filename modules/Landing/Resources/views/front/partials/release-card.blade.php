@@ -10,11 +10,11 @@
         </div>
     @endif
     <div class="p-5">
-        <h3 class="text-lg font-serif font-bold text-brand-primary mb-2 group-hover:text-brand-accent transition-colors">
+        <h3 class="text-2xl font-serif font-bold text-brand-primary mb-2 leading-relaxed group-hover:text-brand-accent transition-colors">
             {{ $book->title }}
         </h3>
         @if($book->excerpt)
-            <p class="text-gray-600 text-sm line-clamp-2">{{ $book->excerpt }}</p>
+            <p class="text-gray-600 text-base leading-relaxed line-clamp-2">{{ $book->excerpt }}</p>
         @endif
     </div>
 </div>

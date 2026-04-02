@@ -17,9 +17,9 @@
         {{-- Section Header --}}
         @if(!empty($title))
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-primary mb-4">{{ $title }}</h2>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-brand-primary mb-4 leading-relaxed">{{ $title }}</h2>
                 @if(!empty($subtitle))
-                    <p class="text-gray-600 max-w-2xl mx-auto">{{ $subtitle }}</p>
+                    <p class="text-gray-600 text-lg leading-relaxed max-w-2xl mx-auto">{{ $subtitle }}</p>
                 @endif
             </div>
         @endif
@@ -34,7 +34,7 @@
         {{-- View All Link --}}
         @if(!empty($viewAllUrl))
             <div class="text-center mt-8">
-                <a href="{{ $viewAllUrl }}" class="inline-flex items-center text-brand-accent hover:text-brand-primary font-medium transition-colors">
+                <a href="{{ $viewAllUrl }}" class="inline-flex items-center text-brand-accent hover:text-brand-primary font-medium text-lg transition-colors">
                     {{ $viewAllText ?? 'عرض الكل' }}
                     <svg class="w-5 h-5 mr-2 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
