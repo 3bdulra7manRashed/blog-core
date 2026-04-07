@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
@@ -460,7 +460,9 @@
                     @if(feature('contact') && Route::has('contact'))
                         <a href="{{ route('contact') }}">تواصل معي</a>
                     @endif
-                    <a href="{{ route('about') }}">عني</a>
+                    @if(feature('about'))
+                        <a href="{{ route('about') }}">عني</a>
+                    @endif
                 </div>
             </div>
         </div>

@@ -141,10 +141,12 @@
                             </a>
                         @endif
 
+                        @if(feature('about'))
                         <a href="{{ route('about') }}"
                             class="text-2xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('about') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
                             عني
                         </a>
+                        @endif
 
                         @if(feature('contact') && Route::has('contact'))
                             <a href="{{ route('contact') }}"
@@ -301,11 +303,13 @@
                     @endif
 
                     <!-- عني (About) -->
+                    @if(feature('about'))
                     <a href="{{ route('about') }}"
                         class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('about') ? 'text-brand-accent bg-gray-50' : '' }}"
                         @click="mobileMenuOpen = false">
                         عني
                     </a>
+                    @endif
 
                     <!-- تواصل معي (Contact) -->
                     @if(feature('contact') && Route::has('contact'))
@@ -449,8 +453,10 @@
                             class="block text-sm text-gray-700 hover:text-brand-accent py-2">المقالات الأكثر قراءة</a>
                     </div>
                 </details>
+                @if(feature('about'))
                 <a href="{{ route('about') }}"
                     class="text-base font-medium text-gray-800 hover:text-brand-accent py-2">عني</a>
+                @endif
                 @if(feature('contact') && Route::has('contact'))
                     <a href="{{ route('contact') }}"
                         class="text-base font-medium text-gray-800 hover:text-brand-accent py-2">تواصل معي</a>

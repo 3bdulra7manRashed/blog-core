@@ -80,6 +80,7 @@ return [
     'books' => $resolve('books'),
     'khutab' => $resolve('khutab'),
     'landing' => $resolve('landing'),
+    'about' => $resolve('about'),
     'general_settings' => $resolve('general_settings'),
 
     // VOD sub-features
