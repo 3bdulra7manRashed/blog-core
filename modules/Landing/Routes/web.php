@@ -17,12 +17,6 @@ use Modules\Landing\Http\Controllers\LandingController;
 |
 */
 
-if (feature('landing')) {
-    // Override homepage with landing page
-    Route::get('/', [LandingController::class, 'index'])
-        ->name('landing.home');
-
-    // Move original homepage to /posts
-    Route::get('/posts', [\App\Http\Controllers\PostController::class, 'index'])
-        ->name('home');
-}
+// The root '/' routing logic has been shifted to App\Http\Controllers\HomeController
+// to allow 'php artisan route:cache' compatibility in production.
+// Do not define '/' or '/posts' here.

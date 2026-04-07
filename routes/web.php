@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 
 // Public blog routes
 
-Route::get('/', [PostController::class, 'index'])->name('home');
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index'); // Maintain access to raw posts index if landing is active
 Route::get('/post/{slug}', [PostController::class, 'show'])->name('post.show');
 Route::get('/category/{slug}', [PostController::class, 'category'])->name('category.show');
 Route::get('/tag/{slug}', [PostController::class, 'tag'])->name('tag.show');
