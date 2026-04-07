@@ -15,11 +15,9 @@ class HomeController extends Controller
     public function index()
     {
         if (config('features.landing')) {
-            // Using the Landing Module's Controller via app()->call() for dependency injection
             return app()->call([\Modules\Landing\Http\Controllers\LandingController::class, 'index']);
         }
-        
-        // Default to the Blog's PostController index
+
         return app()->call([\App\Http\Controllers\PostController::class, 'index']);
     }
 }
