@@ -108,10 +108,22 @@
                 <!-- ═══ Center Column: Navigation Links (flex-none, perfectly centered) ═══ -->
                 <div class="flex-none hidden lg:flex justify-center gap-6 lg:gap-8">
                     <nav class="flex gap-6 lg:gap-8 items-center">
-                        <a href="{{ route('home') }}"
-                            class="text-2xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('home') || request()->routeIs('post.*') || request()->routeIs('category.*') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
-                            المقالات
-                        </a>
+                        @if(config('features.landing'))
+                            <a href="{{ url('/') }}"
+                                class="text-2xl leading-relaxed transition-colors duration-200 {{ request()->is('/') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
+                                الرئيسية
+                            </a>
+                            
+                            <a href="{{ route('posts.index') }}"
+                                class="text-2xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('posts.index') || request()->routeIs('post.*') || request()->routeIs('category.*') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
+                                المقالات
+                            </a>
+                        @else
+                            <a href="{{ route('home') }}"
+                                class="text-2xl leading-relaxed transition-colors duration-200 {{ request()->routeIs('home') || request()->routeIs('posts.index') || request()->routeIs('post.*') || request()->routeIs('category.*') ? 'text-[var(--brand-primary)] font-bold relative after:absolute after:-bottom-[6px] after:left-0 after:w-full after:h-0.5 after:bg-[var(--brand-primary)]' : 'text-gray-600 font-medium hover:text-[var(--brand-accent)]' }}">
+                                المقالات
+                            </a>
+                        @endif
 
                         @if(feature('vod.video'))
                             <a href="{{ route('videos.index') }}"
@@ -259,12 +271,26 @@
             <!-- Navigation Items -->
             <nav class="py-4" @click.away="mobileMenuOpen = false">
                 <div class="flex flex-col">
-                    <!-- المقالات (Articles) - Direct Link -->
-                    <a href="{{ route('home') }}"
-                        class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('home') || request()->routeIs('post.*') ? 'text-brand-accent bg-gray-50' : '' }}"
-                        @click="mobileMenuOpen = false">
-                        المقالات
-                    </a>
+                    @if(config('features.landing'))
+                        <a href="{{ url('/') }}"
+                            class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->is('/') ? 'text-brand-accent bg-gray-50' : '' }}"
+                            @click="mobileMenuOpen = false">
+                            الرئيسية
+                        </a>
+
+                        <a href="{{ route('posts.index') }}"
+                            class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('posts.index') || request()->routeIs('post.*') ? 'text-brand-accent bg-gray-50' : '' }}"
+                            @click="mobileMenuOpen = false">
+                            المقالات
+                        </a>
+                    @else
+                        <!-- المقالات (Articles) - Direct Link -->
+                        <a href="{{ route('home') }}"
+                            class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('home') || request()->routeIs('posts.index') || request()->routeIs('post.*') ? 'text-brand-accent bg-gray-50' : '' }}"
+                            @click="mobileMenuOpen = false">
+                            المقالات
+                        </a>
+                    @endif
 
                     <!-- Video Library -->
                     @if(feature('vod.video'))

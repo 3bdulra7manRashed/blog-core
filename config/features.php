@@ -47,14 +47,20 @@ $planData = $plans[$planName] ?? $plans['basic'];
 $resolve = static function (string $key, bool $default = false) use ($usePlanSystem, $planData): bool {
     // Build the env var name: 'vod_video' → 'FEATURE_VOD_VIDEO'
     $envKey = 'FEATURE_' . strtoupper($key);
+    
+    // 1. Fetch the raw environment value without a default fallback yet
+    $envValue = env($envKey);
+    
+    // 2. Identify the target default based on the Plan System status
+    $targetDefault = $usePlanSystem ? ($planData[$key] ?? $default) : $default;
 
-    if (!$usePlanSystem) {
-        return (bool) env($envKey, $default);
+    // 3. If the env var is missing (null) OR explicitly left empty (""), use the default
+    if ($envValue === null || $envValue === '') {
+        return (bool) $targetDefault;
     }
 
-    $planValue = $planData[$key] ?? $default;
-
-    return (bool) env($envKey, $planValue);
+    // 4. Otherwise, trust the explicit env value (which env() likely already cast to bool if "true"/"false")
+    return (bool) $envValue;
 };
 
 // ── Build the final config array (returned & cached by Laravel) ─────────────

@@ -24,12 +24,10 @@ Route::get('/posts/most-read', [PostController::class, 'mostRead'])->name('posts
 Route::get('/about', [PageController::class, 'about'])->name('about');
 
 // Khutab Routes (Feature-gated)
-if (feature('khutab')) {
-    Route::prefix('khutab')->group(function () {
-        Route::get('/', [KhutbahController::class, 'index'])->name('khutab.index');
-        Route::get('/{slug}', [KhutbahController::class, 'show'])->name('khutab.show');
-    });
-}
+Route::prefix('khutab')->middleware('feature:khutab')->group(function () {
+    Route::get('/', [KhutbahController::class, 'index'])->name('khutab.index');
+    Route::get('/{slug}', [KhutbahController::class, 'show'])->name('khutab.show');
+});
 
 // Note: /contact routes are now handled by Modules\Contact when feature('contact') is enabled
 
@@ -63,34 +61,34 @@ Route::prefix('admin')->middleware(['auth', 'role:admin|moderator'])->name('admi
     Route::resource('tags', \App\Http\Controllers\Admin\TagController::class)->except(['show']);
 
     // Global Settings (Feature-Gated to Business Tier like Landing)
-    if (feature('general_settings')) {
+    Route::middleware('feature:general_settings')->group(function () {
         Route::get('/settings/general', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.general');
         Route::put('/settings/general', [\App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.general.update');
-    }
+    });
 
     // Static Pages (About)
     Route::get('/about', [\App\Http\Controllers\Admin\PageController::class, 'edit'])->name('about.edit');
     Route::put('/about', [\App\Http\Controllers\Admin\PageController::class, 'update'])->name('about.update');
 
     // Khutab Admin Routes (Feature-gated)
-    if (feature('khutab')) {
+    Route::middleware('feature:khutab')->group(function () {
         Route::resource('khutab', \App\Http\Controllers\Admin\KhutbahController::class)
             ->parameters(['khutab' => 'khutbah'])
             ->except(['show']);
-    }
+    });
 
     // Landing Settings Admin Routes (Feature-gated)
-    if (feature('landing')) {
+    Route::middleware('feature:landing')->group(function () {
         Route::get('settings/landing', [\App\Http\Controllers\Admin\LandingSettingsController::class, 'edit'])->name('settings.landing.edit');
         Route::put('settings/landing', [\App\Http\Controllers\Admin\LandingSettingsController::class, 'update'])->name('settings.landing.update');
-    }
+    });
 
 });
 
 // Note: Contact Messages Management routes are now handled by Modules\Contact when feature('contact') is enabled
 
 // User management routes - Only Super Admin (managed by feature flag)
-if (feature('manage_admins')) {
+Route::middleware('feature:manage_admins')->group(function () {
     // User management routes - Only Super Admin (مدير النظام) can access
     Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
         Route::post('users/{user}/promote', [\App\Http\Controllers\Admin\UserController::class, 'promote'])->name('users.promote');
@@ -110,6 +108,6 @@ if (feature('manage_admins')) {
         Route::get('users/create', [\App\Http\Controllers\Admin\UserController::class, 'create'])->name('users.create');
         Route::post('users', [\App\Http\Controllers\Admin\UserController::class, 'store'])->name('users.store');
     });
-}
+});
 
 require __DIR__ . '/auth.php';
