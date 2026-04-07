@@ -15,9 +15,9 @@ class HomeController extends Controller
     public function index()
     {
         if (config('features.landing')) {
-            return app()->call([\Modules\Landing\Http\Controllers\LandingController::class, 'index']);
+            return app(\Modules\Landing\Http\Controllers\LandingController::class)->index();
         }
 
-        return app()->call([\App\Http\Controllers\PostController::class, 'index']);
+        return app(\App\Http\Controllers\PostController::class)->index();
     }
 }
