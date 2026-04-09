@@ -26,7 +26,7 @@
             <div class="w-full md:w-3/5 lg:w-1/2 text-right">
 
                 {{-- Title --}}
-                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-white mb-8 leading-tight drop-shadow-lg">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-sakkal font-bold text-white mb-8 leading-tight drop-shadow-lg">
                     {{ $hero['title'] }}
                 </h1>
 
@@ -61,7 +61,7 @@
         {{-- Top Section: Text & CTA --}}
         <div class="relative z-10 flex-none flex flex-col justify-end px-4 pt-12 pb-2 text-center">
             
-            <h1 class="text-5xl sm:text-6xl font-serif font-bold text-white mb-8 leading-[1.3] drop-shadow-md">
+            <h1 class="text-5xl sm:text-6xl font-sakkal font-bold text-white mb-8 leading-[1.3] drop-shadow-md">
                 {{ $hero['title'] }}
             </h1>
 
