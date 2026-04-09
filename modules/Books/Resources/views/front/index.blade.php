@@ -6,8 +6,8 @@
     <div class="container mx-auto px-4 max-w-5xl py-8">
         <!-- Page Header -->
         <div class="mb-8">
-            <h1 class="text-3xl font-serif font-bold text-[var(--brand-primary)]">الإصدارات</h1>
-            <p class="text-gray-600 mt-2">مجموعة الكتب والإصدارات المتاحة</p>
+            <h1 class="text-4xl font-serif font-bold text-[var(--brand-primary)]">الإصدارات</h1>
+            <p class="text-gray-600 mt-2 text-lg">مجموعة الكتب والإصدارات المتاحة</p>
         </div>
 
         @if($books->count() > 0)
@@ -34,21 +34,21 @@
                         @endif
 
                         <!-- Content -->
-                        <div class="p-4">
-                            <h2 class="text-lg font-bold text-[var(--brand-primary)] mb-2 line-clamp-2">
+                        <div class="p-5">
+                            <h2 class="text-xl font-bold text-[var(--brand-primary)] mb-3 line-clamp-2">
                                 <a href="{{ route('books.show', $book->slug) }}" class="hover:text-brand-accent transition-colors">
                                     {{ $book->title }}
                                 </a>
                             </h2>
 
                             @if($book->excerpt)
-                                <p class="text-gray-600 text-base mb-4 line-clamp-3 leading-relaxed">
+                                <p class="text-gray-600 text-lg mb-4 line-clamp-3 leading-relaxed">
                                     {{ Str::limit($book->excerpt, 120) }}
                                 </p>
                             @endif
 
                             <a href="{{ route('books.show', $book->slug) }}"
-                                class="inline-flex items-center text-sm font-medium text-brand-accent hover:text-brand-primary transition-colors">
+                                class="inline-flex items-center text-base font-medium text-brand-accent hover:text-brand-primary transition-colors">
                                 تفاصيل الكتاب
                                 <svg class="w-4 h-4 mr-1 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -74,8 +74,8 @@
                         d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
                     </path>
                 </svg>
-                <h3 class="text-lg font-medium text-gray-600 mb-2">لا توجد إصدارات حالياً</h3>
-                <p class="text-gray-500">ستُضاف الكتب قريباً</p>
+                <h3 class="text-xl font-medium text-gray-600 mb-2">لا توجد إصدارات حالياً</h3>
+                <p class="text-gray-500 text-lg">ستُضاف الكتب قريباً</p>
             </div>
         @endif
     </div>
