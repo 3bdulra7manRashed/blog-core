@@ -53,8 +53,7 @@
     {{-- Scripts --}}
     @vite(['resources/themes/classic/assets/css/app.css', 'resources/themes/classic/assets/js/app.js'])
 
-    {{-- Alpine.js --}}
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    {{-- Alpine.js (Bundled in app.js, removed CDN to fix duplicate init) --}}
 
     {{-- Structured Data (Schema.org JSON-LD) --}}
     @yield('schema')
@@ -192,10 +191,11 @@
         </div>
     </div>
 
-    <!-- Header (Logo & Menu Button) - Sticky on mobile -->
-    <header class="bg-white sticky top-0 z-50 md:z-30 md:relative py-4 md:py-8 border-b border-gray-100 md:border-b-0"
-        x-data="{ mobileMenuOpen: false, articlesOpen: false }"
+    <!-- Mobile Menu Alpine Scope -->
+    <div x-data="{ mobileMenuOpen: false, articlesOpen: false }"
         x-init="$watch('mobileMenuOpen', value => { if (value) { setTimeout(() => document.getElementById('mobile-menu-close')?.focus(), 100); } })">
+    <!-- Header (Logo & Menu Button) - Sticky on mobile -->
+    <header class="bg-white sticky top-0 z-50 md:z-30 md:relative py-4 md:py-8 border-b border-gray-100 md:border-b-0">
         <div class="container mx-auto px-4 max-w-5xl">
             <div class="flex justify-between items-center">
                 <!-- Right: Logo (Dark Text + Orange Dot) -->
@@ -232,6 +232,7 @@
                 </button>
             </div>
         </div>
+    </header>
 
         <!-- Mobile Off-Canvas Menu -->
         <!-- Overlay -->
@@ -239,17 +240,19 @@
             x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
             x-transition:leave="transition-opacity ease-linear duration-300" x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0" @click="mobileMenuOpen = false"
-            @keydown.escape.window="mobileMenuOpen = false" class="fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden"
-            style="display: none;" aria-hidden="true"></div>
+            @keydown.escape.window="mobileMenuOpen = false" class="fixed inset-0 bg-black bg-opacity-50 md:hidden"
+            style="display: none; z-index: 99998;" aria-hidden="true"></div>
 
         <!-- Sidebar Panel -->
-        <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300 transform"
-            x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
-            x-transition:leave="transition ease-in duration-300 transform" x-transition:leave-start="translate-x-0"
-            x-transition:leave-end="translate-x-full" @keydown.escape.window="mobileMenuOpen = false" id="mobile-menu"
+        <div x-show="mobileMenuOpen"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-300"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+            @keydown.escape.window="mobileMenuOpen = false" id="mobile-menu"
             role="dialog" aria-modal="true" aria-label="قائمة الموقع"
-            class="fixed top-0 right-0 h-full w-72 sm:w-80 bg-white shadow-xl z-50 overflow-y-auto md:hidden"
-            style="display: none;" x-ref="mobileMenu">
+            class="fixed top-0 right-0 h-full w-72 sm:w-80 bg-white shadow-xl overflow-y-auto md:hidden"
+            style="display: none; z-index: 99999;" x-ref="mobileMenu">
             <!-- Close Button -->
             <div class="flex justify-start items-center p-4 border-b border-gray-100">
                 <button id="mobile-menu-close" @click="mobileMenuOpen = false"
@@ -438,9 +441,7 @@
                 </div>
             </nav>
         </div>
-    </header>
-
-    <!-- No-JS Fallback Menu (shows when JavaScript is disabled) -->
+    </div><!-- End Mobile Menu Alpine Scope -->    <!-- No-JS Fallback Menu (shows when JavaScript is disabled) -->
     <noscript>
         <div class="md:hidden border-t border-gray-200 bg-white">
             <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">

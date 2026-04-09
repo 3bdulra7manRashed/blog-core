@@ -53,9 +53,6 @@
     {{-- Scripts --}}
     @vite(['resources/themes/bayan/assets/css/app.css', 'resources/themes/bayan/assets/js/app.js'])
 
-    {{-- Alpine.js --}}
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
     {{-- Structured Data (Schema.org JSON-LD) --}}
     @yield('schema')
     @include('partials.schema')
@@ -82,10 +79,11 @@
         class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:right-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-brand-accent focus:text-white focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent">
         تخطّي إلى المحتوى
     </a>
-    <!-- Main Header Section (Glassmorphism UI) -->
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 transition-all duration-300"
-        x-data="{ mobileMenuOpen: false, articlesOpen: false }"
+    <!-- Mobile Menu Alpine Scope -->
+    <div x-data="{ mobileMenuOpen: false, articlesOpen: false }"
         x-init="$watch('mobileMenuOpen', value => { if (value) { setTimeout(() => document.getElementById('mobile-menu-close')?.focus(), 100); } })">
+    <!-- Main Header Section (Glassmorphism UI) -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
         <div class="container mx-auto px-4 max-w-5xl">
             <div class="flex items-center justify-between h-20">
 
@@ -227,7 +225,7 @@
                 </div>
 
                 <!-- Mobile: Hamburger Button -->
-                <button class="md:hidden text-gray-600 hover:text-[var(--brand-primary)] transition-colors p-2"
+                <button class="lg:hidden text-gray-600 hover:text-[var(--brand-primary)] transition-colors p-2"
                     id="mobile-menu-button"
                     @click="mobileMenuOpen = true; $nextTick(() => { document.getElementById('mobile-menu-close').focus(); })"
                     aria-controls="mobile-menu" :aria-expanded="mobileMenuOpen" aria-label="فتح القائمة">
@@ -238,24 +236,27 @@
                 </button>
             </div>
         </div>
+    </header>
 
-        <!-- Mobile Off-Canvas Menu -->
+        <!-- Mobile Off-Canvas Menu (OUTSIDE header to avoid backdrop-filter containing block) -->
         <!-- Overlay -->
         <div x-show="mobileMenuOpen" x-transition:enter="transition-opacity ease-linear duration-300"
             x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
             x-transition:leave="transition-opacity ease-linear duration-300" x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0" @click="mobileMenuOpen = false"
-            @keydown.escape.window="mobileMenuOpen = false" class="fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden"
-            style="display: none;" aria-hidden="true"></div>
+            @keydown.escape.window="mobileMenuOpen = false" class="fixed inset-0 bg-black bg-opacity-50 lg:hidden"
+            style="display: none; z-index: 99998;" aria-hidden="true"></div>
 
         <!-- Sidebar Panel -->
-        <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300 transform"
-            x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
-            x-transition:leave="transition ease-in duration-300 transform" x-transition:leave-start="translate-x-0"
-            x-transition:leave-end="translate-x-full" @keydown.escape.window="mobileMenuOpen = false" id="mobile-menu"
+        <div x-show="mobileMenuOpen"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-300"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+            @keydown.escape.window="mobileMenuOpen = false" id="mobile-menu"
             role="dialog" aria-modal="true" aria-label="قائمة الموقع"
-            class="fixed top-0 right-0 h-full w-72 sm:w-80 bg-white shadow-xl z-50 overflow-y-auto md:hidden"
-            style="display: none;" x-ref="mobileMenu">
+            class="fixed top-0 right-0 h-full w-72 sm:w-80 bg-white shadow-xl overflow-y-auto lg:hidden"
+            style="display: none; z-index: 99999;" x-ref="mobileMenu">
             <!-- Close Button -->
             <div class="flex justify-start items-center p-4 border-b border-gray-100">
                 <button id="mobile-menu-close" @click="mobileMenuOpen = false"
@@ -460,7 +461,8 @@
                 </div>
             </nav>
         </div>
-    </header>
+    </div><!-- End Mobile Menu Alpine Scope -->
+
 
     <!-- No-JS Fallback Menu (shows when JavaScript is disabled) -->
     <noscript>
