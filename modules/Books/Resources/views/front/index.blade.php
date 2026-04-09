@@ -42,7 +42,7 @@
                             </h2>
 
                             @if($book->excerpt)
-                                <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                                <p class="text-gray-600 text-base mb-4 line-clamp-3 leading-relaxed">
                                     {{ Str::limit($book->excerpt, 120) }}
                                 </p>
                             @endif

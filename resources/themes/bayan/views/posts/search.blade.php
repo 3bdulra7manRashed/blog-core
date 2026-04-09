@@ -36,7 +36,7 @@
                             </h2>
 
                             @if($post->excerpt)
-                                <p class="text-gray-600 leading-loose mb-8 text-base md:text-lg">{{ $post->excerpt }}</p>
+                                <p class="text-gray-600 mb-8 text-xl md:text-2xl leading-relaxed">{{ $post->excerpt }}</p>
                             @endif
 
                             @include('partials.share-buttons', ['post' => $post])
