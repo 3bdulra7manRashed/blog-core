@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\UpdateLandingSettingsRequest;
 use App\Models\Category;
 use App\Models\LandingSetting;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class LandingSettingsController extends Controller
@@ -29,6 +30,17 @@ class LandingSettingsController extends Controller
     {
         $settings = LandingSetting::current();
         $data = $request->validated();
+
+        if ($request->hasFile('hero_mobile_image')) {
+            if ($settings->hero_mobile_image && Storage::disk('public')->exists($settings->hero_mobile_image)) {
+                Storage::disk('public')->delete($settings->hero_mobile_image);
+            }
+            $path = $request->file('hero_mobile_image')->store('landing', 'public');
+            $data['hero_mobile_image'] = $path;
+        } elseif ($request->filled('hero_mobile_image_url')) {
+            $data['hero_mobile_image'] = $request->input('hero_mobile_image_url');
+        }
+        unset($data['hero_mobile_image_url']);
 
         // Handle boolean checkboxes (not sent when unchecked)
         $booleanFields = [

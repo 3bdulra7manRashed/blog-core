@@ -263,7 +263,7 @@
         style="display:none; z-index:99998;"
         aria-hidden="true"></div>
 
-    {{-- Right-Side Sliding Panel --}}
+    {{-- Right-Side Sliding Panel or Full Overlay --}}
     <div x-show="mobileMenuOpen"
         x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="translate-x-full opacity-0"
@@ -274,34 +274,29 @@
         @keydown.escape.window="mobileMenuOpen = false"
         id="mobile-menu"
         role="dialog" aria-modal="true" aria-label="قائمة الموقع"
-        class="fixed top-0 right-0 h-full w-[80%] sm:w-80 bg-white shadow-2xl overflow-y-auto lg:hidden"
-        style="display:none; z-index:99999;">
+        class="fixed inset-y-0 right-0 h-full w-[85%] sm:w-80 bg-white shadow-2xl overflow-y-auto lg:hidden z-[100]"
+        style="display:none;">
 
         {{-- Panel Header: Close (✕) button --}}
-        <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-            {{-- Hamburger icon placeholder (left side in RTL) --}}
-            <button class="p-1 text-gray-500" tabindex="-1" aria-hidden="true">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
+        <div class="sticky top-0 z-10 bg-white flex items-center justify-between px-6 py-4 border-b border-gray-100">
+            {{-- Spacer --}}
+            <div></div>
 
             {{-- Close button --}}
             <button id="mobile-menu-close"
                 @click="mobileMenuOpen = false"
-                class="p-1.5 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+                class="p-2 rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors"
                 aria-label="إغلاق القائمة">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                         d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </button>
         </div>
 
         {{-- Navigation Links --}}
-        <nav class="py-2">
-            <div class="flex flex-col">
+        <nav class="overflow-y-auto max-h-[calc(100vh-80px)]">
+            <div class="flex flex-col space-y-4 p-6">
                 @if(config('features.landing'))
                     <a href="{{ url('/') }}"
                         class="block px-5 py-3.5 text-right text-base border-b border-gray-50 transition-colors {{ request()->is('/') ? 'text-[var(--brand-primary)] font-bold bg-[var(--writer-secondary)]' : 'text-gray-700 font-medium hover:bg-gray-50 hover:text-[var(--brand-primary)]' }}"

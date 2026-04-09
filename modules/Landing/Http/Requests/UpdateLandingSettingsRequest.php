@@ -26,6 +26,8 @@ class UpdateLandingSettingsRequest extends FormRequest
             'hero_subtitle' => ['nullable', 'string', 'max:1000'],
             'hero_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
             'hero_image_url' => ['nullable', 'string', 'max:500'],
+            'hero_mobile_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
+            'hero_mobile_image_url' => ['nullable', 'string', 'max:500'],
             'show_quotes_section' => ['nullable', 'boolean'],
         ];
     }
@@ -42,6 +44,8 @@ class UpdateLandingSettingsRequest extends FormRequest
             'hero_subtitle.max' => 'العنوان الفرعي يجب ألا يتجاوز 1000 حرف',
             'hero_image.image' => 'الملف يجب أن يكون صورة',
             'hero_image.max' => 'حجم الصورة يجب ألا يتجاوز 5 ميجابايت',
+            'hero_mobile_image.image' => 'الملف يجب أن يكون صورة',
+            'hero_mobile_image.max' => 'حجم الصورة يجب ألا يتجاوز 5 ميجابايت',
         ];
     }
 
@@ -56,6 +60,7 @@ class UpdateLandingSettingsRequest extends FormRequest
             'hero_title' => 'عنوان الصفحة',
             'hero_subtitle' => 'العنوان الفرعي',
             'hero_image' => 'صورة الخلفية',
+            'hero_mobile_image' => 'صورة الموبايل (Hero Mobile)',
             'show_quotes_section' => 'قسم الاقتباسات',
         ];
     }

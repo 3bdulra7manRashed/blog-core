@@ -34,6 +34,7 @@ class LandingDataService
             'title' => $settings->hero_title ?: config('app.name'),
             'subtitle' => $settings->hero_subtitle ?: config('branding.site_description', 'مرحباً بكم في موقعنا'),
             'image' => $settings->hero_image,
+            'mobile_image' => $settings->hero_mobile_image,
         ];
     }
 

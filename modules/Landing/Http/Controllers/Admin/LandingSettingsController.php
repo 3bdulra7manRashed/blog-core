@@ -43,8 +43,22 @@ class LandingSettingsController extends Controller
             $data['hero_image'] = $request->input('hero_image_url');
         }
 
-        // Remove hero_image_url from data (not a db column)
+        if ($request->hasFile('hero_mobile_image')) {
+            // Delete old image if exists
+            if ($settings->hero_mobile_image && Storage::disk('public')->exists($settings->hero_mobile_image)) {
+                Storage::disk('public')->delete($settings->hero_mobile_image);
+            }
+
+            $path = $request->file('hero_mobile_image')->store('landing', 'public');
+            $data['hero_mobile_image'] = $path;
+        } elseif ($request->filled('hero_mobile_image_url')) {
+            // Use external URL
+            $data['hero_mobile_image'] = $request->input('hero_mobile_image_url');
+        }
+
+        // Remove URLs from data (not db columns)
         unset($data['hero_image_url']);
+        unset($data['hero_mobile_image_url']);
 
         // Handle checkbox (not sent when unchecked)
         $data['show_quotes_section'] = $request->has('show_quotes_section');

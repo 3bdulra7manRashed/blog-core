@@ -25,7 +25,7 @@
     </div>
 @endif
 
-<form action="{{ route('admin.settings.landing.update') }}" method="POST">
+<form action="{{ route('admin.settings.landing.update') }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -83,6 +83,54 @@
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                     <p class="text-xs text-gray-500 mt-1">مسار نسبي داخل storage أو رابط خارجي كامل</p>
+                </div>
+            </div>
+
+            {{-- Mobile Hero Image Path --}}
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b">صورة الموبايل (Hero Mobile)</h2>
+                
+                {{-- Current Mobile Image Preview --}}
+                @if($settings->hero_mobile_image)
+                    <div class="mb-4">
+                        <img 
+                            src="{{ str_starts_with($settings->hero_mobile_image, 'http') ? $settings->hero_mobile_image : asset('storage/' . $settings->hero_mobile_image) }}" 
+                            alt="صورة الموبايل الحالية" 
+                            class="w-full h-40 object-cover rounded-lg border"
+                        >
+                        <p class="text-sm text-gray-500 mt-1">الصورة الحالية</p>
+                    </div>
+                @endif
+
+                {{-- Upload New Mobile Image --}}
+                <div class="mb-4">
+                    <label for="hero_mobile_image" class="block text-sm font-medium text-gray-700 mb-1">رفع صورة جديدة</label>
+                    <input 
+                        type="file" 
+                        name="hero_mobile_image" 
+                        id="hero_mobile_image" 
+                        accept="image/*"
+                        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brand-accent focus:border-brand-accent @error('hero_mobile_image') border-red-500 @enderror"
+                    >
+                    @error('hero_mobile_image')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                    <p class="text-xs text-gray-500 mt-1">الحد الأقصى: 5 ميجابايت | الصيغ: JPEG, PNG, GIF, WebP (اختياري)</p>
+                </div>
+
+                {{-- Or Use URL --}}
+                <div class="mb-4">
+                    <label for="hero_mobile_image_url" class="block text-sm font-medium text-gray-700 mb-1">مسار صورة الموبايل (خارجي)</label>
+                    <input
+                        type="text"
+                        name="hero_mobile_image_url"
+                        id="hero_mobile_image_url"
+                        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brand-accent focus:border-brand-accent @error('hero_mobile_image_url') border-red-500 @enderror"
+                        placeholder="https://example.com/mobile-image.jpg"
+                    >
+                    @error('hero_mobile_image_url')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
 

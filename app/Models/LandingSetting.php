@@ -18,6 +18,7 @@ class LandingSetting extends Model
         'hero_title',
         'hero_subtitle',
         'hero_image',
+        'hero_mobile_image',
         'cta_text',
         'cta_link',
         'show_quotes_section',

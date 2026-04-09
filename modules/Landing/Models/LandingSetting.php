@@ -22,6 +22,7 @@ class LandingSetting extends Model
         'hero_title',
         'hero_subtitle',
         'hero_image',
+        'hero_mobile_image',
         'show_quotes_section',
     ];
 
@@ -45,6 +46,7 @@ class LandingSetting extends Model
             'hero_title' => null,
             'hero_subtitle' => null,
             'hero_image' => null,
+            'hero_mobile_image' => null,
             'show_quotes_section' => true,
         ]);
     }
