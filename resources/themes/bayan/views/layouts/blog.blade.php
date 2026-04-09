@@ -227,240 +227,258 @@
                 <!-- Mobile: Hamburger Button -->
                 <button class="lg:hidden text-gray-600 hover:text-[var(--brand-primary)] transition-colors p-2"
                     id="mobile-menu-button"
-                    @click="mobileMenuOpen = true; $nextTick(() => { document.getElementById('mobile-menu-close').focus(); })"
+                    @click="mobileMenuOpen = !mobileMenuOpen"
                     aria-controls="mobile-menu" :aria-expanded="mobileMenuOpen" aria-label="فتح القائمة">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg x-show="mobileMenuOpen" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
             </div>
         </div>
     </header>
 
-        <!-- Mobile Off-Canvas Menu (OUTSIDE header to avoid backdrop-filter containing block) -->
-        <!-- Overlay -->
-        <div x-show="mobileMenuOpen" x-transition:enter="transition-opacity ease-linear duration-300"
-            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-            x-transition:leave="transition-opacity ease-linear duration-300" x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0" @click="mobileMenuOpen = false"
-            @keydown.escape.window="mobileMenuOpen = false" class="fixed inset-0 bg-black bg-opacity-50 lg:hidden"
-            style="display: none; z-index: 99998;" aria-hidden="true"></div>
+    {{-- ══════════════════════════════════════════════════════════════
+         Mobile Off-Canvas Drawer
+         MUST be OUTSIDE <header> — backdrop-filter creates a
+         containing block that breaks position:fixed children.
+         Kept INSIDE the Alpine x-data scope for state sharing.
+    ══════════════════════════════════════════════════════════════ --}}
 
-        <!-- Sidebar Panel -->
-        <div x-show="mobileMenuOpen"
-            x-transition:enter="transition ease-out duration-300"
-            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-300"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-            @keydown.escape.window="mobileMenuOpen = false" id="mobile-menu"
-            role="dialog" aria-modal="true" aria-label="قائمة الموقع"
-            class="fixed top-0 right-0 h-full w-72 sm:w-80 bg-white shadow-xl overflow-y-auto lg:hidden"
-            style="display: none; z-index: 99999;" x-ref="mobileMenu">
-            <!-- Close Button -->
-            <div class="flex justify-start items-center p-4 border-b border-gray-100">
-                <button id="mobile-menu-close" @click="mobileMenuOpen = false"
-                    class="p-2 text-gray-600 hover:text-brand-accent transition-colors rounded-md hover:bg-gray-100"
-                    aria-label="إغلاق القائمة">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                        </path>
-                    </svg>
-                </button>
-            </div>
+    {{-- Semi-transparent Overlay --}}
+    <div x-show="mobileMenuOpen"
+        x-transition:enter="transition-opacity ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition-opacity ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        @click="mobileMenuOpen = false"
+        @keydown.escape.window="mobileMenuOpen = false"
+        class="fixed inset-0 bg-black/40 lg:hidden"
+        style="display:none; z-index:99998;"
+        aria-hidden="true"></div>
 
-            <!-- Navigation Items -->
-            <nav class="py-4" @click.away="mobileMenuOpen = false">
-                <div class="flex flex-col">
-                    @if(config('features.landing'))
-                        <a href="{{ url('/') }}"
-                            class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->is('/') ? 'text-brand-accent bg-gray-50' : '' }}"
-                            @click="mobileMenuOpen = false">
-                            الرئيسية
-                        </a>
+    {{-- Right-Side Sliding Panel --}}
+    <div x-show="mobileMenuOpen"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="translate-x-full opacity-0"
+        x-transition:enter-end="translate-x-0 opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="translate-x-0 opacity-100"
+        x-transition:leave-end="translate-x-full opacity-0"
+        @keydown.escape.window="mobileMenuOpen = false"
+        id="mobile-menu"
+        role="dialog" aria-modal="true" aria-label="قائمة الموقع"
+        class="fixed top-0 right-0 h-full w-[80%] sm:w-80 bg-white shadow-2xl overflow-y-auto lg:hidden"
+        style="display:none; z-index:99999;">
 
-                        <a href="{{ route('posts.index') }}"
-                            class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('posts.index') || request()->routeIs('post.*') ? 'text-brand-accent bg-gray-50' : '' }}"
-                            @click="mobileMenuOpen = false">
-                            المقالات
-                        </a>
-                    @else
-                        <!-- المقالات (Articles) - Direct Link -->
-                        <a href="{{ route('home') }}"
-                            class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('home') || request()->routeIs('posts.index') || request()->routeIs('post.*') ? 'text-brand-accent bg-gray-50' : '' }}"
-                            @click="mobileMenuOpen = false">
-                            المقالات
-                        </a>
-                    @endif
+        {{-- Panel Header: Close (✕) button --}}
+        <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+            {{-- Hamburger icon placeholder (left side in RTL) --}}
+            <button class="p-1 text-gray-500" tabindex="-1" aria-hidden="true">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
 
-                    <!-- Video Library -->
-                    @if(feature('vod.video'))
-                        <a href="{{ route('videos.index') }}"
-                            class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('videos.*') ? 'text-brand-accent bg-gray-50' : '' }}"
-                            @click="mobileMenuOpen = false">
-                            مكتبة الفيديو
-                        </a>
-                    @endif
+            {{-- Close button --}}
+            <button id="mobile-menu-close"
+                @click="mobileMenuOpen = false"
+                class="p-1.5 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+                aria-label="إغلاق القائمة">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
 
-                    <!-- Audio Library -->
-                    @if(feature('vod.audio'))
-                        <a href="{{ route('audios.index') }}"
-                            class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('audios.*') ? 'text-brand-accent bg-gray-50' : '' }}"
-                            @click="mobileMenuOpen = false">
-                            الصوتيات
-                        </a>
-                    @endif
+        {{-- Navigation Links --}}
+        <nav class="py-2">
+            <div class="flex flex-col">
+                @if(config('features.landing'))
+                    <a href="{{ url('/') }}"
+                        class="block px-5 py-3.5 text-right text-base border-b border-gray-50 transition-colors {{ request()->is('/') ? 'text-[var(--brand-primary)] font-bold bg-[var(--writer-secondary)]' : 'text-gray-700 font-medium hover:bg-gray-50 hover:text-[var(--brand-primary)]' }}"
+                        @click="mobileMenuOpen = false">
+                        الرئيسية
+                    </a>
 
-                    <!-- الإصدارات (Books) -->
-                    @if(feature('books') && ($hasBooks ?? false))
-                        <a href="{{ route('books.index') }}"
-                            class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('books.*') ? 'text-brand-accent bg-gray-50' : '' }}"
-                            @click="mobileMenuOpen = false">
-                            الإصدارات
-                        </a>
-                    @endif
+                    <a href="{{ route('posts.index') }}"
+                        class="block px-5 py-3.5 text-right text-base border-b border-gray-50 transition-colors {{ request()->routeIs('posts.index') || request()->routeIs('post.*') || request()->routeIs('category.*') ? 'text-[var(--brand-primary)] font-bold bg-[var(--writer-secondary)]' : 'text-gray-700 font-medium hover:bg-gray-50 hover:text-[var(--brand-primary)]' }}"
+                        @click="mobileMenuOpen = false">
+                        المقالات
+                    </a>
+                @else
+                    <a href="{{ route('home') }}"
+                        class="block px-5 py-3.5 text-right text-base border-b border-gray-50 transition-colors {{ request()->routeIs('home') || request()->routeIs('posts.index') || request()->routeIs('post.*') || request()->routeIs('category.*') ? 'text-[var(--brand-primary)] font-bold bg-[var(--writer-secondary)]' : 'text-gray-700 font-medium hover:bg-gray-50 hover:text-[var(--brand-primary)]' }}"
+                        @click="mobileMenuOpen = false">
+                        المقالات
+                    </a>
+                @endif
 
-                    <!-- الخطب (Khutab) -->
-                    @if(feature('khutab'))
-                        <a href="{{ route('khutab.index') }}"
-                            class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('khutab.*') ? 'text-brand-accent bg-gray-50' : '' }}"
-                            @click="mobileMenuOpen = false">
-                            الخطب
-                        </a>
-                    @endif
+                @if(feature('vod.video'))
+                    <a href="{{ route('videos.index') }}"
+                        class="block px-5 py-3.5 text-right text-base border-b border-gray-50 transition-colors {{ request()->routeIs('videos.*') ? 'text-[var(--brand-primary)] font-bold bg-[var(--writer-secondary)]' : 'text-gray-700 font-medium hover:bg-gray-50 hover:text-[var(--brand-primary)]' }}"
+                        @click="mobileMenuOpen = false">
+                        مكتبة الفيديو
+                    </a>
+                @endif
 
-                    <!-- عني (About) -->
-                    @if(feature('about'))
+                @if(feature('vod.audio'))
+                    <a href="{{ route('audios.index') }}"
+                        class="block px-5 py-3.5 text-right text-base border-b border-gray-50 transition-colors {{ request()->routeIs('audios.*') ? 'text-[var(--brand-primary)] font-bold bg-[var(--writer-secondary)]' : 'text-gray-700 font-medium hover:bg-gray-50 hover:text-[var(--brand-primary)]' }}"
+                        @click="mobileMenuOpen = false">
+                        الصوتيات
+                    </a>
+                @endif
+
+                @if(feature('books') && ($hasBooks ?? false))
+                    <a href="{{ route('books.index') }}"
+                        class="block px-5 py-3.5 text-right text-base border-b border-gray-50 transition-colors {{ request()->routeIs('books.*') ? 'text-[var(--brand-primary)] font-bold bg-[var(--writer-secondary)]' : 'text-gray-700 font-medium hover:bg-gray-50 hover:text-[var(--brand-primary)]' }}"
+                        @click="mobileMenuOpen = false">
+                        الإصدارات
+                    </a>
+                @endif
+
+                @if(feature('khutab'))
+                    <a href="{{ route('khutab.index') }}"
+                        class="block px-5 py-3.5 text-right text-base border-b border-gray-50 transition-colors {{ request()->routeIs('khutab.*') ? 'text-[var(--brand-primary)] font-bold bg-[var(--writer-secondary)]' : 'text-gray-700 font-medium hover:bg-gray-50 hover:text-[var(--brand-primary)]' }}"
+                        @click="mobileMenuOpen = false">
+                        الخطب
+                    </a>
+                @endif
+
+                @if(feature('about'))
                     <a href="{{ route('about') }}"
-                        class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('about') ? 'text-brand-accent bg-gray-50' : '' }}"
+                        class="block px-5 py-3.5 text-right text-base border-b border-gray-50 transition-colors {{ request()->routeIs('about') ? 'text-[var(--brand-primary)] font-bold bg-[var(--writer-secondary)]' : 'text-gray-700 font-medium hover:bg-gray-50 hover:text-[var(--brand-primary)]' }}"
                         @click="mobileMenuOpen = false">
                         عني
                     </a>
-                    @endif
+                @endif
 
-                    <!-- تواصل معي (Contact) -->
-                    @if(feature('contact') && Route::has('contact'))
-                        <a href="{{ route('contact') }}"
-                            class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('contact') ? 'text-brand-accent bg-gray-50' : '' }}"
-                            @click="mobileMenuOpen = false">
-                            تواصل معي
-                        </a>
-                    @endif
+                @if(feature('contact') && Route::has('contact'))
+                    <a href="{{ route('contact') }}"
+                        class="block px-5 py-3.5 text-right text-base border-b border-gray-50 transition-colors {{ request()->routeIs('contact') ? 'text-[var(--brand-primary)] font-bold bg-[var(--writer-secondary)]' : 'text-gray-700 font-medium hover:bg-gray-50 hover:text-[var(--brand-primary)]' }}"
+                        @click="mobileMenuOpen = false">
+                        تواصل معي
+                    </a>
+                @endif
+            </div>
+        </nav>
 
-                    <!-- Sidebar Widgets (Mobile Only) -->
-                    <div class="px-4 py-4 space-y-4 border-b border-gray-100">
-                        <!-- Search -->
-                        <div class="bg-brand-secondary p-6 rounded-lg">
-                            <h4 class="text-base font-semibold mb-3 text-right">البحث</h4>
-                            <form action="{{ route('search') }}" method="GET" @click.stop>
-                                <input type="search" name="q" value="{{ request('q') }}" placeholder="ابحث..."
-                                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-right focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent" />
-                            </form>
-                        </div>
+        {{-- Sidebar Widgets --}}
+        <div class="px-5 py-4 space-y-4">
+            {{-- Search --}}
+            <div class="bg-[var(--writer-secondary)] p-5 rounded-xl">
+                <h4 class="text-sm font-bold mb-2.5 text-[var(--brand-primary)] text-right">البحث</h4>
+                <form action="{{ route('search') }}" method="GET" @click.stop>
+                    <input type="search" name="q" value="{{ request('q') }}" placeholder="ابحث عن مقالات..."
+                        class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-right bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand-accent)] focus:border-transparent placeholder:text-gray-400" />
+                </form>
+            </div>
 
-                        <!-- Categories -->
-                        @if(isset($categories) && $categories->count() > 0)
-                            <div class="bg-brand-secondary p-6 rounded-lg">
-                                <h4 class="text-base font-semibold mb-3 text-right">الأقسام</h4>
-                                <ul class="space-y-2 text-right">
-                                    @foreach($categories as $category)
-                                        <li>
-                                            <a href="{{ route('category.show', $category->slug) }}"
-                                                class="flex justify-between items-center py-2 hover:text-brand-accent transition-colors"
-                                                @click="mobileMenuOpen = false">
-                                                <span class="text-sm text-gray-500">({{ $category->posts_count ?? 0 }})</span>
-                                                <span class="text-sm font-medium">{{ $category->name }}</span>
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        <!-- Latest Posts -->
-                        @if(isset($recentPosts) && $recentPosts->count() > 0)
-                            <div class="bg-brand-secondary p-6 rounded-lg">
-                                <h4 class="text-base font-semibold mb-3 text-right">أحدث المقالات</h4>
-                                <ul class="space-y-3 text-right">
-                                    @foreach($recentPosts as $recentPost)
-                                        <li>
-                                            <a href="{{ route('post.show', $recentPost->slug) }}" class="block group"
-                                                @click="mobileMenuOpen = false">
-                                                <div
-                                                    class="text-sm font-medium group-hover:text-brand-accent transition-colors mb-1">
-                                                    {{ Str::limit($recentPost->title, 60) }}
-                                                </div>
-                                                <div class="text-xs text-gray-400">
-                                                    {{ $recentPost->published_at->format('Y/m/d') }}
-                                                </div>
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        <!-- Most Liked Posts -->
-                        @if(isset($mostLikedPosts) && $mostLikedPosts->count() > 0)
-                            <div class="bg-brand-secondary p-6 rounded-lg">
-                                <h4 class="text-base font-semibold mb-3 text-right">المقالات الأكثر إعجاباً</h4>
-                                <ul class="space-y-3 text-right">
-                                    @foreach($mostLikedPosts as $likedPost)
-                                        <li>
-                                            <a href="{{ route('post.show', $likedPost->slug) }}" class="block group"
-                                                @click="mobileMenuOpen = false">
-                                                <div
-                                                    class="text-sm font-medium group-hover:text-brand-accent transition-colors mb-1">
-                                                    {{ Str::limit($likedPost->title, 60) }}
-                                                </div>
-                                                <div class="text-xs text-gray-400 flex items-center gap-1 justify-end">
-                                                    <span>{{ $likedPost->likes_count ?? 0 }} إعجاب</span>
-                                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                                                        <path
-                                                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                                    </svg>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        <!-- Most Read Posts -->
-                        @if(isset($mostReadPosts) && $mostReadPosts->count() > 0)
-                            <div class="bg-brand-secondary p-6 rounded-lg">
-                                <h4 class="text-base font-semibold mb-3 text-right">المقالات الأكثر قراءة</h4>
-                                <ul class="space-y-3 text-right">
-                                    @foreach($mostReadPosts as $readPost)
-                                        <li>
-                                            <a href="{{ route('post.show', $readPost->slug) }}" class="block group"
-                                                @click="mobileMenuOpen = false">
-                                                <div
-                                                    class="text-sm font-medium group-hover:text-brand-accent transition-colors mb-1">
-                                                    {{ Str::limit($readPost->title, 60) }}
-                                                </div>
-                                                <div class="text-xs text-gray-400 flex items-center gap-1 justify-end">
-                                                    <span>{{ $readPost->views ?? 0 }} مشاهدة</span>
-                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                                                        </path>
-                                                    </svg>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                    </div>
-
+            {{-- Categories --}}
+            @if(isset($categories) && $categories->count() > 0)
+                <div class="bg-[var(--writer-secondary)] p-5 rounded-xl">
+                    <h4 class="text-sm font-bold mb-2.5 text-[var(--brand-primary)] text-right">الأقسام</h4>
+                    <ul class="space-y-1.5">
+                        @foreach($categories as $category)
+                            <li>
+                                <a href="{{ route('category.show', $category->slug) }}"
+                                    class="flex justify-between items-center py-1.5 text-sm hover:text-[var(--brand-accent)] transition-colors"
+                                    @click="mobileMenuOpen = false">
+                                    <span class="text-xs text-gray-400">({{ $category->posts_count ?? 0 }})</span>
+                                    <span class="font-medium text-gray-600">{{ $category->name }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
-            </nav>
+            @endif
+
+            {{-- Latest Posts --}}
+            @if(isset($recentPosts) && $recentPosts->count() > 0)
+                <div class="bg-[var(--writer-secondary)] p-5 rounded-xl">
+                    <h4 class="text-sm font-bold mb-2.5 text-[var(--brand-primary)] text-right">أحدث المقالات</h4>
+                    <ul class="space-y-3">
+                        @foreach($recentPosts as $recentPost)
+                            <li>
+                                <a href="{{ route('post.show', $recentPost->slug) }}" class="block group"
+                                    @click="mobileMenuOpen = false">
+                                    <div class="text-sm font-medium text-gray-600 group-hover:text-[var(--brand-accent)] transition-colors text-right">
+                                        {{ Str::limit($recentPost->title, 60) }}
+                                    </div>
+                                    <div class="text-xs text-gray-400 mt-0.5 text-right">
+                                        {{ $recentPost->published_at->format('Y/m/d') }}
+                                    </div>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            {{-- Most Liked Posts --}}
+            @if(isset($mostLikedPosts) && $mostLikedPosts->count() > 0)
+                <div class="bg-[var(--writer-secondary)] p-5 rounded-xl">
+                    <h4 class="text-sm font-bold mb-2.5 text-[var(--brand-primary)] text-right">المقالات الأكثر إعجاباً</h4>
+                    <ul class="space-y-3">
+                        @foreach($mostLikedPosts as $likedPost)
+                            <li>
+                                <a href="{{ route('post.show', $likedPost->slug) }}" class="block group"
+                                    @click="mobileMenuOpen = false">
+                                    <div class="text-sm font-medium text-gray-600 group-hover:text-[var(--brand-accent)] transition-colors text-right">
+                                        {{ Str::limit($likedPost->title, 60) }}
+                                    </div>
+                                    <div class="text-xs text-gray-400 flex items-center gap-1 justify-end mt-0.5">
+                                        <span>{{ $likedPost->likes_count ?? 0 }} إعجاب</span>
+                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                        </svg>
+                                    </div>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            {{-- Most Read Posts --}}
+            @if(isset($mostReadPosts) && $mostReadPosts->count() > 0)
+                <div class="bg-[var(--writer-secondary)] p-5 rounded-xl">
+                    <h4 class="text-sm font-bold mb-2.5 text-[var(--brand-primary)] text-right">المقالات الأكثر قراءة</h4>
+                    <ul class="space-y-3">
+                        @foreach($mostReadPosts as $readPost)
+                            <li>
+                                <a href="{{ route('post.show', $readPost->slug) }}" class="block group"
+                                    @click="mobileMenuOpen = false">
+                                    <div class="text-sm font-medium text-gray-600 group-hover:text-[var(--brand-accent)] transition-colors text-right">
+                                        {{ Str::limit($readPost->title, 60) }}
+                                    </div>
+                                    <div class="text-xs text-gray-400 flex items-center gap-1 justify-end mt-0.5">
+                                        <span>{{ $readPost->views ?? 0 }} مشاهدة</span>
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         </div>
+    </div>
     </div><!-- End Mobile Menu Alpine Scope -->
 
 
