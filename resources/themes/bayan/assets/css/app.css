@@ -1,7 +1,7 @@
-/* Local Font: Sakkal Majalla (Android-proof with TTF fallback) */
+/* Local Font: Calibri (Android-proof with TTF fallback) */
 @font-face {
-    font-family: 'Sakkal Majalla';
-    src: url('/fonts/sakkal-majalla.woff2') format('woff2');
+    font-family: 'Calibri';
+    src: url('/fonts/calibri.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -43,7 +43,7 @@
 
 @layer base {
     html {
-        font-family: "Sakkal Majalla", "Cairo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-family: "Calibri", "Cairo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         -webkit-text-size-adjust: 100%;
     }
 
@@ -283,9 +283,9 @@
         background-color: rgba(0, 0, 0, 0.015);
     }
 
-    /* Force Sakkal Majalla (Android system font override) */
-    .font-sakkal-force {
-        font-family: 'Sakkal Majalla', sans-serif !important;
+    /* Force Calibri (Android system font override) */
+    .font-calibri-force {
+        font-family: 'Calibri', Arial, sans-serif !important;
     }
 }
 
@@ -316,9 +316,9 @@
 }
 
 /* ============================================================
-   🔤 SAKKAL MAJALLA — Global Typography Compensation
+   🔤 CALIBRI — Global Typography Compensation
    Comprehensive scaling to accommodate the smaller optical
-   baseline of the Sakkal Majalla font across ALL views.
+   baseline of the Calibri font across ALL views.
    ============================================================ */
 
 /* ----------------------------------------------------------
