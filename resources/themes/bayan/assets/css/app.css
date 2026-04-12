@@ -1,9 +1,7 @@
 /* Local Font: Sakkal Majalla (Android-proof with TTF fallback) */
 @font-face {
     font-family: 'Sakkal Majalla';
-    src: local('Sakkal Majalla'),
-         url('/fonts/sakkal-majalla.woff2') format('woff2'),
-         url('/fonts/sakkal-majalla.ttf') format('truetype');
+    src: url('/fonts/sakkal-majalla.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
