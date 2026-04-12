@@ -194,45 +194,46 @@
     <!-- Mobile Menu Alpine Scope -->
     <div x-data="{ mobileMenuOpen: false, articlesOpen: false }"
         x-init="$watch('mobileMenuOpen', value => { if (value) { setTimeout(() => document.getElementById('mobile-menu-close')?.focus(), 100); } })">
-    <!-- Header (Logo & Menu Button) - Sticky on mobile -->
-    <header class="bg-white sticky top-0 z-50 md:z-30 md:relative py-4 md:py-8 border-b border-gray-100 md:border-b-0">
-        <div class="container mx-auto px-4 max-w-5xl">
-            <div class="flex justify-between items-center">
-                <!-- Right: Logo (Dark Text + Orange Dot) -->
-                <a href="{{ route('home') }}" class="flex items-center gap-2 group">
-                    {{-- The Text (Dark) - FIRST --}}
-                    <span class="text-gray-900 font-serif font-bold text-2xl md:text-4xl tracking-tight">
-                        {{ config('branding.site_name') }}
-                    </span>
-                    {{-- The Orange Dot - SECOND (appears on left in RTL) --}}
-                    <span
-                        class="w-3 h-3 bg-brand-accent rounded-full inline-block group-hover:scale-110 transition-transform"></span>
-                </a>
+        <!-- Header (Logo & Menu Button) - Sticky on mobile -->
+        <header
+            class="bg-white sticky top-0 z-50 md:z-30 md:relative py-4 md:py-8 border-b border-gray-100 md:border-b-0">
+            <div class="container mx-auto px-4 max-w-5xl">
+                <div class="flex justify-between items-center">
+                    <!-- Right: Logo (Dark Text + Orange Dot) -->
+                    <a href="{{ route('home') }}" class="flex items-center gap-2 group">
+                        {{-- The Text (Dark) - FIRST --}}
+                        <span class="text-gray-900 font-serif font-bold text-2xl md:text-4xl tracking-tight">
+                            {{ config('branding.site_name') }}
+                        </span>
+                        {{-- The Orange Dot - SECOND (appears on left in RTL) --}}
+                        <span
+                            class="w-3 h-3 bg-brand-accent rounded-full inline-block group-hover:scale-110 transition-transform"></span>
+                    </a>
 
-                <!-- Left: Menu Button (Desktop) -->
-                <div class="hidden md:block">
-                    <button id="sidebar-toggle"
-                        class="p-3 border border-gray-200 rounded-full hover:border-brand-accent transition-colors bg-gray-50">
-                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <!-- Left: Menu Button (Desktop) -->
+                    <div class="hidden md:block">
+                        <button id="sidebar-toggle"
+                            class="p-3 border border-gray-200 rounded-full hover:border-brand-accent transition-colors bg-gray-50">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Mobile: Hamburger Button -->
+                    <button class="md:hidden text-gray-600 hover:text-brand-accent transition-colors p-2"
+                        id="mobile-menu-button"
+                        @click="mobileMenuOpen = true; $nextTick(() => { document.getElementById('mobile-menu-close').focus(); })"
+                        aria-controls="mobile-menu" :aria-expanded="mobileMenuOpen" aria-label="فتح القائمة">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
                     </button>
                 </div>
-
-                <!-- Mobile: Hamburger Button -->
-                <button class="md:hidden text-gray-600 hover:text-brand-accent transition-colors p-2"
-                    id="mobile-menu-button"
-                    @click="mobileMenuOpen = true; $nextTick(() => { document.getElementById('mobile-menu-close').focus(); })"
-                    aria-controls="mobile-menu" :aria-expanded="mobileMenuOpen" aria-label="فتح القائمة">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
             </div>
-        </div>
-    </header>
+        </header>
 
         <!-- Mobile Off-Canvas Menu -->
         <!-- Overlay -->
@@ -244,12 +245,10 @@
             style="display: none; z-index: 99998;" aria-hidden="true"></div>
 
         <!-- Sidebar Panel -->
-        <div x-show="mobileMenuOpen"
-            x-transition:enter="transition ease-out duration-300"
+        <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
             x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-300"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-            @keydown.escape.window="mobileMenuOpen = false" id="mobile-menu"
+            x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0" @keydown.escape.window="mobileMenuOpen = false" id="mobile-menu"
             role="dialog" aria-modal="true" aria-label="قائمة الموقع"
             class="fixed top-0 right-0 h-full w-72 sm:w-80 bg-white shadow-xl overflow-y-auto md:hidden"
             style="display: none; z-index: 99999;" x-ref="mobileMenu">
@@ -441,7 +440,7 @@
                 </div>
             </nav>
         </div>
-    </div><!-- End Mobile Menu Alpine Scope -->    <!-- No-JS Fallback Menu (shows when JavaScript is disabled) -->
+    </div><!-- End Mobile Menu Alpine Scope --> <!-- No-JS Fallback Menu (shows when JavaScript is disabled) -->
     <noscript>
         <div class="md:hidden border-t border-gray-200 bg-white">
             <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">

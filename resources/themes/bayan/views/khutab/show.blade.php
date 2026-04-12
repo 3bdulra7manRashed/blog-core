@@ -163,10 +163,12 @@
 {{-- ============================================================ --}}
 {{-- 📄 MAIN CONTENT SECTION                                      --}}
 {{-- ============================================================ --}}
-@section('content')
-<!-- Reading Progress Bar (GPU-Optimized) -->
-<div id="reading-progress-bar" class="fixed top-20 left-0 right-0 h-1 bg-[#14B8A6] z-40 transition-all duration-150"
+@push('progress-bar')
+<div id="reading-progress-bar" class="w-full h-1 bg-[#14B8A6] transition-all duration-150"
     style="transform: scaleX(0); transform-origin: right; will-change: transform; backface-visibility: hidden;"></div>
+@endpush
+
+@section('content')
 
 <article>
     <!-- Post Header -->

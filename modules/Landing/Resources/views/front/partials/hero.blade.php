@@ -32,7 +32,7 @@
 
                 {{-- Subtitle --}}
                 @if($hero['subtitle'])
-                    <p class="text-xl md:text-2xl lg:text-3xl text-white/80 leading-[2] mb-12 max-w-xl whitespace-pre-line">
+                    <p class="text-xl md:text-2xl lg:text-3xl font-sakkal text-white/80 leading-[2] mb-12 max-w-xl whitespace-pre-line">
                         {{ $hero['subtitle'] }}
                     </p>
                 @endif
@@ -66,7 +66,7 @@
             </h1>
 
             @if($hero['subtitle'])
-                <p class="text-xl sm:text-2xl font-medium text-white/95 leading-[1.8] mb-10 w-full px-2 mx-auto whitespace-pre-line">
+                <p class="text-xl sm:text-2xl font-sakkal font-medium text-white/95 leading-[1.8] mb-10 w-full px-2 mx-auto whitespace-pre-line">
                     {{ $hero['subtitle'] }}
                 </p>
             @endif
