@@ -50,6 +50,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    {{-- Font Preload (Android-critical: start download before CSS parse) --}}
+    <link rel="preload" href="{{ asset('fonts/sakkal-majalla.woff2') }}" as="font" type="font/woff2" crossorigin="anonymous">
+
     {{-- Scripts --}}
     @vite(['resources/themes/bayan/assets/css/app.css', 'resources/themes/bayan/assets/js/app.js'])
 
