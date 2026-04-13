@@ -43,6 +43,7 @@
         'viewAllUrl'  => Route::has('khutab.index') ? route('khutab.index') : null,
         'viewAllText' => 'جميع الخطب',
         'bgClass'     => 'bg-gray-50',
+        'itemRoute'   => 'khutab.show',
     ])
 @endif
 

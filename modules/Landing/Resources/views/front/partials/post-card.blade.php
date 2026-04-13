@@ -3,12 +3,12 @@
     class="bg-surface-tint hover:bg-surface-hover rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 group">
     {{-- Featured Image --}}
     @if($post->featured_image_url)
-        <a href="{{ route('post.show', $post->slug) }}" class="block aspect-video overflow-hidden">
+        <a href="{{ route($itemRoute ?? 'post.show', $post->slug) }}" class="block aspect-video overflow-hidden">
             <img src="{{ $post->featured_image_url }}" alt="{{ $post->title }}"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
         </a>
     @else
-        <a href="{{ route('post.show', $post->slug) }}"
+        <a href="{{ route($itemRoute ?? 'post.show', $post->slug) }}"
             class="block aspect-video bg-gradient-to-br from-brand-secondary/20 to-brand-accent/20 flex items-center justify-center">
             <svg class="w-12 h-12 text-brand-accent/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -33,7 +33,7 @@
 
         <h3
             class="text-3xl font-serif font-bold text-brand-primary mb-3 leading-snug line-clamp-2 group-hover:text-brand-accent transition-colors">
-            <a href="{{ route('post.show', $post->slug) }}">
+            <a href="{{ route($itemRoute ?? 'post.show', $post->slug) }}">
                 {{ $post->title }}
             </a>
         </h3>
@@ -45,7 +45,7 @@
         @endif
 
         <div class="flex items-center justify-between pt-3 border-t border-gray-100">
-            <a href="{{ route('post.show', $post->slug) }}"
+            <a href="{{ route($itemRoute ?? 'post.show', $post->slug) }}"
                 class="inline-block px-6 py-2 rounded-full border border-brand-accent text-brand-accent font-medium hover:bg-brand-accent hover:text-white transition-all duration-300 text-lg">
                 اقرأ المقال
             </a>

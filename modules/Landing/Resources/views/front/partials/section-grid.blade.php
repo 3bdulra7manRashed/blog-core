@@ -27,7 +27,10 @@
         {{-- 3-Column Grid --}}
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             @foreach($items as $post)
-                @include('landing::front.partials.post-card', ['post' => $post])
+                @include('landing::front.partials.post-card', [
+                    'post' => $post,
+                    'itemRoute' => $itemRoute ?? 'post.show'
+                ])
             @endforeach
         </div>
 
