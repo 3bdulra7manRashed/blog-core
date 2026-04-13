@@ -32,8 +32,22 @@
 }
 
 @layer base {
+    :root {
+        --font-primary: "Cairo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    
+    [data-theme="classic"],
+    [data-theme="gpma"] {
+        --font-primary: "Cairo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    [data-theme="bayan"] {
+        --font-primary: "Sakkal Majalla", "Cairo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
     html {
-        font-family: "Writer Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-family: var(--font-primary);
+        -webkit-text-size-adjust: 100%;
     }
 
     body {

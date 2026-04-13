@@ -24,7 +24,7 @@
                         @endif
 
                         <div class="text-center max-w-4xl mx-auto">
-                            <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 leading-tight text-[var(--brand-primary)]">
+                            <h2 class="text-3xl md:text-4xl font-bold mb-6 leading-tight text-[var(--brand-primary)]">
                                 <a href="{{ route('post.show', $post->slug) }}" class="hover:text-brand-accent transition-colors">
                                     {{ $post->title }}
                                 </a>

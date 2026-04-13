@@ -6,7 +6,7 @@
 
 {{-- Share Label (only when Read More is hidden, i.e. on full article pages) --}}
 @if($hideReadMore)
-    <h3 class="text-xl font-serif font-bold text-brand-primary mb-4">شارك هذا المقال:</h3>
+    <h3 class="text-xl font-bold text-brand-primary mb-4">شارك هذا المقال:</h3>
 @endif
 
 <div class="flex items-center justify-start gap-3 flex-wrap {{ $hideReadMore ? '' : 'mt-8' }}">

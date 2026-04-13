@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}" data-theme="bayan">
 
 <head>
     <meta charset="utf-8">
@@ -21,7 +21,7 @@
     @vite(['resources/themes/bayan/assets/css/app.css', 'resources/themes/bayan/assets/js/app.js'])
 </head>
 
-<body class="font-sans antialiased ">
+<body class="antialiased ">
     <div class="min-h-screen bg-gray-100">
         @include('layouts.navigation')
 

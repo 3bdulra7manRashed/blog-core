@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="bayan">
 
 <head>
     {{-- Essential Meta Tags --}}
@@ -51,7 +51,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     {{-- Font Preload (Android-critical: start download before CSS parse) --}}
-    <link rel="preload" href="{{ asset('fonts/calibri.woff2') }}" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="/fonts/majalla-webfont.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/majallab-webfont.woff2" as="font" type="font/woff2" crossorigin>
 
     {{-- Scripts --}}
     @vite(['resources/themes/bayan/assets/css/app.css', 'resources/themes/bayan/assets/js/app.js'])
@@ -76,7 +77,7 @@
     @stack('styles')
 </head>
 
-<body class="font-sans antialiased bg-white text-brand-primary flex flex-col min-h-screen">
+<body class="antialiased bg-white text-brand-primary flex flex-col min-h-screen">
     {{-- Skip to Content Link (Accessibility) --}}
     <a href="#main-content"
         class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:right-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-brand-accent focus:text-white focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent">
@@ -98,7 +99,7 @@
                                 <img src="{{ config('branding.site_logo') }}" alt="{{ config('branding.site_name') }}"
                                     class="w-14 h-14 rounded-full object-cover border border-gray-200">
                             @else
-                                <span class="text-[var(--brand-primary)] font-serif font-bold text-2xl tracking-tight">
+                                <span class="text-[var(--brand-primary)] font-bold text-2xl tracking-tight">
                                     {{ config('branding.site_name') }}
                                 </span>
                                 <span
@@ -266,12 +267,10 @@
                 style="display:none; z-index:99998;" aria-hidden="true"></div>
 
             {{-- Right-Side Sliding Panel --}}
-            <div x-show="mobileMenuOpen"
-                x-transition:enter="transition ease-out duration-300"
+            <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
                 x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                x-transition:leave="transition ease-in duration-300"
-                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-                @keydown.escape.window="mobileMenuOpen = false" id="mobile-menu"
+                x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0" @keydown.escape.window="mobileMenuOpen = false" id="mobile-menu"
                 role="dialog" aria-modal="true" aria-label="قائمة الموقع"
                 class="fixed top-0 right-0 h-full w-72 sm:w-80 bg-white shadow-xl overflow-y-auto lg:hidden"
                 style="display:none; z-index:99999;" x-ref="mobileMenu">
@@ -282,7 +281,8 @@
                         class="p-2 text-gray-600 hover:text-[var(--brand-accent)] transition-colors rounded-md hover:bg-gray-100"
                         aria-label="إغلاق القائمة">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12">
                             </path>
                         </svg>
                     </button>
@@ -380,7 +380,8 @@
                                                 <a href="{{ route('category.show', $category->slug) }}"
                                                     class="flex justify-between items-center py-2 hover:text-[var(--brand-accent)] transition-colors"
                                                     @click="mobileMenuOpen = false">
-                                                    <span class="text-sm text-gray-500">({{ $category->posts_count ?? 0 }})</span>
+                                                    <span
+                                                        class="text-sm text-gray-500">({{ $category->posts_count ?? 0 }})</span>
                                                     <span class="text-sm font-medium">{{ $category->name }}</span>
                                                 </a>
                                             </li>
@@ -454,10 +455,12 @@
                                                     </div>
                                                     <div class="text-xs text-gray-400 flex items-center gap-1 justify-end">
                                                         <span>{{ $readPost->views ?? 0 }} مشاهدة</span>
-                                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        <svg class="w-3 h-3" fill="none" stroke="currentColor"
+                                                            viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2"
                                                                 d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
                                                             </path>
                                                         </svg>

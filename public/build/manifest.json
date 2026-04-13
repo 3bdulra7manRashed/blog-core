@@ -4,8 +4,8 @@
     "name": "module.esm"
   },
   "resources/themes/admin/gpma/assets/css/app.css": {
-    "file": "assets/app-Dne6KeLj.css",
-    "src": "resources/themes/gpma/assets/css/app.css",
+    "file": "assets/app-C2Uamwzk.css",
+    "src": "resources/themes/admin/gpma/assets/css/app.css",
     "isEntry": true
   },
   "resources/themes/admin/gpma/assets/js/app.js": {
@@ -18,7 +18,7 @@
     ]
   },
   "resources/themes/bayan/assets/css/app.css": {
-    "file": "assets/app-BxtlZy6k.css",
+    "file": "assets/app-DZzVcbvA.css",
     "src": "resources/themes/bayan/assets/css/app.css",
     "isEntry": true
   },
@@ -32,7 +32,7 @@
     ]
   },
   "resources/themes/classic/assets/css/app.css": {
-    "file": "assets/app-DqtDa0ei.css",
+    "file": "assets/app-DGgGMFvY.css",
     "src": "resources/themes/classic/assets/css/app.css",
     "isEntry": true
   },
@@ -46,7 +46,7 @@
     ]
   },
   "resources/themes/gpma/assets/css/app.css": {
-    "file": "assets/app-Dne6KeLj.css",
+    "file": "assets/app-DV5zDG66.css",
     "src": "resources/themes/gpma/assets/css/app.css",
     "isEntry": true
   },

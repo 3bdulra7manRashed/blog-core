@@ -30,9 +30,10 @@ export default {
                 },
             },
             fontFamily: {
-                sans: ['"Calibri"', '"Cairo"', ...defaultTheme.fontFamily.sans],
-                serif: ['"Calibri"', '"Cairo"', ...defaultTheme.fontFamily.serif],
-                calibri: ['"Calibri"', 'Arial', 'sans-serif'],
+                sans: ['var(--font-primary)', 'system-ui', 'sans-serif'],
+                serif: ['var(--font-primary)', 'system-ui', 'serif'],
+                cairo: ['"Cairo"', ...defaultTheme.fontFamily.sans],
+                sakkal: ['"Sakkal Majalla"', ...defaultTheme.fontFamily.sans],
             },
             maxWidth: {
                 prose: '70ch',

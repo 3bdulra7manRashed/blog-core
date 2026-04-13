@@ -10,7 +10,7 @@
         <div class="space-y-8">
             <!-- Search -->
             <div class="bg-brand-secondary p-6 rounded-lg">
-                <h3 class="text-lg font-serif font-semibold mb-4">البحث</h3>
+                <h3 class="text-lg font-semibold mb-4">البحث</h3>
                 <form action="{{ route('search') }}" method="GET">
                     <input type="text" name="q" value="{{ request('q') }}" placeholder="ابحث عن مقالات..." class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent">
                 </form>
@@ -19,7 +19,7 @@
             <!-- Categories -->
             @if(isset($categories) && $categories->count() > 0)
                 <div class="bg-brand-secondary p-6 rounded-lg">
-                    <h3 class="text-lg font-serif font-semibold mb-4">الأقسام</h3>
+                    <h3 class="text-lg font-semibold mb-4">الأقسام</h3>
                     <ul class="space-y-2">
                         @foreach($categories as $category)
                             <li>
@@ -36,7 +36,7 @@
             <!-- Recent Posts -->
             @if(isset($recentPosts) && $recentPosts->count() > 0)
                 <div class="bg-brand-secondary p-6 rounded-lg">
-                    <h3 class="text-lg font-serif font-semibold mb-4">أحدث المقالات</h3>
+                    <h3 class="text-lg font-semibold mb-4">أحدث المقالات</h3>
                     <ul class="space-y-4">
                         @foreach($recentPosts as $recentPost)
                             <li>
@@ -55,7 +55,7 @@
             <!-- Most Liked Posts -->
             @if(isset($mostLikedPosts) && $mostLikedPosts->count() > 0)
                 <div class="bg-brand-secondary p-6 rounded-lg">
-                    <h3 class="text-lg font-serif font-semibold mb-4">المقالات الأكثر إعجاباً</h3>
+                    <h3 class="text-lg font-semibold mb-4">المقالات الأكثر إعجاباً</h3>
                     <ul class="space-y-4">
                         @foreach($mostLikedPosts as $likedPost)
                             <li>
@@ -79,7 +79,7 @@
             <!-- Most Read Posts -->
             @if(isset($mostReadPosts) && $mostReadPosts->count() > 0)
                 <div class="bg-brand-secondary p-6 rounded-lg">
-                    <h3 class="text-lg font-serif font-semibold mb-4">المقالات الأكثر قراءة</h3>
+                    <h3 class="text-lg font-semibold mb-4">المقالات الأكثر قراءة</h3>
                     <ul class="space-y-4">
                         @foreach($mostReadPosts as $readPost)
                             <li>

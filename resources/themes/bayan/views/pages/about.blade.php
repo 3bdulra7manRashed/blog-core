@@ -1,7 +1,7 @@
-я╗┐@extends('layouts.blog')
+@extends('layouts.blog')
 
 {{-- About Page SEO --}}
-@section('title', '╪╣┘Ж ' . $admin->name . ' - ' . config('branding.site_name'))
+@section('title', '┌ф ' . $admin->name . ' - ' . config('branding.site_name'))
 
 @section('description', \Illuminate\Support\Str::limit(strip_tags($admin->biography ?? ''), 160))
 
@@ -44,8 +44,8 @@
                 <!-- 2nd Column (Left): Text Content -->
                 <div class="flex flex-col justify-center lg:py-6">
                     <!-- Heading -->
-                    <h1 class="text-4xl md:text-5xl font-bold text-[var(--brand-primary)] mb-8 font-serif tracking-tight leading-tight text-center lg:text-start">
-                        ╪╣┘Ж┘К
+                    <h1 class="text-4xl md:text-5xl font-bold text-[var(--brand-primary)] mb-8 tracking-tight leading-tight text-center lg:text-start">
+                        ┌фэ
                     </h1>
 
                     <!-- Dynamic Bio Content -->
@@ -54,7 +54,7 @@
                             {!! $admin->biography !!}
                         @else
                             <div class="p-8 bg-white/50 backdrop-blur rounded-xl border border-dashed border-gray-300 text-center text-gray-400 italic">
-                                ┘Д┘Е ┘К╪к┘Е ┘Г╪к╪з╪и╪й ┘Ж╪и╪░╪й ╪к╪╣╪▒┘К┘Б┘К╪й ╪и╪╣╪п
+                                су э╩у ▀╩╟╚╔ ф╚╨╔ ╩┌╤э▌э╔ ╚┌╧
                             </div>
                         @endif
                     </div>

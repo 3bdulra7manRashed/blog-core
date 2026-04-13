@@ -195,7 +195,7 @@
     <div class="container mx-auto px-4 pt-8 pb-6 max-w-5xl">
         <header class="mb-8 text-center max-w-4xl mx-auto">
             {{-- Title First --}}
-            <h1 class="post-title text-5xl md:text-6xl font-serif font-bold text-[var(--brand-primary)] mb-4">
+            <h1 class="post-title text-5xl md:text-6xl font-bold text-[var(--brand-primary)] mb-4">
                 {{ $post->title }}
             </h1>
 
@@ -289,7 +289,7 @@
                     </div>
                     <!-- Text Content -->
                     <div class="flex-1 text-center sm:text-right">
-                        <h3 class="text-2xl font-serif font-bold text-brand-primary mb-2">
+                        <h3 class="text-2xl font-bold text-brand-primary mb-2">
                             {{ $post->publishing_identity->name }}
                         </h3>
                         <p class="text-gray-600 text-lg leading-relaxed">
@@ -333,7 +333,7 @@
                                 <span class="block text-sm font-bold uppercase tracking-wide text-gray-400 mb-1">المقال
                                     التالي</span>
                                 <a href="{{ route('post.show', $nextPost->slug) }}"
-                                    class="block text-xl font-serif font-bold text-brand-primary group-hover:text-brand-accent transition-colors">
+                                    class="block text-xl font-bold text-brand-primary group-hover:text-brand-accent transition-colors">
                                     {{ $nextPost->title }}
                                 </a>
                             </div>
@@ -358,7 +358,7 @@
                                 <span class="block text-sm font-bold uppercase tracking-wide text-gray-400 mb-1">المقال
                                     السابق</span>
                                 <a href="{{ route('post.show', $previousPost->slug) }}"
-                                    class="block text-lg font-serif font-bold text-brand-primary group-hover:text-brand-accent transition-colors">
+                                    class="block text-lg font-bold text-brand-primary group-hover:text-brand-accent transition-colors">
                                     {{ $previousPost->title }}
                                 </a>
                             </div>
@@ -373,7 +373,7 @@
     @if($relatedPosts->count() > 0)
         <div class="py-16 bg-gray-50 border-t border-gray-100">
             <div class="container mx-auto px-4 max-w-6xl">
-                <h2 class="text-3xl font-serif font-bold mb-8 text-brand-primary text-right">مقالات ذات صلة</h2>
+                <h2 class="text-3xl font-bold mb-8 text-brand-primary text-right">مقالات ذات صلة</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     @foreach($relatedPosts as $relatedPost)
                         <article class="group text-right">
@@ -385,7 +385,7 @@
                                 </a>
                             @endif
                             <div class="mt-4">
-                                <h3 class="text-2xl font-serif font-bold mb-2 leading-relaxed">
+                                <h3 class="text-2xl font-bold mb-2 leading-relaxed">
                                     <a href="{{ route('post.show', $relatedPost->slug) }}"
                                         class="text-brand-primary hover:text-brand-accent transition-colors">
                                         {{ $relatedPost->title }}

@@ -5,7 +5,7 @@
 @section('content')
 <div class="container mx-auto px-4 py-12 max-w-5xl">
     <div class="mb-16 text-center">
-        <h1 class="text-4xl font-serif font-bold text-brand-primary mb-2">الوسم: {{ $tag->name }}</h1>
+        <h1 class="text-4xl font-bold text-brand-primary mb-2">الوسم: {{ $tag->name }}</h1>
         <p class="text-brand-muted">مقالات موسومة بـ "{{ $tag->name }}"</p>
     </div>
 
@@ -20,7 +20,7 @@
                     @endif
                     
                     <div class="text-center max-w-4xl mx-auto">
-                        <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 leading-tight text-brand-primary">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6 leading-tight text-brand-primary">
                             <a href="{{ route('post.show', $post->slug) }}" class="hover:text-brand-accent transition-colors">
                                 {{ $post->title }}
                             </a>
