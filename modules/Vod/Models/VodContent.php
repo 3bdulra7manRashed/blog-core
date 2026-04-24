@@ -83,6 +83,53 @@ class VodContent extends Model implements Seoable
         };
     }
 
+    public function getEmbedHtmlAttribute()
+    {
+        $code = trim($this->embed_code ?? '');
+        
+        if (empty($code)) {
+            return '';
+        }
+
+        if (\Illuminate\Support\Str::startsWith($code, '<iframe')) {
+            return $code;
+        }
+
+        $url = parse_url($code);
+        if (!$url || !isset($url['host'])) {
+            return $code;
+        }
+
+        $host = strtolower($url['host']);
+
+        // YouTube
+        if (str_contains($host, 'youtube.com') || str_contains($host, 'youtu.be')) {
+            $videoId = '';
+            if (str_contains($host, 'youtu.be')) {
+                $videoId = trim($url['path'] ?? '', '/');
+            } elseif (isset($url['query'])) {
+                parse_str($url['query'], $query);
+                $videoId = $query['v'] ?? '';
+            } elseif (isset($url['path']) && str_starts_with($url['path'], '/embed/')) {
+                $videoId = str_replace('/embed/', '', $url['path']);
+            }
+            
+            if ($videoId) {
+                return '<iframe src="https://www.youtube.com/embed/'.$videoId.'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+            }
+        }
+
+        // Vimeo
+        if (str_contains($host, 'vimeo.com')) {
+            $videoId = trim($url['path'] ?? '', '/');
+            if (is_numeric($videoId)) {
+                return '<iframe src="https://player.vimeo.com/video/'.$videoId.'" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+            }
+        }
+
+        return $code;
+    }
+
     // =========================================================================
     // SEO Interface Implementation
     // =========================================================================

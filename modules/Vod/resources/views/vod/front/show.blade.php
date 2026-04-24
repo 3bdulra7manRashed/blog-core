@@ -21,13 +21,13 @@
     <div class="flex flex-col">
         {{-- Video Player --}}
         <div class="relative w-full pb-[56.25%] bg-brand-primary rounded-2xl overflow-hidden shadow-2xl z-10">
-            @if(Str::startsWith(trim($content->embed_code), '<iframe'))
+            @if(Str::startsWith(trim($content->embed_html), '<iframe'))
                  <div class="absolute inset-0 w-full h-full [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:border-0">
-                    {!! $content->embed_code !!}
+                    {!! $content->embed_html !!}
                  </div>
             @else
                  <div class="absolute inset-0 w-full h-full flex items-center justify-center text-white">
-                    {!! $content->embed_code !!}
+                    {!! $content->embed_html !!}
                  </div>
             @endif
         </div>
