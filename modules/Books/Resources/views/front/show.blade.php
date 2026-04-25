@@ -26,12 +26,12 @@
 
             <!-- Book Info -->
             <div class="flex-1">
-                <h1 class="text-3xl md:text-4xl font-serif font-bold text-brand-primary mb-4">
+                <h1 class="text-4xl md:text-5xl font-serif font-bold text-brand-primary mb-4">
                     {{ $book->title }}
                 </h1>
 
                 @if($book->excerpt)
-                    <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+                    <p class="text-xl text-gray-600 mb-6 leading-loose">
                         {{ $book->excerpt }}
                     </p>
                 @endif
@@ -39,7 +39,7 @@
                 <!-- CTA Button -->
                 <div class="mt-6">
                     <a href="{{ $book->external_url }}" target="_blank" rel="nofollow sponsored noopener"
-                        class="inline-flex items-center px-8 py-3 bg-brand-accent text-white font-bold rounded-lg hover:bg-[#2f5c8f] transition-colors shadow-md hover:shadow-lg">
+                        class="inline-flex items-center px-8 py-3.5 text-lg bg-brand-accent text-white font-bold rounded-lg hover:bg-brand-primary hover:text-white transition-colors shadow-md hover:shadow-lg">
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
@@ -50,7 +50,7 @@
                 </div>
 
                 @if($book->published_at)
-                    <p class="text-sm text-gray-500 mt-4">
+                    <p class="text-base text-gray-500 mt-4">
                         تاريخ النشر: {{ $book->published_at->format('Y/m/d') }}
                     </p>
                 @endif
@@ -60,8 +60,8 @@
         <!-- Description -->
         @if($book->description)
             <div class="border-t border-gray-200 pt-8">
-                <h2 class="text-xl font-bold text-brand-primary mb-4">نبذة عن الكتاب</h2>
-                <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+                <h2 class="text-2xl font-bold text-brand-primary mb-4">نبذة عن الكتاب</h2>
+                <div class="prose prose-xl max-w-none text-gray-700 leading-loose">
                     {!! nl2br(e($book->description)) !!}
                 </div>
             </div>
@@ -70,8 +70,8 @@
         <!-- Back Link -->
         <div class="mt-12 pt-6 border-t border-gray-200">
             <a href="{{ route('books.index') }}"
-                class="inline-flex items-center text-brand-accent hover:text-brand-primary transition-colors">
-                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                class="inline-flex items-center text-lg text-brand-accent hover:text-brand-primary transition-colors">
+                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3">
                     </path>
                 </svg>
