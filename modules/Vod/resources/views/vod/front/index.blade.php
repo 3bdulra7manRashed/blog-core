@@ -6,19 +6,19 @@
     <div class="container mx-auto px-4 py-12 max-w-6xl">
         {{-- Header Section --}}
         <div class="mb-12 flex flex-col items-center justify-center text-center">
-            <h1 class="mb-2 text-4xl font-bold text-[var(--brand-primary)]">{{ $title }}</h1>
-            <p class="mb-8 text-xl text-gray-500">أحدث {{ $type === 'video' ? 'المقاطع المرئية' : 'المقاطع الصوتية' }}
+            <h1 class="mb-2 text-5xl font-bold text-[var(--brand-primary)]">{{ $title }}</h1>
+            <p class="mb-8 text-2xl text-gray-500">أحدث {{ $type === 'video' ? 'المقاطع المرئية' : 'المقاطع الصوتية' }}
                 والسلاسل</p>
 
             {{-- Tabs --}}
             @if(config('features.vod.playlists'))
                 <div class="inline-flex rounded-lg bg-gray-100 p-1">
                     <a href="{{ $type === 'video' ? route('videos.index') : route('audios.index') }}"
-                        class="rounded-md px-6 py-2.5 text-base font-bold transition-all {{ $currentTab !== 'playlists' ? 'bg-brand-accent text-brand-secondary shadow-sm hover:bg-[#3B75B0] hover:text-white' : 'text-gray-500 hover:text-gray-700' }}">
+                        class="rounded-md px-6 py-2.5 text-lg font-bold transition-all {{ $currentTab !== 'playlists' ? 'bg-brand-accent text-brand-secondary shadow-sm hover:bg-brand-primary hover:text-white' : 'text-gray-500 hover:text-gray-700' }}">
                         {{ $type === 'video' ? 'كل الفيديوهات' : 'كل الصوتيات' }}
                     </a>
                     <a href="{{ ($type === 'video' ? route('videos.index') : route('audios.index')) . '?tab=playlists' }}"
-                        class="rounded-md px-6 py-2.5 text-base font-bold transition-all {{ $currentTab === 'playlists' ? 'bg-brand-accent text-brand-secondary shadow-sm hover:bg-[#3B75B0] hover:text-white' : 'text-gray-500 hover:text-gray-700' }}">
+                        class="rounded-md px-6 py-2.5 text-lg font-bold transition-all {{ $currentTab === 'playlists' ? 'bg-brand-accent text-brand-secondary shadow-sm hover:bg-brand-primary hover:text-white' : 'text-gray-500 hover:text-gray-700' }}">
                         {{ $type === 'video' ? 'سلاسل الفيديو' : 'الألبومات الصوتية' }}
                     </a>
                 </div>
@@ -77,10 +77,10 @@
                         {{-- Content --}}
                         <div class="flex flex-col gap-1.5">
                             <h3
-                                class="text-xl font-bold leading-snug text-[var(--brand-primary)] line-clamp-2 group-hover:text-brand-accent transition-colors">
+                                class="text-2xl font-bold leading-snug text-[var(--brand-primary)] line-clamp-2 group-hover:text-brand-accent transition-colors">
                                 <a href="{{ $route }}">{{ $title }}</a>
                             </h3>
-                            <div class="flex items-center gap-2 text-base text-gray-500">
+                            <div class="flex items-center gap-2 text-lg text-gray-500">
                                 @if($isPlaylist)
                                     <span>{{ $count }} {{ $typeLabel }}</span>
                                     <span class="h-1 w-1 rounded-full bg-gray-300"></span>
@@ -104,8 +104,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                         d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
                 </svg>
-                <h3 class="text-xl font-bold text-gray-900 mb-2">لا يوجد محتوى حالياً</h3>
-                <p class="text-gray-500 text-lg">لم تُضَف أي {{ $type === 'video' ? 'فيديوهات' : 'صوتيات' }} بعد.</p>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">لا يوجد محتوى حالياً</h3>
+                <p class="text-gray-500 text-xl">لم تُضَف أي {{ $type === 'video' ? 'فيديوهات' : 'صوتيات' }} بعد.</p>
             </div>
         @endif
     </div>

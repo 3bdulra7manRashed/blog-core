@@ -5,7 +5,7 @@
 @section('content')
 <div class="container mx-auto px-4 py-12 max-w-6xl">
     {{-- Breadcrumb --}}
-    <nav class="flex items-center gap-2 text-sm text-gray-500 mb-8">
+    <nav class="flex items-center gap-3 text-lg text-gray-500 mb-8">
         <a href="{{ route('home') }}" class="hover:text-brand-primary transition-colors">الرئيسية</a>
         <span class="text-gray-300">/</span>
         <a href="{{ $playlist->type == 'video' ? route('videos.index') : route('audios.index') }}" class="hover:text-brand-primary transition-colors">
@@ -24,16 +24,16 @@
         {{-- Right Column (Videos List) --}}
         {{-- In RTL, this appears on the Right side as requested --}}
         <div class="w-full lg:w-2/3 order-2 lg:order-1">
-            <h2 class="text-2xl font-serif font-bold text-gray-900 mb-6 flex items-center gap-2">
+            <h2 class="text-3xl font-serif font-bold text-gray-900 mb-6 flex items-center gap-2">
                 <span>محتويات {{ $playlist->type == 'video' ? 'السلسلة' : 'الألبوم' }}</span>
-                <span class="bg-gray-100 text-brand-primary text-sm font-sans font-bold px-2 py-1 rounded-full">{{ $playlist->items->count() }}</span>
+                <span class="bg-gray-100 text-brand-primary text-base font-sans font-bold px-2.5 py-1 rounded-full">{{ $playlist->items->count() }}</span>
             </h2>
 
             <div class="space-y-4">
                 @forelse($playlist->items as $index => $item)
                     <article class="group flex items-start gap-4 p-4 bg-white border border-gray-100 rounded-xl hover:border-gray-200 hover:shadow-sm transition-all duration-300">
                         {{-- Number --}}
-                        <div class="hidden sm:flex items-center justify-center w-8 h-8 rounded-full bg-gray-50 text-gray-400 font-bold text-sm shrink-0 group-hover:bg-brand-primary group-hover:text-white transition-colors mt-2">
+                        <div class="hidden sm:flex items-center justify-center w-8 h-8 rounded-full bg-gray-50 text-gray-400 font-bold text-base shrink-0 group-hover:bg-brand-primary group-hover:text-white transition-colors mt-2">
                             {{ $index + 1 }}
                         </div>
 
@@ -53,14 +53,14 @@
 
                         {{-- Content --}}
                         <div class="flex-1 min-w-0 py-1">
-                            <h3 class="text-lg font-bold font-serif text-gray-900 leading-tight mb-2 group-hover:text-brand-accent transition-colors">
+                            <h3 class="text-xl font-bold font-serif text-gray-900 leading-snug mb-2 group-hover:text-brand-accent transition-colors">
                                 <a href="{{ $item->route }}" class="line-clamp-2">
                                     {{ $item->title }}
                                 </a>
                             </h3>
-                            <div class="flex items-center gap-3 text-xs text-gray-500">
+                            <div class="flex items-center gap-3 text-base text-gray-500">
                                 <span class="flex items-center gap-1">
-                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                                     {{ number_format($item->views_count) }}
                                 </span>
                                 <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
@@ -97,27 +97,27 @@
                         @endif
                         
                         {{-- Type Badge --}}
-                        <div class="absolute top-3 right-3 bg-brand-primary text-white text-xs font-bold px-2 py-1 rounded shadow-sm">
+                        <div class="absolute top-3 right-3 bg-brand-primary text-white text-sm font-bold px-2.5 py-1 rounded shadow-sm">
                             {{ $playlist->type == 'video' ? 'سلسلة فيديو' : 'ألبوم صوتي' }}
                         </div>
                     </div>
 
-                    <h1 class="text-2xl font-serif font-bold text-gray-900 mb-4 leading-tight">
+                    <h1 class="text-3xl font-serif font-bold text-gray-900 mb-4 leading-snug">
                         {{ $playlist->title }}
                     </h1>
 
                     @if($playlist->description)
-                        <div class="prose prose-sm text-gray-600 mb-6 leading-relaxed">
+                        <div class="prose prose-lg text-gray-600 mb-6 leading-relaxed">
                             {!! $playlist->description !!}
                         </div>
                     @endif
 
                     <div class="border-t border-gray-200 pt-4 mt-2">
-                        <div class="flex items-center justify-between text-sm text-gray-500">
+                        <div class="flex items-center justify-between text-base text-gray-500">
                             <span>عدد الحلقات</span>
                             <span class="font-bold text-gray-900">{{ $playlist->items->count() }}</span>
                         </div>
-                        <div class="flex items-center justify-between text-sm text-gray-500 mt-2">
+                        <div class="flex items-center justify-between text-base text-gray-500 mt-2">
                             <span>تاريخ الإنشاء</span>
                             <span class="font-bold text-gray-900">{{ $playlist->created_at->format('Y/m/d') }}</span>
                         </div>
