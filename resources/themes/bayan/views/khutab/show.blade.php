@@ -174,11 +174,11 @@
     <!-- Post Header -->
     <div class="container mx-auto px-4 pt-8 pb-6 max-w-5xl">
         <header class="mb-8 text-center max-w-4xl mx-auto">
-            <h1 class="post-title text-4xl md:text-4xl font-bold text-brand-accent mb-4">
+            <h1 class="post-title text-5xl md:text-6xl font-bold text-[var(--brand-primary)] mb-4">
                 {{ $post->title }}
             </h1>
 
-            <div class="flex items-center justify-center gap-3 text-sm text-gray-500">
+            <div class="flex items-center justify-center gap-3 text-lg text-gray-500">
                 @if($post->categories->count() > 0)
                     @foreach($post->categories as $category)
                         <a href="{{ route('category.show', $category->slug) }}" class="text-gray-500 font-medium hover:text-brand-accent hover:underline transition-colors">
@@ -201,17 +201,17 @@
         @endif
 
         <!-- Post Content -->
-        <div class="prose prose-lg max-w-none prose-headings:text-brand-accent prose-headings:font-bold prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-blue-600 prose-img:rounded-xl prose-li:marker:text-brand-accent text-right">
+        <div class="prose prose-2xl max-w-none prose-headings:text-brand-accent prose-headings:font-bold prose-p:text-gray-700 prose-p:leading-loose prose-a:text-blue-600 prose-img:rounded-xl prose-li:marker:text-brand-accent prose-li:leading-loose text-right">
             {!! $post->content !!}
         </div>
 
         <!-- Tags -->
         @if($post->tags->count() > 0)
             <div class="mt-12 pt-8 border-t border-gray-100 flex items-center space-x-2 space-x-reverse">
-                <span class="text-sm font-bold text-brand-primary">الوسوم:</span>
+                <span class="text-base font-bold text-brand-primary">الوسوم:</span>
                 <div class="flex flex-wrap gap-2">
                     @foreach($post->tags as $tag)
-                        <a href="{{ route('tag.show', $tag->slug) }}" class="text-sm text-gray-500 hover:text-brand-accent transition-colors">
+                        <a href="{{ route('tag.show', $tag->slug) }}" class="text-base text-gray-500 hover:text-brand-accent transition-colors">
                             #{{ $tag->name }}
                         </a>
                     @endforeach
@@ -249,8 +249,8 @@
                         <img src="{{ $post->publishing_identity->profile_photo_url }}" alt="{{ $post->publishing_identity->name }}" class="w-20 h-20 rounded-full object-cover shadow-md">
                     </div>
                     <div class="flex-1 text-center sm:text-right">
-                        <h3 class="text-xl font-bold text-brand-primary mb-2">{{ $post->publishing_identity->name }}</h3>
-                        <p class="text-gray-600 leading-relaxed">
+                        <h3 class="text-2xl font-bold text-brand-primary mb-2">{{ $post->publishing_identity->name }}</h3>
+                        <p class="text-gray-600 text-lg leading-relaxed">
                             {{ $post->publishing_identity->short_bio }}
                         </p>
                     </div>
@@ -285,8 +285,8 @@
                                 </a>
                             </div>
                             <div>
-                                <span class="block text-xs font-bold uppercase tracking-wide text-gray-400 mb-1">الخطبة التالية</span>
-                                <a href="{{ route('khutab.show', $nextPost->slug) }}" class="block text-lg font-bold text-brand-primary group-hover:text-brand-accent transition-colors">
+                                <span class="block text-sm font-bold uppercase tracking-wide text-gray-400 mb-1">الخطبة التالية</span>
+                                <a href="{{ route('khutab.show', $nextPost->slug) }}" class="block text-xl font-bold text-brand-primary group-hover:text-brand-accent transition-colors">
                                     {{ $nextPost->title }}
                                 </a>
                             </div>
@@ -307,7 +307,7 @@
                                 </a>
                             </div>
                             <div>
-                                <span class="block text-xs font-bold uppercase tracking-wide text-gray-400 mb-1">الخطبة السابقة</span>
+                                <span class="block text-sm font-bold uppercase tracking-wide text-gray-400 mb-1">الخطبة السابقة</span>
                                 <a href="{{ route('khutab.show', $previousPost->slug) }}" class="block text-lg font-bold text-brand-primary group-hover:text-brand-accent transition-colors">
                                     {{ $previousPost->title }}
                                 </a>
@@ -323,7 +323,7 @@
     @if($relatedPosts->count() > 0)
         <div class="py-16 bg-gray-50 border-t border-gray-100">
             <div class="container mx-auto px-4 max-w-6xl">
-                <h2 class="text-2xl font-bold mb-8 text-brand-primary text-right">خطب ذات صلة</h2>
+                <h2 class="text-3xl font-bold mb-8 text-brand-primary text-right">خطب ذات صلة</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     @foreach($relatedPosts as $relatedPost)
                         <article class="group text-right">
@@ -333,12 +333,12 @@
                                 </a>
                             @endif
                             <div class="mt-4">
-                                <h3 class="text-xl font-bold mb-2 leading-tight">
+                                <h3 class="text-2xl font-bold mb-2 leading-relaxed">
                                     <a href="{{ route('khutab.show', $relatedPost->slug) }}" class="text-brand-primary hover:text-brand-accent transition-colors">
                                         {{ $relatedPost->title }}
                                     </a>
                                 </h3>
-                                <p class="text-sm text-gray-500">{{ $relatedPost->published_at->format('Y/m/d') }}</p>
+                                <p class="text-base text-gray-500">{{ $relatedPost->published_at->format('Y/m/d') }}</p>
                             </div>
                         </article>
                     @endforeach
