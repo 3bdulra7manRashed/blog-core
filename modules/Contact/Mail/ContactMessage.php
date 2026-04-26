@@ -37,7 +37,7 @@ class ContactMessage extends Mailable
         $defaultColors = [
             'bayan' => '#0F766E',
             'gpma' => '#1F3A6E',
-            'classic' => '#efa330ff',
+            'classic' => '#c37c54',
         ];
         
         $this->themeColor = setting('primary_color', $defaultColors[$activeTheme] ?? '#0F766E');
