@@ -210,7 +210,7 @@
 
                     {{-- Success Message Removed (Handled Globally) --}}
 
-                    <form action="{{ route('contact.send') }}" method="POST" class="space-y-6" id="contact-form">
+                    <form action="{{ route('contact.send') }}" method="POST" class="space-y-6" id="contact-form" novalidate>
                         @csrf
 
                         {{-- Grid: Name (Full) | Email + Phone (Half each) --}}
@@ -244,7 +244,7 @@
                                     رقم الهاتف <span class="text-gray-400 font-normal">(اختياري)</span>
                                 </label>
                                 <div class="w-full">
-                                    <input type="tel" id="phone" dir="ltr"
+                                    <input type="tel" id="phone" dir="ltr" value="{{ old('phone') }}"
                                         class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-brand-accent focus:border-brand-accent transition-all outline-none {{ $errorBag && $errorBag->has('phone') ? 'border-red-500' : '' }}">
                                 </div>
                                 <input type="hidden" name="phone" id="phone_full" value="{{ old('phone') }}">

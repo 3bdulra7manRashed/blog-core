@@ -21,7 +21,7 @@
             overflow: hidden;
         }
         .email-header {
-            background: linear-gradient(135deg, #c37c54 0%, #a86845 100%);
+            background: linear-gradient(135deg, {{ $themeColor }} 0%, {{ $themeColor }}dd 100%);
             color: #ffffff;
             padding: 30px;
             text-align: center;
@@ -38,6 +38,7 @@
         }
         .email-body {
             padding: 30px;
+            text-align: right;
         }
         .info-row {
             margin-bottom: 20px;
@@ -51,7 +52,7 @@
         }
         .info-label {
             font-weight: 600;
-            color: #c37c54;
+            color: {{ $themeColor }};
             font-size: 14px;
             margin-bottom: 5px;
             display: block;
@@ -62,7 +63,7 @@
             line-height: 1.6;
         }
         .info-value a {
-            color: #c37c54;
+            color: {{ $themeColor }};
             text-decoration: none;
         }
         .info-value a:hover {
@@ -75,6 +76,7 @@
             white-space: pre-wrap;
             word-wrap: break-word;
             line-height: 1.8;
+            text-align: right;
         }
         .email-footer {
             background-color: #f9f9f9;
@@ -85,7 +87,7 @@
             border-top: 1px solid #eee;
         }
         .email-footer a {
-            color: #c37c54;
+            color: {{ $themeColor }};
             text-decoration: none;
         }
     </style>
@@ -94,32 +96,32 @@
     <div class="email-container">
         <!-- Header -->
         <div class="email-header">
-            <h1>📧 رسالة جديدة من نموذج التواصل</h1>
+            <h1>📧 <br> رسالة جديدة من نموذج التواصل</h1>
             <p>{{ config('app.name') }}</p>
         </div>
 
         <!-- Body -->
-        <div class="email-body">
+        <div class="email-body" style="text-align: right; padding: 30px;" dir="rtl">
             <!-- Sender Name -->
-            <div class="info-row">
-                <span class="info-label">👤 الاسم</span>
-                <div class="info-value">{{ $senderName }}</div>
+            <div class="info-row" style="margin-bottom: 20px; text-align: right;">
+                <span class="info-label" style="display: block; margin-bottom: 5px;">👤 الاسم</span>
+                <div class="info-value" style="color: #333; font-size: 16px;">{{ $senderName }}</div>
             </div>
 
             <!-- Sender Email -->
-            <div class="info-row">
-                <span class="info-label">📧 البريد الإلكتروني</span>
-                <div class="info-value">
-                    <a href="mailto:{{ $senderEmail }}">{{ $senderEmail }}</a>
+            <div class="info-row" style="margin-bottom: 20px; text-align: right;">
+                <span class="info-label" style="display: block; margin-bottom: 5px;">📧 البريد الإلكتروني</span>
+                <div class="info-value" style="color: #333; font-size: 16px; text-align: right;">
+                    <a href="mailto:{{ $senderEmail }}" dir="ltr" style="display: inline-block; text-align: right;">{{ $senderEmail }}</a>
                 </div>
             </div>
 
             <!-- Sender Phone -->
-            <div class="info-row">
-                <span class="info-label">📞 رقم الهاتف</span>
-                <div class="info-value">
-                    @if($senderPhone)
-                        <a href="tel:{{ $senderPhone }}" dir="ltr">{{ $senderPhone }}</a>
+            <div class="info-row" style="margin-bottom: 20px; text-align: right;">
+                <span class="info-label" style="display: block; margin-bottom: 5px;">📞 رقم الهاتف</span>
+                <div class="info-value" style="color: #333; font-size: 16px; text-align: right;">
+                    @if(!empty($senderPhone))
+                        <a href="tel:{{ $senderPhone }}" dir="ltr" style="display: inline-block; text-align: right;">{{ $senderPhone }}</a>
                     @else
                         <span style="color: #888;">غير متوفر</span>
                     @endif
@@ -127,9 +129,9 @@
             </div>
 
             <!-- Message -->
-            <div class="info-row">
-                <span class="info-label">💬 نص الرسالة</span>
-                <div class="info-value message-box">{{ $senderMessage }}</div>
+            <div class="info-row" style="text-align: right;">
+                <span class="info-label" style="display: block; margin-bottom: 5px;">💬 نص الرسالة</span>
+                <div class="info-value message-box" style="color: #333; font-size: 16px; text-align: right;">{{ $senderMessage }}</div>
             </div>
         </div>
 

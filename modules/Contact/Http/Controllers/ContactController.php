@@ -51,7 +51,7 @@ class ContactController extends Controller
             ]);
 
             // Send email to the site owner
-            Mail::to(config('mail.from.address'))->send(new ContactMail($validated));
+            Mail::to(config('mail.from.address'))->send(new ContactMail($contactMessage));
 
             Log::info('Contact form submitted and saved', [
                 'id' => $contactMessage->id,

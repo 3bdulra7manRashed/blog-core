@@ -9,21 +9,38 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+use Modules\Contact\Models\ContactMessage as ContactMessageModel;
+
 class ContactMessage extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
-     * The contact form data.
+     * The contact form message model.
      */
-    public array $data;
+    public ContactMessageModel $message;
+
+    /**
+     * The dynamic theme color for the email.
+     */
+    public string $themeColor;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(array $data)
+    public function __construct(ContactMessageModel $message)
     {
-        $this->data = $data;
+        $this->message = $message;
+
+        $activeTheme = active_theme();
+        
+        $defaultColors = [
+            'bayan' => '#0F766E',
+            'gpma' => '#1F3A6E',
+            'classic' => '#efa330ff',
+        ];
+        
+        $this->themeColor = setting('primary_color', $defaultColors[$activeTheme] ?? '#0F766E');
     }
 
     /**
@@ -32,8 +49,8 @@ class ContactMessage extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            replyTo: [$this->data['email']],
-            subject: 'رسالة جديدة من نموذج التواصل - ' . $this->data['name'],
+            replyTo: [$this->message->email],
+            subject: 'رسالة جديدة من نموذج التواصل - ' . $this->message->name,
         );
     }
 
@@ -45,10 +62,11 @@ class ContactMessage extends Mailable
         return new Content(
             view: 'emails.contact',
             with: [
-                'senderName' => $this->data['name'],
-                'senderEmail' => $this->data['email'],
-                'senderPhone' => $this->data['phone'] ?? null,
-                'senderMessage' => $this->data['message'],
+                'senderName' => $this->message->name,
+                'senderEmail' => $this->message->email,
+                'senderPhone' => $this->message->phone,
+                'senderMessage' => $this->message->message,
+                'themeColor' => $this->themeColor,
             ],
         );
     }
