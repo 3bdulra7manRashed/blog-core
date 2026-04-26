@@ -15,6 +15,27 @@
     
     <div class="bg-white rounded-lg shadow-sm overflow-hidden">
         <div class="p-6 space-y-6">
+            <!-- Type -->
+            <div class="mb-6">
+                <label for="type" class="block text-sm font-medium text-gray-700 mb-1">نوع القائمة</label>
+                <div class="relative">
+                    <select name="type" id="type" 
+                            class="w-full bg-none appearance-none text-right pr-4 pl-10 py-2 border border-gray-300 rounded-md bg-white focus:ring-brand-accent focus:border-brand-accent transition-colors @error('type') border-red-500 @enderror" 
+                            required>
+                        <option value="video" {{ old('type', 'video') == 'video' ? 'selected' : '' }}>فيديو</option>
+                        <option value="audio" {{ old('type') == 'audio' ? 'selected' : '' }}>صوت</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </div>
+                @error('type')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
             <!-- Title -->
             <div>
                 <label for="title" class="block text-sm font-medium text-gray-700 mb-1">عنوان القائمة</label>

@@ -46,7 +46,9 @@ class VodPlaylistController extends Controller
         ]);
 
         if (empty($validated['slug'])) {
-            $validated['slug'] = \Illuminate\Support\Str::slug($validated['title']);
+            // Safe Arabic Slug Generation
+            $slug = preg_replace('/\s+/u', '-', trim($validated['title']));
+            $validated['slug'] = $slug;
         }
 
         $validated['user_id'] = auth()->id();
@@ -86,7 +88,9 @@ class VodPlaylistController extends Controller
         ]);
 
         if (empty($validated['slug'])) {
-            $validated['slug'] = \Illuminate\Support\Str::slug($validated['title']);
+            // Safe Arabic Slug Generation
+            $slug = preg_replace('/\s+/u', '-', trim($validated['title']));
+            $validated['slug'] = $slug;
         }
 
         $playlist->update($validated);

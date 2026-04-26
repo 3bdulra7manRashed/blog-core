@@ -136,7 +136,7 @@ class UserController extends Controller
         }
 
         // Prevent demoting the root admin (admin@example.com)
-        if ($user->email === 'admin@example.com') {
+        if ($user->id === 1) {
             return redirect()
                 ->back()
                 ->with('error', 'لا يمكن إزالة صلاحيات المشرف الرئيسي.');
@@ -272,66 +272,101 @@ class UserController extends Controller
      * WARNING: This is irreversible and should be used with extreme caution.
      */
     public function forceDelete($id): RedirectResponse
-    {
-        $user = User::withTrashed()->findOrFail($id);
-        Gate::authorize('forceDelete', $user);
+{
+    $user = User::withTrashed()->findOrFail($id);
+    Gate::authorize('forceDelete', $user);
 
-        // Additional protection: Prevent force deleting super admin (id = 1)
-        if ($user->id === 1) {
-            return redirect()
-                ->route('admin.users.index')
-                ->with('error', 'لا يمكن حذف حساب المشرف الرئيسي نهائياً.');
-        }
-
-        // Additional protection: Prevent self-delete
-        if ($user->id === auth()->id()) {
-            return redirect()
-                ->route('admin.users.index')
-                ->with('error', 'لا يمكنك حذف حسابك الخاص نهائياً.');
-        }
-
-        // Compute counts or meta needed for audit before we delete
-        $postsCount = Post::where('user_id', $user->id)->count();
-        $mediaCount = method_exists($user, 'media') ? $user->media()->count() : 0;
-
-        DB::transaction(function () use ($user, $postsCount, $mediaCount) {
-            // 1) Insert audit log first (user still exists)
-            AuditLog::create([
-                'actor_id' => auth()->id(),
-                'target_user_id' => $user->id,
-                'action' => 'force_delete_user',
-                'meta' => [
-                    'posts_count' => $postsCount,
-                    'media_count' => $mediaCount,
-                    'ip' => request()->ip(),
-                    'timestamp' => now()->toIso8601String(),
-                    'warning' => 'Permanent deletion - user record will be removed from database',
-                ],
-            ]);
-
-            // 2) Delete relationships/pivots (roles/permissions) if needed
-            if (method_exists($user, 'roles')) {
-                $user->roles()->detach();
-            }
-            if (method_exists($user, 'permissions')) {
-                $user->permissions()->detach();
-            }
-
-            // 3) Finally permanently delete the user
-            $user->forceDelete();
-        });
-
-        // Build message with newlines (JS will convert to <br>)
-        if ($postsCount === 0) {
-            $message = "تم حذف المستخدم نهائياً من قاعدة البيانات.";
-        } else {
-            $articleWord = $postsCount > 1 ? 'مقالات' : 'مقال';
-            $message = "تم حذف المستخدم نهائياً من قاعدة البيانات.\nتم نقل {$postsCount} {$articleWord} إلى حساب المستخدم المحذوف.";
-        }
-
+    // Additional protection: Prevent force deleting super admin
+    if ($user->isSuperAdmin()) {
         return redirect()
             ->route('admin.users.index')
-            ->with('success', $message);
+            ->with('error', 'لا يمكن حذف حساب المشرف الرئيسي نهائياً.');
     }
+
+    // Additional protection: Prevent self-delete
+    if ($user->id === auth()->id()) {
+        return redirect()
+            ->route('admin.users.index')
+            ->with('error', 'لا يمكنك حذف حسابك الخاص نهائياً.');
+    }
+
+    // Prevent force deleting placeholder account
+    if ($user->isDeletedUserPlaceholder()) {
+        return redirect()
+            ->route('admin.users.index')
+            ->with('error', 'لا يمكن حذف حساب المستخدم المحذوف الاحتياطي.');
+    }
+
+    // Get placeholder user for reassignment
+    $deletedUserEmail = config('app.deleted_user_email', 'deleted-user@local');
+    $placeholder = User::withTrashed()->firstWhere('email', $deletedUserEmail);
+
+    if (!$placeholder) {
+        return redirect()
+            ->route('admin.users.index')
+            ->with('error', "خطأ: حساب المستخدم المحذوف ($deletedUserEmail) غير موجود.");
+    }
+
+    // Ensure placeholder exists as active user
+    if ($placeholder->trashed()) {
+        $placeholder->restore();
+    }
+
+    // Compute counts before deletion
+    $postsCount = Post::where('user_id', $user->id)->count();
+    $mediaCount = method_exists($user, 'media') ? $user->media()->count() : 0;
+
+    DB::transaction(function () use ($user, $placeholder, $postsCount, $mediaCount) {
+
+        // 1) Insert audit log before permanent deletion
+        AuditLog::create([
+            'actor_id' => auth()->id(),
+            'target_user_id' => $user->id,
+            'action' => 'force_delete_user',
+            'meta' => [
+                'posts_count' => $postsCount,
+                'media_count' => $mediaCount,
+                'placeholder_user_id' => $placeholder->id,
+                'ip' => request()->ip(),
+                'timestamp' => now()->toIso8601String(),
+                'warning' => 'Permanent deletion - user record removed from database',
+            ],
+        ]);
+
+        // 2) Cleanup pivot relationships
+        if (method_exists($user, 'roles')) {
+            $user->roles()->detach();
+        }
+
+        if (method_exists($user, 'permissions')) {
+            $user->permissions()->detach();
+        }
+
+        // 3) Reassign owned content before force delete
+        // This prevents foreign key errors and preserves content ownership
+        Post::where('user_id', $user->id)
+            ->update(['user_id' => $placeholder->id]);
+
+        // Optional media reassignment
+        if (method_exists($user, 'media')) {
+            $user->media()->update(['user_id' => $placeholder->id]);
+        }
+
+        // 4) Permanently delete the user
+        $user->forceDelete();
+    });
+
+    // Build success message
+    if ($postsCount === 0) {
+        $message = "تم حذف المستخدم نهائياً من قاعدة البيانات.";
+    } else {
+        $articleWord = $postsCount > 1 ? 'مقالات' : 'مقال';
+        $message = "تم حذف المستخدم نهائياً من قاعدة البيانات.\nتم نقل {$postsCount} {$articleWord} إلى حساب المستخدم المحذوف.";
+    }
+
+    return redirect()
+        ->route('admin.users.index')
+        ->with('success', $message);
+}
 }
 
