@@ -14,8 +14,8 @@
 <div class="container mx-auto px-4 py-12 max-w-5xl">
     
     <header class="mb-12 text-center">
-        <h1 class="text-4xl font-bold text-[var(--brand-primary)] mb-4">الخطب</h1>
-        <p class="text-gray-600">مجموعة من الخطب والمواعظ</p>
+        <h1 class="text-5xl font-bold text-[var(--brand-primary)] mb-4">الخطب</h1>
+        <p class="text-gray-600 text-xl ">مجموعة من الخطب والمواعظ</p>
     </header>
     
     @if($posts->count() > 0)
