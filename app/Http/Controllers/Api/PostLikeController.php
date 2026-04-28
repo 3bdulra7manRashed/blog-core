@@ -18,21 +18,22 @@ class PostLikeController extends Controller
 
         if ($action === 'like') {
             // Increment the likes count
-            $post->likes_count = $post->likes_count + 1;
-            $post->save();
-            
+            $post->increment('likes_count');
+            $post->refresh();
+
             return response()->json([
                 'success' => true,
                 'action' => 'liked',
                 'likes_count' => $post->likes_count,
             ]);
         } elseif ($action === 'unlike') {
-            // Decrement the likes count (but don't go below 0)
-            if ($post->likes_count > 0) {
-                $post->likes_count = $post->likes_count - 1;
-                $post->save();
-            }
-            
+
+            Post::where('id', $post->id)
+                ->where('likes_count', '>', 0)
+                ->decrement('likes_count');
+
+            $post->refresh();
+
             return response()->json([
                 'success' => true,
                 'action' => 'unliked',
