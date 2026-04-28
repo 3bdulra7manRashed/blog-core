@@ -198,8 +198,8 @@
 
         <!-- Header -->
         <div class="text-center mb-12">
-            <h1 class="text-3xl font-serif font-bold text-[var(--brand-primary)] mb-4">تواصل معي</h1>
-            <p class="text-gray-500 text-lg max-w-2xl mx-auto">
+            <h1 class="{{ theme_name() === 'bayan' ? 'text-5xl' : 'text-3xl' }} font-serif font-bold text-[var(--brand-primary)] mb-4">تواصل معي</h1>
+            <p class="text-gray-500 {{ theme_name() === 'bayan' ? 'text-2xl' : 'text-lg' }} max-w-2xl mx-auto">
                 يسعدني تواصلكم في أي وقت.
             </p>
         </div>
@@ -218,9 +218,9 @@
 
                             {{-- 1. NAME (Full Width) --}}
                             <div class="space-y-2 md:col-span-2">
-                                <label for="name" class="block text-sm font-bold text-gray-700">الاسم</label>
+                                <label for="name" class="block {{ theme_name() === 'bayan' ? 'text-lg' : 'text-sm' }} font-bold text-gray-700">الاسم</label>
                                 <input type="text" name="name" id="name" value="{{ old('name') }}"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-brand-accent focus:border-brand-accent transition-all outline-none placeholder-gray-400 {{ $errorBag && $errorBag->has('name') ? 'border-red-500' : '' }}"
+                                    class="w-full px-4 py-3 {{ theme_name() === 'bayan' ? 'text-lg' : 'text-sm' }} border border-gray-300 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-brand-accent focus:border-brand-accent transition-all outline-none placeholder-gray-400 {{ $errorBag && $errorBag->has('name') ? 'border-red-500' : '' }}"
                                     placeholder="أدخل اسمك">
                                 @if($errorBag && $errorBag->has('name'))
                                     <p class="text-sm text-red-600 mt-1">{{ $errorBag->first('name') }}</p>
@@ -229,9 +229,9 @@
 
                             {{-- 2. EMAIL (Half Width) --}}
                             <div class="space-y-2">
-                                <label for="email" class="block text-sm font-bold text-gray-700">البريد الإلكتروني</label>
+                                <label for="email" class="block {{ theme_name() === 'bayan' ? 'text-lg' : 'text-sm' }} font-bold text-gray-700">البريد الإلكتروني</label>
                                 <input type="email" name="email" id="email" value="{{ old('email') }}"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-brand-accent focus:border-brand-accent transition-all outline-none placeholder-gray-400 {{ $errorBag && $errorBag->has('email') ? 'border-red-500' : '' }}"
+                                    class="w-full px-4 py-3 {{ theme_name() === 'bayan' ? 'text-lg' : 'text-sm' }} border border-gray-300 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-brand-accent focus:border-brand-accent transition-all outline-none placeholder-gray-400 {{ $errorBag && $errorBag->has('email') ? 'border-red-500' : '' }}"
                                     placeholder="name@example.com" dir="ltr">
                                 @if($errorBag && $errorBag->has('email'))
                                     <p class="text-sm text-red-600 mt-1">{{ $errorBag->first('email') }}</p>
@@ -240,12 +240,12 @@
 
                             {{-- 3. PHONE (Half Width) - International Input --}}
                             <div class="space-y-2">
-                                <label for="phone" class="block text-sm font-bold text-gray-700">
-                                    رقم الهاتف <span class="text-gray-400 font-normal">(اختياري)</span>
+                                <label for="phone" class="block {{ theme_name() === 'bayan' ? 'text-lg' : 'text-sm' }} font-bold text-gray-700">
+                                    رقم الهاتف <span class="text-gray-400 font-normal {{ theme_name() === 'bayan' ? 'text-base' : 'text-xs' }}">(اختياري)</span>
                                 </label>
                                 <div class="w-full">
                                     <input type="tel" id="phone" dir="ltr" value="{{ old('phone') }}"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-brand-accent focus:border-brand-accent transition-all outline-none {{ $errorBag && $errorBag->has('phone') ? 'border-red-500' : '' }}">
+                                        class="w-full px-4 py-3 {{ theme_name() === 'bayan' ? 'text-lg' : 'text-sm' }} border border-gray-300 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-brand-accent focus:border-brand-accent transition-all outline-none {{ $errorBag && $errorBag->has('phone') ? 'border-red-500' : '' }}">
                                 </div>
                                 <input type="hidden" name="phone" id="phone_full" value="{{ old('phone') }}">
                                 {{-- Client-side validation error message --}}
@@ -266,9 +266,9 @@
 
                         {{-- 4. MESSAGE --}}
                         <div class="space-y-2">
-                            <label for="message" class="block text-sm font-bold text-gray-700">الرسالة</label>
+                            <label for="message" class="block {{ theme_name() === 'bayan' ? 'text-lg' : 'text-sm' }} font-bold text-gray-700">الرسالة</label>
                             <textarea name="message" id="message" rows="6"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-brand-accent focus:border-brand-accent transition-all outline-none resize-none placeholder-gray-400 {{ $errorBag && $errorBag->has('message') ? 'border-red-500' : '' }}"
+                                class="w-full px-4 py-3 {{ theme_name() === 'bayan' ? 'text-lg' : 'text-sm' }} border border-gray-300 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-brand-accent focus:border-brand-accent transition-all outline-none resize-none placeholder-gray-400 {{ $errorBag && $errorBag->has('message') ? 'border-red-500' : '' }}"
                                 placeholder="اكتب رسالتك هنا...">{{ old('message') }}</textarea>
                             @if($errorBag && $errorBag->has('message'))
                                 <p class="text-sm text-red-600 mt-1">{{ $errorBag->first('message') }}</p>
@@ -277,7 +277,7 @@
 
                         {{-- 5. reCAPTCHA --}}
                         <div class="space-y-2">
-                            <label class="block text-sm font-bold text-gray-700">التحقّق</label>
+                            <label class="block {{ theme_name() === 'bayan' ? 'text-lg' : 'text-sm' }} font-bold text-gray-700">التحقّق</label>
                             <div class="{{ $errorBag && $errorBag->has('g-recaptcha-response') ? 'border-2 border-red-500 rounded-lg p-2' : '' }}"
                                 style="display: inline-block;">
                                 @if(config('services.recaptcha.site_key'))
