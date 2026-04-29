@@ -3,7 +3,7 @@
 @section('title', 'إضافة قائمة تشغيل جديدة')
 
 @section('content')
-{{ dd(feature('vod.audio')) }}
+
     <div class="mb-6 flex items-center justify-between">
         <h1 class="text-3xl font-serif font-bold text-brand-primary">إضافة قائمة تشغيل</h1>
         <a href="{{ route('admin.vod.playlists.index') }}"
