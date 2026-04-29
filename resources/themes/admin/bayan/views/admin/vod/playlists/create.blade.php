@@ -1,5 +1,5 @@
 @extends('theme::layouts.admin')
-
+<!-- BAYAN THEME ACTIVE VIEW -->
 @section('title', 'إنشاء قائمة جديدة')
 
 @section('content')
@@ -23,7 +23,9 @@
                             class="w-full bg-none appearance-none text-right pr-4 pl-10 py-2 border border-gray-300 rounded-md bg-white focus:ring-brand-accent focus:border-brand-accent transition-colors @error('type') border-red-500 @enderror" 
                             required>
                         <option value="video" {{ old('type', 'video') == 'video' ? 'selected' : '' }}>فيديو</option>
-                        <option value="audio" {{ old('type') == 'audio' ? 'selected' : '' }}>صوت</option>
+                        @if(feature('vod.audio'))
+                            <option value="audio" {{ old('type') == 'audio' ? 'selected' : '' }}>صوت</option>
+                        @endif
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                         <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

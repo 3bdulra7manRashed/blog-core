@@ -3,6 +3,7 @@
 @section('title', 'إضافة قائمة تشغيل جديدة')
 
 @section('content')
+{{ dd(feature('vod.audio')) }}
     <div class="mb-6 flex items-center justify-between">
         <h1 class="text-3xl font-serif font-bold text-brand-primary">إضافة قائمة تشغيل</h1>
         <a href="{{ route('admin.vod.playlists.index') }}"
@@ -89,11 +90,13 @@
                                 class="form-radio h-5 w-5 text-brand-primary focus:ring-brand-accent">
                             <span class="text-gray-900 font-medium">فيديو</span>
                         </label>
+                        @if(feature('vod.audio'))
                         <label class="flex items-center space-x-3 space-x-reverse cursor-pointer">
                             <input type="radio" name="type" value="audio" x-model="type"
                                 class="form-radio h-5 w-5 text-brand-primary focus:ring-brand-accent">
                             <span class="text-gray-900 font-medium">صوت</span>
                         </label>
+                        @endif
                     </div>
                     <p class="text-xs text-gray-500 mt-2">تغيير النوع سيقوم بتصفية المحتوى المتاح في الأسفل.</p>
                 </div>
