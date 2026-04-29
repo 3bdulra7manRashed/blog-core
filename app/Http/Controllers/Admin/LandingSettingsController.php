@@ -7,6 +7,8 @@ use App\Http\Requests\Admin\UpdateLandingSettingsRequest;
 use App\Models\Category;
 use App\Models\LandingSetting;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -41,6 +43,8 @@ class LandingSettingsController extends Controller
             $data['hero_mobile_image'] = $request->input('hero_mobile_image_url');
         }
         unset($data['hero_mobile_image_url']);
+        // Strip hero_bg fields — stored separately in the generic settings table
+        unset($data['hero_bg_type'], $data['hero_bg_color_1'], $data['hero_bg_color_2'], $data['hero_bg_angle']);
 
         // Handle boolean checkboxes (not sent when unchecked)
         $booleanFields = [
@@ -57,6 +61,26 @@ class LandingSettingsController extends Controller
         }
 
         $settings->update($data);
+
+        // ── Hero Background Settings (theme-isolated, stored in generic settings table) ──
+        $activeTheme = theme_name();
+        $bgFields = [
+            'hero_bg_type'    => $request->input('hero_bg_type', 'solid'),
+            'hero_bg_color_1' => $request->input('hero_bg_color_1'),
+            'hero_bg_color_2' => $request->input('hero_bg_color_2'),
+            'hero_bg_angle'   => $request->input('hero_bg_angle', 135),
+        ];
+
+        foreach ($bgFields as $shortKey => $value) {
+            $fullKey = "theme_{$activeTheme}_{$shortKey}";
+            if ($value !== null) {
+                DB::table('settings')->updateOrInsert(
+                    ['key' => $fullKey],
+                    ['value' => $value]
+                );
+            }
+            Cache::forget("setting.{$fullKey}");
+        }
 
         return redirect()
             ->route('admin.settings.landing.edit')

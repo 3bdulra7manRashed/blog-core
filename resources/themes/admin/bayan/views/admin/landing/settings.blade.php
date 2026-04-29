@@ -86,6 +86,127 @@
                 </div>
             </div>
 
+            {{-- Hero Background Color Configuration --}}
+            <div class="bg-white p-6 rounded-lg shadow"
+                 x-data="{
+                    bgType: '{{ old('hero_bg_type', setting('theme_'.theme_name().'_hero_bg_type', 'solid')) }}',
+                    color1: '{{ old('hero_bg_color_1', setting('theme_'.theme_name().'_hero_bg_color_1', '#0F766E')) }}',
+                    color2: '{{ old('hero_bg_color_2', setting('theme_'.theme_name().'_hero_bg_color_2', '#14B8A6')) }}',
+                    angle:  {{ old('hero_bg_angle', setting('theme_'.theme_name().'_hero_bg_angle', 135)) }},
+                    get previewStyle() {
+                        return this.bgType === 'gradient'
+                            ? `background: linear-gradient(${this.angle}deg, ${this.color1}, ${this.color2});`
+                            : `background-color: ${this.color1};`;
+                    }
+                 }"
+            >
+                <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b">لون خلفية الهيرو</h2>
+
+                {{-- Background Type Select --}}
+                <div class="mb-4">
+                    <label for="hero_bg_type" class="block text-sm font-medium text-gray-700 mb-1">نوع الخلفية</label>
+                    <select
+                        name="hero_bg_type"
+                        id="hero_bg_type"
+                        x-model="bgType"
+                        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brand-accent focus:border-brand-accent @error('hero_bg_type') border-red-500 @enderror"
+                    >
+                        <option value="solid">لون سادة</option>
+                        <option value="gradient">تدرج لوني</option>
+                    </select>
+                    @error('hero_bg_type')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Color Pickers Row --}}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    {{-- Color 1 (Always Visible) --}}
+                    <div>
+                        <label for="hero_bg_color_1" class="block text-sm font-medium text-gray-700 mb-1">
+                            <span x-text="bgType === 'gradient' ? 'اللون الأول (البداية)' : 'لون الخلفية'"></span>
+                        </label>
+                        <div class="flex items-center gap-3">
+                            <input
+                                type="color"
+                                name="hero_bg_color_1"
+                                id="hero_bg_color_1"
+                                x-model="color1"
+                                class="w-12 h-10 rounded border border-gray-300 cursor-pointer p-0.5"
+                            >
+                            <input
+                                type="text"
+                                x-model="color1"
+                                maxlength="7"
+                                class="flex-1 border border-gray-300 rounded-md px-3 py-2 font-mono text-sm focus:ring-brand-accent focus:border-brand-accent"
+                                dir="ltr"
+                                placeholder="#0F766E"
+                            >
+                        </div>
+                        @error('hero_bg_color_1')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Color 2 (Gradient Only) --}}
+                    <div x-show="bgType === 'gradient'" x-transition>
+                        <label for="hero_bg_color_2" class="block text-sm font-medium text-gray-700 mb-1">اللون الثاني (النهاية)</label>
+                        <div class="flex items-center gap-3">
+                            <input
+                                type="color"
+                                name="hero_bg_color_2"
+                                id="hero_bg_color_2"
+                                x-model="color2"
+                                class="w-12 h-10 rounded border border-gray-300 cursor-pointer p-0.5"
+                            >
+                            <input
+                                type="text"
+                                x-model="color2"
+                                maxlength="7"
+                                class="flex-1 border border-gray-300 rounded-md px-3 py-2 font-mono text-sm focus:ring-brand-accent focus:border-brand-accent"
+                                dir="ltr"
+                                placeholder="#14B8A6"
+                            >
+                        </div>
+                        @error('hero_bg_color_2')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                {{-- Angle Slider (Gradient Only) --}}
+                <div x-show="bgType === 'gradient'" x-transition class="mb-4">
+                    <label for="hero_bg_angle" class="block text-sm font-medium text-gray-700 mb-1">
+                        زاوية التدرج: <span class="font-bold text-brand-primary" x-text="angle + '°'"></span>
+                    </label>
+                    <input
+                        type="range"
+                        name="hero_bg_angle"
+                        id="hero_bg_angle"
+                        min="0"
+                        max="360"
+                        x-model="angle"
+                        class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-primary"
+                    >
+                    <div class="flex justify-between text-xs text-gray-400 mt-1">
+                        <span>0°</span>
+                        <span>90°</span>
+                        <span>180°</span>
+                        <span>270°</span>
+                        <span>360°</span>
+                    </div>
+                </div>
+
+                {{-- Live Preview Swatch --}}
+                <div class="mt-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">معاينة مباشرة</label>
+                    <div
+                        class="w-full h-20 rounded-lg border border-gray-200 shadow-inner transition-all duration-300"
+                        :style="previewStyle"
+                    ></div>
+                </div>
+            </div>
+
             {{-- Mobile Hero Image Path --}}
             <div class="bg-white p-6 rounded-lg shadow">
                 <h2 class="text-xl font-bold text-[#1F3A6E] mb-4 pb-2 border-b">صورة الموبايل (Hero Mobile)</h2>
