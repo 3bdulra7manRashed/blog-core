@@ -16,7 +16,7 @@
         <div class="w-full lg:w-2/3 space-y-6">
             <!-- Hero Section Settings -->
             <div class="bg-white p-6 rounded-lg shadow">
-                <h2 class="text-xl font-bold text-[#1F3A6E] mb-4 pb-2 border-b">قسم الترحيب (Hero)</h2>
+                <h2 class="text-xl font-bold text-[#1F3A6E] mb-4 pb-2 border-b">قسم الترحيب </h2>
                 
                 <!-- Hero Title -->
                 <div class="mb-4">

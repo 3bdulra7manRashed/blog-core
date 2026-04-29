@@ -1,4 +1,4 @@
-@extends('theme::layouts.admin')
+﻿@extends('theme::layouts.admin')
 
 @section('title', 'إعدادات الصفحة الرئيسية')
 
@@ -35,7 +35,7 @@
 
             {{-- Hero Section --}}
             <div class="bg-white p-6 rounded-lg shadow">
-                <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b">قسم الترحيب (Hero)</h2>
+                <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b">قسم الترحيب </h2>
 
                 {{-- Hero Title --}}
                 <div class="mb-4">
@@ -100,20 +100,25 @@
                     }
                  }"
             >
-                <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b">لون خلفية الهيرو</h2>
+                <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b">لون خلفية قسم الترحيب</h2>
 
                 {{-- Background Type Select --}}
                 <div class="mb-4">
                     <label for="hero_bg_type" class="block text-sm font-medium text-gray-700 mb-1">نوع الخلفية</label>
-                    <select
-                        name="hero_bg_type"
-                        id="hero_bg_type"
-                        x-model="bgType"
-                        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brand-accent focus:border-brand-accent @error('hero_bg_type') border-red-500 @enderror"
-                    >
-                        <option value="solid">لون سادة</option>
-                        <option value="gradient">تدرج لوني</option>
-                    </select>
+                    <div class="relative w-full">
+                        <select
+                            name="hero_bg_type"
+                            id="hero_bg_type"
+                            x-model="bgType"
+                            class="appearance-none bg-none pr-4 pl-10 w-full border border-gray-300 rounded-md py-2 focus:ring-brand-accent focus:border-brand-accent @error('hero_bg_type') border-red-500 @enderror"
+                        >
+                            <option value="solid">لون سادة</option>
+                            <option value="gradient">تدرج لوني</option>
+                        </select>
+                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
                     @error('hero_bg_type')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -312,11 +317,11 @@
                     </div>
                     <div>
                         <label for="category_one_id" class="block text-sm font-medium text-gray-700 mb-1">التصنيف</label>
-                        <div class="searchable-select-wrapper relative">
+                        <div class="searchable-select-wrapper relative w-full">
                             <select
                                 name="category_one_id"
                                 id="category_one_id"
-                                class="searchable-select w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brand-accent focus:border-brand-accent @error('category_one_id') border-red-500 @enderror"
+                                class="appearance-none bg-none pr-4 pl-10 searchable-select w-full border border-gray-300 rounded-md py-2 focus:ring-brand-accent focus:border-brand-accent @error('category_one_id') border-red-500 @enderror"
                                 {{ old('show_category_one', $settings->show_category_one) ? '' : 'disabled' }}
                             >
                                 <option value="">-- اختر تصنيف --</option>
@@ -326,6 +331,9 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
                         </div>
                         @error('category_one_id')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -350,11 +358,11 @@
                     </div>
                     <div>
                         <label for="category_two_id" class="block text-sm font-medium text-gray-700 mb-1">التصنيف</label>
-                        <div class="searchable-select-wrapper relative">
+                        <div class="searchable-select-wrapper relative w-full">
                             <select
                                 name="category_two_id"
                                 id="category_two_id"
-                                class="searchable-select w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brand-accent focus:border-brand-accent @error('category_two_id') border-red-500 @enderror"
+                                class="appearance-none bg-none pr-4 pl-10 searchable-select w-full border border-gray-300 rounded-md py-2 focus:ring-brand-accent focus:border-brand-accent @error('category_two_id') border-red-500 @enderror"
                                 {{ old('show_category_two', $settings->show_category_two) ? '' : 'disabled' }}
                             >
                                 <option value="">-- اختر تصنيف --</option>
@@ -364,6 +372,9 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
                         </div>
                         @error('category_two_id')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -388,11 +399,11 @@
                     </div>
                     <div>
                         <label for="khutab_category_id" class="block text-sm font-medium text-gray-700 mb-1">تصنيف الخطب</label>
-                        <div class="searchable-select-wrapper relative">
+                        <div class="searchable-select-wrapper relative w-full">
                             <select
                                 name="khutab_category_id"
                                 id="khutab_category_id"
-                                class="searchable-select w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-brand-accent focus:border-brand-accent @error('khutab_category_id') border-red-500 @enderror"
+                                class="appearance-none bg-none pr-4 pl-10 searchable-select w-full border border-gray-300 rounded-md py-2 focus:ring-brand-accent focus:border-brand-accent @error('khutab_category_id') border-red-500 @enderror"
                                 {{ old('show_khutab', $settings->show_khutab) ? '' : 'disabled' }}
                             >
                                 <option value="">-- اختر تصنيف (اختياري) --</option>
@@ -402,6 +413,9 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
                         </div>
                         @error('khutab_category_id')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
