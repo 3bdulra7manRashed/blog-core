@@ -382,7 +382,7 @@
                                                     @click="mobileMenuOpen = false">
                                                     <span
                                                         class="text-sm text-gray-500">({{ $category->posts_count ?? 0 }})</span>
-                                                    <span class="text-sm font-medium">{{ $category->name }}</span>
+                                                    <span class="text-base font-medium">{{ $category->name }}</span>
                                                 </a>
                                             </li>
                                         @endforeach
@@ -394,16 +394,16 @@
                             @if(isset($recentPosts) && $recentPosts->count() > 0)
                                 <div class="bg-[var(--writer-secondary)] p-6 rounded-lg">
                                     <h4 class="text-base font-semibold mb-3 text-right">أحدث المقالات</h4>
-                                    <ul class="space-y-3 text-right">
+                                    <ul class="space-y-5 text-right">
                                         @foreach($recentPosts as $recentPost)
                                             <li>
                                                 <a href="{{ route('post.show', $recentPost->slug) }}" class="block group"
                                                     @click="mobileMenuOpen = false">
                                                     <div
-                                                        class="text-sm font-medium group-hover:text-[var(--brand-accent)] transition-colors mb-1">
+                                                        class="text-base leading-relaxed font-medium group-hover:text-[var(--brand-accent)] transition-colors mb-1">
                                                         {{ Str::limit($recentPost->title, 60) }}
                                                     </div>
-                                                    <div class="text-xs text-gray-400">
+                                                    <div class="text-sm text-gray-400">
                                                         {{ $recentPost->published_at->format('Y/m/d') }}
                                                     </div>
                                                 </a>
@@ -417,18 +417,18 @@
                             @if(isset($mostLikedPosts) && $mostLikedPosts->count() > 0)
                                 <div class="bg-[var(--writer-secondary)] p-6 rounded-lg">
                                     <h4 class="text-base font-semibold mb-3 text-right">المقالات الأكثر إعجاباً</h4>
-                                    <ul class="space-y-3 text-right">
+                                    <ul class="space-y-5 text-right">
                                         @foreach($mostLikedPosts as $likedPost)
                                             <li>
                                                 <a href="{{ route('post.show', $likedPost->slug) }}" class="block group"
                                                     @click="mobileMenuOpen = false">
                                                     <div
-                                                        class="text-sm font-medium group-hover:text-[var(--brand-accent)] transition-colors mb-1">
+                                                        class="text-base leading-relaxed font-medium group-hover:text-[var(--brand-accent)] transition-colors mb-1">
                                                         {{ Str::limit($likedPost->title, 60) }}
                                                     </div>
-                                                    <div class="text-xs text-gray-400 flex items-center gap-1 justify-end">
+                                                    <div class="text-sm text-gray-400 flex items-center gap-1 justify-end">
                                                         <span>{{ $likedPost->likes_count ?? 0 }} إعجاب</span>
-                                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                                             <path
                                                                 d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                                                         </svg>
@@ -444,18 +444,18 @@
                             @if(isset($mostReadPosts) && $mostReadPosts->count() > 0)
                                 <div class="bg-[var(--writer-secondary)] p-6 rounded-lg">
                                     <h4 class="text-base font-semibold mb-3 text-right">المقالات الأكثر قراءة</h4>
-                                    <ul class="space-y-3 text-right">
+                                    <ul class="space-y-5 text-right">
                                         @foreach($mostReadPosts as $readPost)
                                             <li>
                                                 <a href="{{ route('post.show', $readPost->slug) }}" class="block group"
                                                     @click="mobileMenuOpen = false">
                                                     <div
-                                                        class="text-sm font-medium group-hover:text-[var(--brand-accent)] transition-colors mb-1">
+                                                        class="text-base leading-relaxed font-medium group-hover:text-[var(--brand-accent)] transition-colors mb-1">
                                                         {{ Str::limit($readPost->title, 60) }}
                                                     </div>
-                                                    <div class="text-xs text-gray-400 flex items-center gap-1 justify-end">
+                                                    <div class="text-sm text-gray-400 flex items-center gap-1 justify-end">
                                                         <span>{{ $readPost->views ?? 0 }} مشاهدة</span>
-                                                        <svg class="w-3 h-3" fill="none" stroke="currentColor"
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor"
                                                             viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                                 stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -529,7 +529,7 @@
                                         <a href="{{ route('category.show', $category->slug) }}"
                                             class="flex justify-between items-center py-2 hover:text-brand-accent transition-colors">
                                             <span class="text-sm text-gray-500">({{ $category->posts_count ?? 0 }})</span>
-                                            <span class="text-sm font-medium">{{ $category->name }}</span>
+                                            <span class="text-base font-medium">{{ $category->name }}</span>
                                         </a>
                                     </li>
                                 @endforeach
@@ -541,15 +541,15 @@
                     @if(isset($recentPosts) && $recentPosts->count() > 0)
                         <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
                             <h4 class="text-base font-semibold mb-3 text-right">أحدث المقالات</h4>
-                            <ul class="space-y-3 text-right">
+                            <ul class="space-y-5 text-right">
                                 @foreach($recentPosts as $recentPost)
                                     <li>
                                         <a href="{{ route('post.show', $recentPost->slug) }}" class="block group">
                                             <div
-                                                class="text-sm font-medium group-hover:text-brand-accent transition-colors mb-1">
+                                                class="text-base leading-relaxed font-medium group-hover:text-brand-accent transition-colors mb-1">
                                                 {{ Str::limit($recentPost->title, 60) }}
                                             </div>
-                                            <div class="text-xs text-gray-400">
+                                            <div class="text-sm text-gray-400">
                                                 {{ $recentPost->published_at->format('Y/m/d') }}
                                             </div>
                                         </a>
