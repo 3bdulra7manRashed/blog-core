@@ -30,7 +30,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.settings.general.update') }}" method="POST">
+    <form action="{{ route('admin.settings.general.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         {{-- Hidden input: holds Base64 cropped image data --}}
@@ -170,6 +170,77 @@
                         </div>
 
                         @error('site_logo_url')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Site Favicon -->
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">أيقونة الموقع (Favicon)</label>
+
+                        {{-- Current Favicon Preview --}}
+                        @if(setting('site_favicon'))
+                            <div class="mb-4 flex items-center gap-4">
+                                <div class="relative">
+                                    <img src="{{ setting('site_favicon') }}" alt="أيقونة الموقع الحالية"
+                                        class="w-16 h-16 rounded object-contain border-2 border-gray-200 shadow-sm bg-gray-50 p-1">
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">الأيقونة الحالية</p>
+                                    <p class="text-xs text-gray-400 mt-1 max-w-xs truncate" dir="ltr">{{ setting('site_favicon') }}</p>
+                                </div>
+                            </div>
+                        @endif
+
+                        {{-- Dual Option Tabs --}}
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            {{-- Tab Headers --}}
+                            <div class="flex border-b border-gray-200 bg-gray-50">
+                                <button type="button" id="tab-favicon-upload"
+                                    class="flex-1 px-4 py-3 text-sm font-medium text-center transition-colors border-b-2 border-brand-accent text-brand-accent bg-white"
+                                    onclick="switchFaviconTab('upload')">
+                                    <svg class="w-4 h-4 inline-block ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                        </path>
+                                    </svg>
+                                    رفع صورة
+                                </button>
+                                <button type="button" id="tab-favicon-url"
+                                    class="flex-1 px-4 py-3 text-sm font-medium text-center transition-colors border-b-2 border-transparent text-gray-500 hover:text-gray-700"
+                                    onclick="switchFaviconTab('url')">
+                                    <svg class="w-4 h-4 inline-block ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
+                                        </path>
+                                    </svg>
+                                    رابط مباشر
+                                </button>
+                            </div>
+
+                            {{-- Tab: Upload --}}
+                            <div id="panel-favicon-upload" class="p-5">
+                                <label for="site_favicon" class="block text-xs font-medium text-gray-600 mb-2">اختر صورة من جهازك</label>
+                                <input type="file" name="site_favicon" id="site_favicon" accept="image/*,.ico"
+                                    class="w-full text-sm border border-gray-300 rounded-md file:mr-0 file:ml-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-brand-primary hover:file:bg-gray-100 cursor-pointer">
+                                <p class="mt-1 text-xs text-gray-400">يفضل صورة مربعة بصيغة PNG أو ICO — الحد الأقصى: 1 ميجابايت</p>
+                                @error('site_favicon')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            {{-- Tab: URL --}}
+                            <div id="panel-favicon-url" class="p-5 hidden">
+                                <label for="site_favicon_url" class="block text-xs font-medium text-gray-600 mb-2">رابط الأيقونة المباشر</label>
+                                <input type="text" name="site_favicon_url" id="site_favicon_url"
+                                    value="{{ old('site_favicon_url') }}"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-accent"
+                                    placeholder="https://example.com/favicon.png" dir="ltr">
+                                <p class="mt-2 text-xs text-gray-500">أدخل رابط الأيقونة (رابط خارجي كامل أو مسار نسبي)</p>
+                            </div>
+                        </div>
+
+                        @error('site_favicon_url')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
@@ -347,6 +418,30 @@
                 fileInput.value = '';
                 fileInput.click();
             });
+
+            // Favicon tab switching
+            window.switchFaviconTab = function (tab) {
+                var tabUpload = document.getElementById('tab-favicon-upload');
+                var tabUrl = document.getElementById('tab-favicon-url');
+                var panelUpload = document.getElementById('panel-favicon-upload');
+                var panelUrl = document.getElementById('panel-favicon-url');
+
+                if (tab === 'upload') {
+                    tabUpload.classList.add('border-brand-accent', 'text-brand-accent', 'bg-white');
+                    tabUpload.classList.remove('border-transparent', 'text-gray-500');
+                    tabUrl.classList.remove('border-brand-accent', 'text-brand-accent', 'bg-white');
+                    tabUrl.classList.add('border-transparent', 'text-gray-500');
+                    panelUpload.classList.remove('hidden');
+                    panelUrl.classList.add('hidden');
+                } else {
+                    tabUrl.classList.add('border-brand-accent', 'text-brand-accent', 'bg-white');
+                    tabUrl.classList.remove('border-transparent', 'text-gray-500');
+                    tabUpload.classList.remove('border-brand-accent', 'text-brand-accent', 'bg-white');
+                    tabUpload.classList.add('border-transparent', 'text-gray-500');
+                    panelUrl.classList.remove('hidden');
+                    panelUpload.classList.add('hidden');
+                }
+            };
         });
     </script>
 @endpush

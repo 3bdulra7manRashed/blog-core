@@ -27,6 +27,8 @@ class SettingController extends Controller
             'site_name' => 'nullable|string|max:255',
             'site_logo_url' => 'nullable|string',
             'site_logo_base64' => 'nullable|string',
+            'site_favicon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,ico,webp|max:1024',
+            'site_favicon_url' => 'nullable|string',
         ]);
 
         // Update site name
@@ -70,6 +72,29 @@ class SettingController extends Controller
                 ['value' => $logoValue]
             );
             Cache::forget('setting.site_logo');
+        }
+
+        // Update site favicon — File upload takes priority over raw URL
+        $faviconValue = null;
+
+        if ($request->hasFile('site_favicon')) {
+            $file = $request->file('site_favicon');
+            $filename = 'favicon_' . time() . '.' . $file->getClientOriginalExtension();
+
+            $file->storeAs('settings', $filename, 'public');
+
+            $faviconValue = url('storage/settings/' . $filename);
+
+        } elseif ($request->filled('site_favicon_url')) {
+            $faviconValue = $request->site_favicon_url;
+        }
+
+        if ($faviconValue !== null) {
+            DB::table('settings')->updateOrInsert(
+                ['key' => 'site_favicon'],
+                ['value' => $faviconValue]
+            );
+            Cache::forget('setting.site_favicon');
         }
 
         return redirect()->back()->with('success', 'تم حفظ الإعدادات بنجاح.');

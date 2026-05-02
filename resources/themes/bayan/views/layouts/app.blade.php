@@ -9,9 +9,14 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ asset('images/favicons/favicon.png') }}">
-    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('images/favicons/fav-192.png') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicons/fav-180.png') }}">
+    @if(setting('site_favicon'))
+        <link rel="icon" type="image/png" href="{{ setting('site_favicon') }}">
+        <link rel="apple-touch-icon" href="{{ setting('site_favicon') }}">
+    @else
+        <link rel="icon" type="image/png" href="{{ asset('images/favicons/favicon.png') }}">
+        <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('images/favicons/fav-192.png') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicons/fav-180.png') }}">
+    @endif
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">

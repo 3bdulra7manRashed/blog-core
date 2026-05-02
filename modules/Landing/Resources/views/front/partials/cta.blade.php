@@ -2,7 +2,8 @@
 @if(!empty($cta['text']) && !empty($cta['link']))
     <div class="flex flex-wrap items-center justify-start mt-8 w-full gap-4">
         <a href="{{ $cta['link'] }}"
-            class="px-10 py-4 text-xl bg-white text-[#0F766E] font-bold rounded-full transition-all duration-300 hover:-translate-y-1 hover:bg-gray-100 shadow-xl">
+            class="px-10 py-4 text-xl bg-white font-bold rounded-full transition-all duration-300 hover:-translate-y-1 hover:bg-gray-100 shadow-xl"
+            style="color: {{ $ctaPrimaryColor ?? '#0F766E' }};">
             {{ $cta['text'] }}
         </a>
     </div>

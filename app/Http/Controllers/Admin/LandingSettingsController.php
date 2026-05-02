@@ -44,7 +44,7 @@ class LandingSettingsController extends Controller
         }
         unset($data['hero_mobile_image_url']);
         // Strip hero_bg fields — stored separately in the generic settings table
-        unset($data['hero_bg_type'], $data['hero_bg_color_1'], $data['hero_bg_color_2'], $data['hero_bg_angle']);
+        unset($data['hero_bg_type'], $data['hero_bg_color_1'], $data['hero_bg_color_2'], $data['hero_bg_angle'], $data['hero_bg_preset']);
 
         // Handle boolean checkboxes (not sent when unchecked)
         $booleanFields = [
@@ -69,6 +69,7 @@ class LandingSettingsController extends Controller
             'hero_bg_color_1' => $request->input('hero_bg_color_1'),
             'hero_bg_color_2' => $request->input('hero_bg_color_2'),
             'hero_bg_angle'   => $request->input('hero_bg_angle', 135),
+            'hero_bg_preset'  => $request->input('hero_bg_preset'),
         ];
 
         foreach ($bgFields as $shortKey => $value) {

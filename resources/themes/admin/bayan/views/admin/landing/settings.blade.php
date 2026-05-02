@@ -1,4 +1,4 @@
-﻿@extends('theme::layouts.admin')
+@extends('theme::layouts.admin')
 
 @section('title', 'إعدادات الصفحة الرئيسية')
 
@@ -93,7 +93,15 @@
                     color1: '{{ old('hero_bg_color_1', setting('theme_'.theme_name().'_hero_bg_color_1', '#0F766E')) }}',
                     color2: '{{ old('hero_bg_color_2', setting('theme_'.theme_name().'_hero_bg_color_2', '#14B8A6')) }}',
                     angle:  {{ old('hero_bg_angle', setting('theme_'.theme_name().'_hero_bg_angle', 135)) }},
+                    selectedPreset: '{{ old('hero_bg_preset', setting('theme_'.theme_name().'_hero_bg_preset', 'institutional_teal')) }}',
+                    presets: {
+                        institutional_teal: 'linear-gradient(180deg, #2E6F89 0%, #5EA6A2 35%, #7DB39B 65%, #6B7FA7 100%)',
+                        premium_cinematic: 'radial-gradient(ellipse at 50% 30%, rgba(181, 231, 211, 0.50) 0%, rgba(181, 231, 211, 0.20) 28%, transparent 60%), linear-gradient(180deg, #2D6F8A 0%, #438CA0 35%, #7DB29E 72%, #7082AB 100%)'
+                    },
                     get previewStyle() {
+                        if (this.bgType === 'preset') {
+                            return 'background: ' + (this.presets[this.selectedPreset] || this.presets['institutional_teal']) + ';';
+                        }
                         return this.bgType === 'gradient'
                             ? `background: linear-gradient(${this.angle}deg, ${this.color1}, ${this.color2});`
                             : `background-color: ${this.color1};`;
@@ -114,6 +122,7 @@
                         >
                             <option value="solid">لون سادة</option>
                             <option value="gradient">تدرج لوني</option>
+                            <option value="preset">تدرج جاهز</option>
                         </select>
                         <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -124,8 +133,40 @@
                     @enderror
                 </div>
 
-                {{-- Color Pickers Row --}}
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                {{-- ══ Preset Selector (only when bgType === 'preset') ══ --}}
+                <div x-show="bgType === 'preset'" x-transition class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">اختر تدرج جاهز</label>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        {{-- Preset Card: Institutional Teal --}}
+                        <label class="cursor-pointer group">
+                            <input type="radio" name="hero_bg_preset" value="institutional_teal"
+                                x-model="selectedPreset" class="sr-only peer">
+                            <div class="rounded-lg overflow-hidden border-2 transition-all duration-200 peer-checked:border-brand-accent peer-checked:ring-2 peer-checked:ring-brand-accent/30 border-gray-200 hover:border-gray-300 group-hover:shadow-md">
+                                <div class="h-20 w-full" style="background: linear-gradient(180deg, #2E6F89 0%, #5EA6A2 35%, #7DB39B 65%, #6B7FA7 100%);"></div>
+                                <div class="bg-white px-2 py-1.5 text-center">
+                                    <span class="text-xs font-medium text-gray-700">تدرج مؤسسي</span>
+                                </div>
+                            </div>
+                        </label>
+
+                        {{-- Preset Card: Premium Cinematic --}}
+                        <label class="cursor-pointer group">
+                            <input type="radio" name="hero_bg_preset" value="premium_cinematic"
+                                x-model="selectedPreset" class="sr-only peer">
+                            <div class="rounded-lg overflow-hidden border-2 transition-all duration-200 peer-checked:border-brand-accent peer-checked:ring-2 peer-checked:ring-brand-accent/30 border-gray-200 hover:border-gray-300 group-hover:shadow-md">
+                                <div class="h-20 w-full" style="background: radial-gradient(ellipse at 50% 30%, rgba(181, 231, 211, 0.50) 0%, rgba(181, 231, 211, 0.20) 28%, transparent 60%), linear-gradient(180deg, #2D6F8A 0%, #438CA0 35%, #7DB29E 72%, #7082AB 100%);"></div>
+                                <div class="bg-white px-2 py-1.5 text-center">
+                                    <span class="text-xs font-medium text-gray-700">تدرج سينمائي مضيء</span>
+                                </div>
+                            </div>
+                        </label>
+
+                        {{-- Future presets can be added here as additional <label> cards --}}
+                    </div>
+                </div>
+
+                {{-- Color Pickers Row (hidden when preset is active) --}}
+                <div x-show="bgType !== 'preset'" x-transition class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     {{-- Color 1 (Always Visible) --}}
                     <div>
                         <label for="hero_bg_color_1" class="block text-sm font-medium text-gray-700 mb-1">
@@ -179,7 +220,7 @@
                     </div>
                 </div>
 
-                {{-- Angle Slider (Gradient Only) --}}
+                {{-- Angle Slider (Gradient Only, hidden when preset) --}}
                 <div x-show="bgType === 'gradient'" x-transition class="mb-4">
                     <label for="hero_bg_angle" class="block text-sm font-medium text-gray-700 mb-1">
                         زاوية التدرج: <span class="font-bold text-brand-primary" x-text="angle + '°'"></span>

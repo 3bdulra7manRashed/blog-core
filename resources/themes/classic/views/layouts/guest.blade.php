@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -8,7 +8,11 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Favicon -->
+        @if(setting('site_favicon'))
+        <link rel="icon" href="{{ setting('site_favicon') }}" type="image/png">
+    @else
         <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    @endif
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">

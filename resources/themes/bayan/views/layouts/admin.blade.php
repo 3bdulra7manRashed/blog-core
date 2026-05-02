@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
@@ -6,11 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'áæÍÉ ÇáÊÍßã') - {{ config('app.name') }}</title>
+    <title>@yield('title', 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½') - {{ config('app.name') }}</title>
 
-    <link rel="icon" type="image/png" href="{{ asset('images/favicons/favicon.png') }}">
-    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('images/favicons/fav-192.png') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicons/fav-180.png') }}">
+    @if(setting('site_favicon'))
+        <link rel="icon" type="image/png" href="{{ setting('site_favicon') }}">
+        <link rel="apple-touch-icon" href="{{ setting('site_favicon') }}">
+    @else
+        <link rel="icon" type="image/png" href="{{ asset('images/favicons/favicon.png') }}">
+        <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('images/favicons/fav-192.png') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicons/fav-180.png') }}">
+    @endif
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,7 +41,7 @@
                         d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                         clip-rule="evenodd" />
                 </svg>
-                <p class="font-medium">ßáãÉ ÇáãÑæÑ åí: <strong>{{ $plainPassword }}</strong> (ÊÙåÑ ãÑÉ æÇÍÏÉ ÝÞØ)</p>
+                <p class="font-medium">ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½: <strong>{{ $plainPassword }}</strong> (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½)</p>
             </div>
         </div>
     @endif
@@ -51,22 +56,22 @@
             <button id="site-confirm-close" aria-label="close"
                 class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 transition-colors text-2xl leading-none">&times;</button>
 
-            <h3 id="site-confirm-title" class="text-xl font-semibold text-gray-800 mb-3">ÊÃßíÏ ÇáÅÌÑÇÁ</h3>
+            <h3 id="site-confirm-title" class="text-xl font-semibold text-gray-800 mb-3">ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</h3>
 
-            <p id="site-confirm-message" class="text-gray-600 mb-4">åá ÃäÊ ãÊÃßÏ¿</p>
+            <p id="site-confirm-message" class="text-gray-600 mb-4">ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿</p>
 
             <div id="site-confirm-input-wrapper" class="mb-4 hidden">
                 <input id="site-confirm-input" type="text" class="w-full border rounded px-3 py-2 text-center"
-                    placeholder="ÇßÊÈ ßáãÉ ÇáÊÃßíÏ åäÇ" />
-                <p id="site-confirm-help" class="text-sm text-gray-500 mt-2">ÇßÊÈ <strong>ÍÐÝ</strong> ááÊÃßíÏ</p>
+                    placeholder="ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½" />
+                <p id="site-confirm-help" class="text-sm text-gray-500 mt-2">ï¿½ï¿½ï¿½ï¿½ <strong>ï¿½ï¿½ï¿½</strong> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</p>
                 <p id="site-confirm-error" class="text-sm text-red-600 mt-2 hidden"></p>
             </div>
 
             <div class="flex items-center justify-center gap-4" dir="rtl">
                 <button id="site-confirm-ok"
-                    class="px-6 py-2.5 rounded-lg bg-red-600 text-white font-medium hover:bg-red-700 transition-colors duration-200 shadow-sm hover:shadow-md">ÍÐÝ</button>
+                    class="px-6 py-2.5 rounded-lg bg-red-600 text-white font-medium hover:bg-red-700 transition-colors duration-200 shadow-sm hover:shadow-md">ï¿½ï¿½ï¿½</button>
                 <button id="site-confirm-cancel"
-                    class="px-5 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 hover:border-gray-400 transition-colors duration-200">ÅáÛÇÁ</button>
+                    class="px-5 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 hover:border-gray-400 transition-colors duration-200">ï¿½ï¿½ï¿½ï¿½ï¿½</button>
             </div>
         </div>
     </div>
@@ -110,7 +115,7 @@
                                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
                             </path>
                         </svg>
-                        ÇáÑÆíÓíÉ
+                        ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     </a>
 
                     <a href="{{ route('admin.posts.index') }}"
@@ -120,7 +125,7 @@
                                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
                             </path>
                         </svg>
-                        ÇáãÞÇáÇÊ
+                        ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     </a>
 
                     <a href="{{ route('admin.categories.index') }}"
@@ -130,7 +135,7 @@
                                 d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z">
                             </path>
                         </svg>
-                        ÇáÃÞÓÇã
+                        ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     </a>
 
                     <a href="{{ route('admin.tags.index') }}"
@@ -139,7 +144,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path>
                         </svg>
-                        ÇáæÓæã
+                        ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     </a>
 
                     <a href="{{ route('admin.media.library.index') }}"
@@ -149,7 +154,7 @@
                                 d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
                             </path>
                         </svg>
-                        ÇáæÓÇÆØ
+                        ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     </a>
 
                     @if(vod_enabled())
@@ -163,7 +168,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                ãßÊÈÉ ÇáÝíÏíæ
+                                ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                             </x-feature-link>
                         @endif
                         @if(config('features.vod.playlists'))
@@ -173,7 +178,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
                                 </svg>
-                                ÞæÇÆã ÇáÊÔÛíá
+                                ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                             </x-feature-link>
                         @endif
                     @endif
@@ -184,7 +189,7 @@
                                 d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
                             </path>
                         </svg>
-                        ÇáãáÝÇÊ æÇáãÑÝÞÇÊ
+                        ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     </x-feature-link>
 
                     {{-- Messages Menu Item with Unread Badge (Contact Module) --}}
@@ -198,7 +203,7 @@
                                         d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
                                     </path>
                                 </svg>
-                                ÇáÑÓÇÆá
+                                ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                             </div>
                             @if($unreadMessagesCount > 0)
                                 <span
@@ -216,7 +221,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
                         </svg>
-                        ÇáÍãáÇÊ ÇáÈÑíÏíÉ
+                        ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     </x-feature-link>
 
                     {{-- Newsletter Subscribers Menu Item --}}
@@ -227,13 +232,13 @@
                                 d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
                             </path>
                         </svg>
-                        ÇáãÔÊÑßíä
+                        ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     </x-feature-link>
 
                     @if(feature('manage_admins'))
                         @can('manage-users')
                             <div class="pt-4 border-t border-gray-200 mt-4">
-                                <p class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">ÅÏÇÑÉ ÎÇÕÉ</p>
+                                <p class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½</p>
                                 <x-feature-link feature="manage_admins" route="admin.users.index"
                                     class="flex items-center px-4 py-2 rounded-md transition-colors {{ request()->routeIs('admin.users.*') ? 'bg-brand-accent  text-white hover:text-white hover:bg-teal-800' : 'text-gray-700 hover:bg-gray-100' }}">
                                     <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -241,7 +246,7 @@
                                             d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
                                         </path>
                                     </svg>
-                                    ÇáãÏíÑíä
+                                    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                                 </x-feature-link>
                             </div>
                         @endcan
@@ -255,7 +260,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                             </svg>
-                            ÇáãáÝ ÇáÔÎÕí
+                            ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                         </a>
                         <a href="{{ route('home') }}"
                             class="flex items-center px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors">
@@ -266,7 +271,7 @@
                                     d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
                                 </path>
                             </svg>
-                            ÚÑÖ ÇáãæÞÚ
+                            ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                         </a>
                         <form method="POST" action="{{ route('logout') }}" class="mt-2">
                             @csrf
@@ -277,7 +282,7 @@
                                         d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
                                     </path>
                                 </svg>
-                                ÊÓÌíá ÇáÎÑæÌ
+                                ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                             </button>
                         </form>
                     </div>
@@ -443,7 +448,7 @@
             let expectedInput = null;
 
             // 1. Show Modal Function
-            window.showConfirmModal = function (message, form, expectedText = null, placeholder = null, okText = 'ÊÃßíÏ') {
+            window.showConfirmModal = function (message, form, expectedText = null, placeholder = null, okText = 'ï¿½ï¿½ï¿½ï¿½ï¿½') {
                 currentForm = form;
                 expectedInput = expectedText;
 
@@ -455,8 +460,8 @@
                 if (expectedText && inputWrapper) {
                     inputWrapper.classList.remove('hidden');
                     inputEl.value = '';
-                    inputEl.placeholder = placeholder || 'ÇßÊÈ ßáãÉ ÇáÊÃßíÏ';
-                    if (helpEl) helpEl.innerHTML = `ÇßÊÈ <strong>${expectedText}</strong> ááÊÃßíÏ`;
+                    inputEl.placeholder = placeholder || 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+                    if (helpEl) helpEl.innerHTML = `ï¿½ï¿½ï¿½ï¿½ <strong>${expectedText}</strong> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`;
                     if (errorEl) errorEl.classList.add('hidden');
                 } else if (inputWrapper) {
                     inputWrapper.classList.add('hidden');
@@ -481,7 +486,7 @@
                 if (expectedInput && inputEl) {
                     if (inputEl.value.trim() !== expectedInput) {
                         if (errorEl) {
-                            errorEl.textContent = `áã íÊã ÇáÊÃßíÏ ÈÔßá ÕÍíÍ.`;
+                            errorEl.textContent = `ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.`;
                             errorEl.classList.remove('hidden');
                         }
                         return;
@@ -497,9 +502,9 @@
             }
 
             // 4. Global Helper specifically for Delete Forms (onsubmit="return confirmDelete(...)")
-            window.confirmDelete = function (form, message = 'åá ÃäÊ ãÊÃßÏ ãä ÍÐÝ åÐÇ ÇáÚäÕÑ äåÇÆíÇð¿') {
+            window.confirmDelete = function (form, message = 'ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½') {
                 // Open the modal
-                window.showConfirmModal(message, form, null, null, 'ÍÐÝ');
+                window.showConfirmModal(message, form, null, null, 'ï¿½ï¿½ï¿½');
 
                 // RETURN FALSE to stop the form from submitting immediately
                 // The form will be submitted programmatically inside handleConfirm()
@@ -533,10 +538,10 @@
                     return;
                 }
 
-                const message = confirmBtn.getAttribute('data-confirm-message') || 'åá ÃäÊ ãÊÃßÏ ãä ÊäÝíÐ åÐÇ ÇáÅÌÑÇÁ¿';
+                const message = confirmBtn.getAttribute('data-confirm-message') || 'ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
                 const expectedInput = confirmBtn.getAttribute('data-confirm-input') || null;
                 const placeholder = confirmBtn.getAttribute('data-confirm-input-placeholder') || null;
-                const okText = confirmBtn.getAttribute('data-confirm-ok-text') || 'ÊÃßíÏ';
+                const okText = confirmBtn.getAttribute('data-confirm-ok-text') || 'ï¿½ï¿½ï¿½ï¿½ï¿½';
 
                 window.showConfirmModal(message, form, expectedInput, placeholder, okText);
             });

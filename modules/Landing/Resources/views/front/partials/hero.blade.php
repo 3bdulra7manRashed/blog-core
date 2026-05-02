@@ -7,23 +7,60 @@
     $color2 = setting("theme_{$activeTheme}_hero_bg_color_2", '#14B8A6');
     $angle  = (int) setting("theme_{$activeTheme}_hero_bg_angle", 135);
 
-    // Derive secondary shade from color1 (darken by mixing with black) for overlays
-    // We'll use color1 with opacity for the overlay gradient effect
-    $color1Dark = $color1 . 'F2'; // ~95% opacity variant for overlay via/to stops
+    // ── Gradient Presets Map (responsive: desktop vs mobile) ──
+    $presetsDesktop = [
+        'institutional_teal' => 'linear-gradient(135deg, #2E6F89 0%, #5EA6A2 35%, #7DB39B 65%, #6B7FA7 100%)',
+        'premium_cinematic'  => 'radial-gradient(ellipse at 75% 55%, rgba(181, 231, 211, 0.45) 0%, rgba(181, 231, 211, 0.15) 35%, transparent 65%), linear-gradient(135deg, #2D6F8A 0%, #438CA0 45%, #7DB29E 75%, #7082AB 100%)',
+    ];
+    $presetsMobile = [
+        'institutional_teal' => 'linear-gradient(180deg, #2E6F89 0%, #5EA6A2 35%, #7DB39B 65%, #6B7FA7 100%)',
+        'premium_cinematic'  => 'radial-gradient(ellipse at 72% 18%, rgba(181, 231, 211, 0.50) 0%, rgba(181, 231, 211, 0.20) 28%, transparent 60%), linear-gradient(180deg, #2D6F8A 0%, #438CA0 35%, #7DB29E 72%, #7082AB 100%)',
+    ];
+    // First color of each preset — used for overlays and CTA button color
+    $presetPrimaryColors = [
+        'institutional_teal' => '#2E6F89',
+        'premium_cinematic'  => '#2D6F8A',
+    ];
+    $activePreset  = setting("theme_{$activeTheme}_hero_bg_preset", 'institutional_teal');
+    $presetDesktop = $presetsDesktop[$activePreset] ?? $presetsDesktop['institutional_teal'];
+    $presetMobile  = $presetsMobile[$activePreset]  ?? $presetsMobile['institutional_teal'];
+    $presetPrimary = $presetPrimaryColors[$activePreset] ?? '#2E6F89';
 
-    // Build the inline style for the main section background (solid fallback)
-    $sectionBgStyle = $bgType === 'gradient'
-        ? "background: linear-gradient({$angle}deg, {$color1}, {$color2});"
-        : "background-color: {$color1};";
+    // Derive secondary shade from color1 for overlays
+    $color1Dark = $color1 . 'F2';
+
+    // Build the inline style for the main section background
+    if ($bgType === 'preset') {
+        // Use CSS custom properties for responsive preset switching
+        $sectionBgStyle = "--bg-mob: {$presetMobile}; --bg-desk: {$presetDesktop}; background-image: {$presetMobile};";
+    } elseif ($bgType === 'gradient') {
+        $sectionBgStyle = "background: linear-gradient({$angle}deg, {$color1}, {$color2});";
+    } else {
+        $sectionBgStyle = "background-color: {$color1};";
+    }
+
+    // Determine the primary color used for overlays (preset uses its own primary)
+    $overlayColor = $bgType === 'preset' ? $presetPrimary : $color1;
 
     // Build the desktop overlay gradient style (directional overlay on top of image)
-    $desktopOverlayWithImage    = "background: linear-gradient(to left, transparent, {$color1}F2 50%, {$color1});";
-    $desktopOverlayWithoutImage = "background: linear-gradient(to bottom right, {$color1}, {$color1}E6 50%, {$color2});";
+    $desktopOverlayWithImage    = "background: linear-gradient(to left, transparent, {$overlayColor}F2 50%, {$overlayColor});";
+    $desktopOverlayWithoutImage = $bgType === 'preset'
+        ? "background-image: {$presetDesktop};"
+        : "background: linear-gradient(to bottom right, {$color1}, {$color1}E6 50%, {$color2});";
 
-    // Build the mobile background gradient style
-    $mobileBgStyle = "background: linear-gradient(to bottom, {$color1}E6, {$color1});";
+    // Build the mobile background style — uses mobile-optimized positioning for presets
+    if ($bgType === 'preset') {
+        $mobileBgStyle = "background-image: {$presetMobile};";
+    } elseif ($bgType === 'gradient') {
+        $mobileBgStyle = "background: linear-gradient(180deg, {$color1}, {$color2});";
+    } else {
+        $mobileBgStyle = "background-color: {$color1};";
+    }
+
+    // The primary color for CTA button text
+    $ctaPrimaryColor = $bgType === 'preset' ? $presetPrimary : $color1;
 @endphp
-<section class="relative overflow-hidden min-h-[calc(100vh-5rem)] flex flex-col lg:block" style="{{ $sectionBgStyle }}">
+<section class="relative overflow-hidden min-h-[calc(100vh-5rem)] flex flex-col lg:block {{ $bgType === 'preset' ? 'lg:[background-image:var(--bg-desk)]' : '' }}" style="{{ $sectionBgStyle }}">
 
     {{-- ═══ DESKTOP LAYOUT (lg+): Classic asymmetric hero ═══ --}}
     <div class="hidden lg:block relative h-full min-h-[calc(100vh-5rem)]">
@@ -72,50 +109,72 @@
     </div>
 
 
-    {{-- ═══ MOBILE LAYOUT (<lg): Clean vertical stack, constrained to Viewport ═══ --}} 
-    <div class="lg:hidden flex flex-col flex-1 h-full min-h-[calc(100vh-5rem)] relative">
-        
-        {{-- Overall Background Gradient for Mobile --}}
-        <div class="absolute inset-0 z-0" style="{{ $mobileBgStyle }}"></div>
+    {{-- ═══ MOBILE LAYOUT (<lg): Premium personal-brand hero ═══ --}}
+    <div class="lg:hidden flex flex-col relative overflow-hidden"
+        style="min-height: calc(100vh - 70px); background: linear-gradient(to bottom, #2F6D8A 0%, #5FA79E 35%, #8DBA9D 65%, #6B7FA7 100%);">
 
-        {{-- Top Section: Text & CTA --}}
-        <div class="relative z-10 flex-none flex flex-col justify-end px-4 pt-12 pb-2 text-center">
-            
-            <h1 class="text-5xl sm:text-6xl font-sakkal font-bold text-white mb-8 leading-[1.3] drop-shadow-md">
-                {{ $hero['title'] }}
-            </h1>
+        {{-- ── Main Content Stack ── --}}
+        <div class="relative z-10 flex flex-col items-center flex-1 px-5 text-center">
 
-            @if($hero['subtitle'])
-                <p class="text-xl sm:text-2xl font-sakkal font-medium text-white/95 leading-[1.8] mb-10 w-full px-2 mx-auto whitespace-pre-line">
-                    {{ $hero['subtitle'] }}
-                </p>
-            @endif
+            {{-- Text Group: Vertically centered in available space --}}
+            <div class="flex-grow flex flex-col justify-center items-center px-4 py-8 w-full">
 
-            {{-- CTA Button --}}
-            @if(!empty($cta['text']) && !empty($cta['link']))
-                <div class="flex justify-center mt-2 mb-4">
+                {{-- 1. Name / Title --}}
+                <h1 class="text-[34px] font-sakkal font-bold text-white leading-[1.4]">
+                    {{ $hero['title'] }}
+                </h1>
+
+                {{-- 2. Decorative Divider --}}
+                <div class="w-12 h-1 bg-[#8DBA9D] rounded-full mx-auto mt-4"></div>
+
+                {{-- 3. Description --}}
+                @if($hero['subtitle'])
+                    <p class="text-[17px] font-sakkal text-white/80 leading-relaxed mt-5 w-[85%] max-w-xs mx-auto whitespace-pre-line">
+                        {{ $hero['subtitle'] }}
+                    </p>
+                @endif
+
+                {{-- 4. CTA Button — White pill (only renders when configured) --}}
+                @if(!empty($cta['text']) && !empty($cta['link']))
                     <a href="{{ $cta['link'] }}"
-                        class="px-8 py-3 text-base bg-white font-bold rounded-full transition-all duration-300 hover:-translate-y-1 hover:bg-gray-100 shadow-xl active:scale-95 shrink-0"
-                        style="color: {{ $color1 }};">
+                        class="inline-flex items-center justify-center w-[70%] h-[54px] mt-7 bg-white text-[#2F6D8A] font-medium text-base rounded-full shadow-lg transition-all duration-300 hover:shadow-xl active:scale-95">
                         {{ $cta['text'] }}
                     </a>
+                @endif
+
+            </div>
+
+            {{-- 5. Portrait Image with Glow (Bottom anchored) --}}
+            @php $mobileImagePath = $hero['mobile_image'] ?: $hero['image']; @endphp
+            @if($mobileImagePath)
+                <div class="relative w-[85%] max-w-[300px] mx-auto shrink-0">
+                    {{-- Radial Glow Behind Image --}}
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-white/10 blur-[80px] z-0"></div>
+
+                    {{-- Portrait Image with Bottom Fade --}}
+                    <img src="{{ str_starts_with($mobileImagePath, 'http') ? $mobileImagePath : asset('storage/' . $mobileImagePath) }}"
+                        alt="{{ $hero['title'] }}"
+                        class="relative z-10 w-full h-auto object-contain drop-shadow-2xl"
+                        style="-webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%); mask-image: linear-gradient(to bottom, black 80%, transparent 100%);">
                 </div>
             @endif
 
         </div>
 
-        {{-- Bottom Section: Subject Image --}}
-        @php $mobileImagePath = $hero['mobile_image'] ?: $hero['image']; @endphp
-        @if($mobileImagePath)
-            <div class="relative w-full shrink-0 h-[38vh] flex justify-center items-end overflow-hidden pt-2 mt-auto">
-                
-                {{-- Subtle top gradient for smooth transition --}}
-                <div class="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-transparent z-10 pointer-events-none"></div>
-
-                <img src="{{ str_starts_with($mobileImagePath, 'http') ? $mobileImagePath : asset('storage/' . $mobileImagePath) }}"
-                    alt="{{ $hero['title'] }}" class="w-full h-full object-contain object-bottom relative z-20">
-            </div>
-        @endif
+        {{-- ── Bottom Wave Contours (stroke-based, subtle) ── --}}
+        <div class="absolute bottom-0 left-0 w-full z-0 pointer-events-none" style="height: 20%;">
+            <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                {{-- Wave line 1 --}}
+                <path d="M0,224 C120,180 240,280 480,220 C720,160 960,280 1200,200 C1320,170 1380,210 1440,192"
+                    fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+                {{-- Wave line 2 --}}
+                <path d="M0,256 C180,210 360,300 600,240 C840,180 1020,290 1260,230 C1380,200 1420,240 1440,224"
+                    fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="1.2"/>
+                {{-- Wave line 3 --}}
+                <path d="M0,288 C160,250 320,310 560,270 C800,230 1000,310 1240,260 C1360,240 1400,270 1440,256"
+                    fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+            </svg>
+        </div>
 
     </div>
 

@@ -37,10 +37,11 @@ class UpdateLandingSettingsRequest extends FormRequest
             'khutab_category_id' => ['nullable', 'integer'],
             'show_releases'     => ['nullable', 'boolean'],
             // Hero Background Settings
-            'hero_bg_type'      => ['nullable', 'string', 'in:solid,gradient'],
+            'hero_bg_type'      => ['nullable', 'string', 'in:solid,gradient,preset'],
             'hero_bg_color_1'   => ['nullable', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'hero_bg_color_2'   => ['nullable', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'hero_bg_angle'     => ['nullable', 'integer', 'min:0', 'max:360'],
+            'hero_bg_preset'    => ['nullable', 'string', 'in:institutional_teal,premium_cinematic'],
         ];
     }
 
@@ -57,11 +58,12 @@ class UpdateLandingSettingsRequest extends FormRequest
             'cta_text.max'      => 'نص الزر يجب ألا يتجاوز 255 حرفاً',
             'cta_link.url'      => 'رابط الزر يجب أن يكون رابطاً صالحاً',
             'cta_link.max'      => 'رابط الزر يجب ألا يتجاوز 255 حرفاً',
-            'hero_bg_type.in'   => 'نوع الخلفية يجب أن يكون لون سادة أو تدرج لوني',
+            'hero_bg_type.in'   => 'نوع الخلفية يجب أن يكون لون سادة أو تدرج لوني أو تدرج جاهز',
             'hero_bg_color_1.regex' => 'اللون الأول يجب أن يكون بصيغة HEX صحيحة (e.g. #0F766E)',
             'hero_bg_color_2.regex' => 'اللون الثاني يجب أن يكون بصيغة HEX صحيحة (e.g. #14B8A6)',
             'hero_bg_angle.min' => 'زاوية التدرج يجب أن تكون بين 0 و 360',
             'hero_bg_angle.max' => 'زاوية التدرج يجب أن تكون بين 0 و 360',
+            'hero_bg_preset.in' => 'التدرج الجاهز المحدد غير صالح',
         ];
     }
 
@@ -90,6 +92,7 @@ class UpdateLandingSettingsRequest extends FormRequest
             'hero_bg_color_1'   => 'اللون الأول',
             'hero_bg_color_2'   => 'اللون الثاني',
             'hero_bg_angle'     => 'زاوية التدرج',
+            'hero_bg_preset'    => 'التدرج الجاهز',
         ];
     }
 }
