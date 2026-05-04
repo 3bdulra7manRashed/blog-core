@@ -154,7 +154,7 @@
                     {{-- Portrait Image with Bottom Fade --}}
                     <img src="{{ str_starts_with($mobileImagePath, 'http') ? $mobileImagePath : asset('storage/' . $mobileImagePath) }}"
                         alt="{{ $hero['title'] }}"
-                        class="relative z-10 w-full h-auto object-contain drop-shadow-2xl"
+                        class="relative z-10 w-full h-auto object-contain drop-shadow-2xl opacity-70 mix-blend-luminosity"
                         style="-webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%); mask-image: linear-gradient(to bottom, black 80%, transparent 100%);">
                 </div>
             @endif
