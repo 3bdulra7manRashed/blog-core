@@ -29,7 +29,7 @@
                         </h2>
 
                         @if($post->excerpt)
-                            <p class="text-gray-600 mb-8 text-xl md:text-2xl leading-relaxed">{{ $post->excerpt }}</p>
+                            <p class="text-gray-600 mb-8 text-lg md:text-xl leading-[2] text-justify text-right">{{ $post->excerpt }}</p>
                         @endif
 
                         <div class="flex items-center justify-center gap-4 text-sm text-gray-500 mb-6">

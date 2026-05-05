@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
@@ -93,10 +93,21 @@
                 <!-- Right: Navigation Links (RTL: Right side) -->
                 <nav class="hidden md:flex items-center space-x-6 space-x-reverse">
                     <!-- المقالات - Direct Link -->
-                    <a href="{{ route('home') }}"
-                        class="text-m font-medium {{ request()->routeIs('home') || request()->routeIs('post.*') || request()->routeIs('category.*') ? 'text-brand-accent font-bold' : 'text-gray-800' }} hover:text-brand-accent transition-colors">
-                        المقالات
-                    </a>
+                    @if(config('features.landing'))
+                        <a href="{{ url('/') }}"
+                            class="text-m font-medium {{ request()->is('/') ? 'text-brand-accent font-bold' : 'text-gray-800' }} hover:text-brand-accent transition-colors">
+                            الرئيسية
+                        </a>
+                        <a href="{{ route('posts.index') }}"
+                            class="text-m font-medium {{ request()->routeIs('posts.index') || request()->routeIs('post.*') || request()->routeIs('category.*') ? 'text-brand-accent font-bold' : 'text-gray-800' }} hover:text-brand-accent transition-colors">
+                            المقالات
+                        </a>
+                    @else
+                        <a href="{{ route('home') }}"
+                            class="text-m font-medium {{ request()->routeIs('home') || request()->routeIs('posts.index') || request()->routeIs('post.*') || request()->routeIs('category.*') ? 'text-brand-accent font-bold' : 'text-gray-800' }} hover:text-brand-accent transition-colors">
+                            المقالات
+                        </a>
+                    @endif
 
                     @if(feature('vod.video'))
                         <a href="{{ route('videos.index') }}"
@@ -273,11 +284,24 @@
             <nav class="py-4" @click.away="mobileMenuOpen = false">
                 <div class="flex flex-col">
                     <!-- المقالات (Articles) - Direct Link -->
-                    <a href="{{ route('home') }}"
-                        class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('home') || request()->routeIs('post.*') ? 'text-brand-accent bg-gray-50' : '' }}"
-                        @click="mobileMenuOpen = false">
-                        المقالات
-                    </a>
+                    @if(config('features.landing'))
+                        <a href="{{ url('/') }}"
+                            class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->is('/') ? 'text-brand-accent bg-gray-50' : '' }}"
+                            @click="mobileMenuOpen = false">
+                            الرئيسية
+                        </a>
+                        <a href="{{ route('posts.index') }}"
+                            class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('posts.index') || request()->routeIs('post.*') || request()->routeIs('category.*') ? 'text-brand-accent bg-gray-50' : '' }}"
+                            @click="mobileMenuOpen = false">
+                            المقالات
+                        </a>
+                    @else
+                        <a href="{{ route('home') }}"
+                            class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('home') || request()->routeIs('posts.index') || request()->routeIs('post.*') || request()->routeIs('category.*') ? 'text-brand-accent bg-gray-50' : '' }}"
+                            @click="mobileMenuOpen = false">
+                            المقالات
+                        </a>
+                    @endif
 
                     <!-- Video Library -->
                     @if(feature('vod.video'))

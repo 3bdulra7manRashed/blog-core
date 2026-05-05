@@ -36,7 +36,7 @@
                         </h2>
 
                         @if($post->excerpt)
-                            <p class="text-gray-600 mb-8 text-xl md:text-2xl leading-relaxed">{{ $post->excerpt }}</p>
+                            <p class="text-gray-600 mb-8 text-lg md:text-xl leading-[2] text-justify text-right">{{ $post->excerpt }}</p>
                         @endif
 
                         @include('partials.share-buttons', ['post' => $post, 'route' => 'khutab.show'])

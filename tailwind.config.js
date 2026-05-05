@@ -30,7 +30,7 @@ export default {
                 },
             },
             fontFamily: {
-                sans: ['var(--font-primary)', 'system-ui', 'sans-serif'],
+                sans: ['"Cairo"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
                 serif: ['var(--font-primary)', 'system-ui', 'serif'],
                 cairo: ['"Cairo"', ...defaultTheme.fontFamily.sans],
                 sakkal: ['"Sakkal Majalla"', ...defaultTheme.fontFamily.sans],
