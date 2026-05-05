@@ -167,7 +167,7 @@
 <!-- Reading Progress Bar (GPU-Optimized) -->
 <div id="reading-progress-bar" class="fixed top-17 md:top-12 right-0 left-0 h-1.5 bg-brand-accent z-50" style="transform: scaleX(0); transform-origin: right; will-change: transform; backface-visibility: hidden;"></div>
 
-<article>
+<article class="bg-slate-50">
     <!-- Post Header -->
     <div class="container mx-auto px-4 pt-8 pb-6 max-w-5xl">
         <header class="mb-8 text-center max-w-4xl mx-auto">
@@ -198,7 +198,7 @@
         @endif
 
         <!-- Post Content -->
-        <div class="prose prose-lg max-w-none prose-headings:text-brand-accent prose-headings:font-bold prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-blue-600 prose-img:rounded-xl prose-li:marker:text-brand-accent text-right">
+        <div class="prose prose-2xl max-w-4xl mx-auto px-5 sm:px-6 md:p-10 md:bg-white md:shadow-sm md:border md:border-slate-100 md:rounded-2xl text-justify text-right text-slate-800 leading-[2.2] space-y-7 prose-headings:text-brand-accent prose-headings:font-bold prose-p:text-slate-800 prose-p:leading-[2.2] prose-a:text-blue-600 prose-img:rounded-xl prose-li:marker:text-brand-accent prose-li:leading-[2.2]">
             {!! $post->content !!}
         </div>
 
