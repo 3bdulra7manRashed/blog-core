@@ -628,13 +628,20 @@
 
             <!-- Footer Bottom -->
             <div class="py-8">
-                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                @php
+                    $hasSocialLinks = !empty(config('branding.social.twitter'))
+                        || !empty(config('branding.social.linkedin'))
+                        || !empty(config('branding.social.facebook'))
+                        || !empty(config('branding.social.instagram'));
+                @endphp
+                <div class="flex flex-col md:flex-row items-center gap-4 {{ $hasSocialLinks ? 'justify-between' : 'justify-center' }}">
                     <!-- Copyright -->
-                    <div class="text-center md:text-right order-2 md:order-1">
+                    <div class="{{ $hasSocialLinks ? 'text-center md:text-right order-2 md:order-1' : 'text-center' }}">
                         <p class="text-sm text-gray-500">&copy; {{ date('Y') }} {{ config('branding.site_name') }}. جميع
                             الحقوق محفوظة.</p>
                     </div>
 
+                    @if($hasSocialLinks)
                     <!-- Social Links -->
                     <div class="flex flex-col items-center gap-3 order-1 md:order-2">
                         <p class="text-sm font-medium text-gray-400">تابعني</p>
@@ -663,6 +670,7 @@
                             @endif
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
