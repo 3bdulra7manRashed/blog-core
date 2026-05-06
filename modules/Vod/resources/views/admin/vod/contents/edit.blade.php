@@ -102,7 +102,7 @@
             </div>
 
             <!-- Sidebar Column -->
-            <div class="w-full lg:w-1/3 space-y-6">
+            <div class="w-full lg:w-1/3 space-y-6" x-data="{ selectedContentType: '{{ old('type', $content->type) }}' }">
 
                 <!-- Type Box -->
                 @php
@@ -123,11 +123,11 @@
                     @else
                         <div class="space-y-2">
                             <label class="flex items-center space-x-2 space-x-reverse cursor-pointer hover:bg-gray-50 p-1 rounded">
-                                <input type="radio" name="type" value="video" {{ old('type', $content->type) == 'video' ? 'checked' : '' }} class="text-brand-accent h-4 w-4 focus:ring-brand-accent">
+                                <input type="radio" name="type" value="video" x-model="selectedContentType" {{ old('type', $content->type) == 'video' ? 'checked' : '' }} class="text-brand-accent h-4 w-4 focus:ring-brand-accent">
                                 <span class="text-sm text-gray-700 select-none">فيديو (Video)</span>
                             </label>
                             <label class="flex items-center space-x-2 space-x-reverse cursor-pointer hover:bg-gray-50 p-1 rounded">
-                                <input type="radio" name="type" value="audio" {{ old('type', $content->type) == 'audio' ? 'checked' : '' }} class="text-brand-accent h-4 w-4 focus:ring-brand-accent">
+                                <input type="radio" name="type" value="audio" x-model="selectedContentType" {{ old('type', $content->type) == 'audio' ? 'checked' : '' }} class="text-brand-accent h-4 w-4 focus:ring-brand-accent">
                                 <span class="text-sm text-gray-700 select-none">صوت (Audio)</span>
                             </label>
                         </div>
@@ -158,7 +158,7 @@
                             $selectedPlaylists = old('playlists', $content->playlists->pluck('id')->toArray());
                         @endphp
                         @foreach($playlists as $playlist)
-                            <label class="flex items-center space-x-2 space-x-reverse cursor-pointer hover:bg-gray-50 p-1 rounded">
+                            <label x-show="selectedContentType === '{{ $playlist->type }}'" class="flex items-center space-x-2 space-x-reverse cursor-pointer hover:bg-gray-50 p-1 rounded">
                                 <input type="checkbox" name="playlists[]" value="{{ $playlist->id }}" {{ in_array($playlist->id, $selectedPlaylists) ? 'checked' : '' }} class="text-brand-accent h-4 w-4 rounded focus:ring-brand-accent border-gray-300">
                                 <span class="text-sm text-gray-700 select-none">{{ $playlist->title }}</span>
                             </label>

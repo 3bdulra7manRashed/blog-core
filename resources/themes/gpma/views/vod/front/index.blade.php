@@ -33,7 +33,7 @@
                         $isPlaylist = isset($currentTab) && $currentTab === 'playlists';
                         $route = $isPlaylist ? route('videos.playlists.show', $item->slug) : $item->route;
                         $title = $item->title;
-                        $thumbnail = $isPlaylist ? ($item->items->first()?->thumbnail_path) : $item->thumbnail_path;
+                        $thumbnail = $isPlaylist ? ($item->items->first()?->thumbnail_path ?? null) : $item->thumbnail_path;
                         $date = $item->created_at->translatedFormat('F Y');
                         $count = $isPlaylist ? $item->items_count : null;
                         $typeLabel = $type === 'video' ? 'فيديوهات' : 'مقاطع';

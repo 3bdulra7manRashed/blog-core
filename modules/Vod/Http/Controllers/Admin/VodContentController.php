@@ -44,7 +44,7 @@ class VodContentController extends Controller
     {
         $playlists = [];
         if (config('features.vod.playlists')) {
-            $playlists = VodPlaylist::select('id', 'title')->get();
+            $playlists = VodPlaylist::select('id', 'title', 'type')->get();
         }
         return view('admin.vod.contents.create', compact('playlists'));
     }
@@ -106,7 +106,7 @@ class VodContentController extends Controller
     {
         $playlists = [];
         if (config('features.vod.playlists')) {
-            $playlists = VodPlaylist::select('id', 'title')->get();
+            $playlists = VodPlaylist::select('id', 'title', 'type')->get();
         }
         return view('admin.vod.contents.edit', compact('content', 'playlists'));
     }

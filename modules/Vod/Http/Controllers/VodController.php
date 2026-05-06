@@ -22,6 +22,9 @@ class VodController extends Controller
         if ($tab === 'playlists') {
             $contents = VodPlaylist::where('type', 'video')
                 ->withCount('items')
+                ->with(['items' => function ($query) {
+                    $query->where('status', 'published')->select('vod_contents.id', 'thumbnail_path')->limit(1);
+                }])
                 ->latest()
                 ->paginate(12);
 
@@ -53,6 +56,9 @@ class VodController extends Controller
         if ($tab === 'playlists') {
             $contents = VodPlaylist::where('type', 'audio')
                 ->withCount('items')
+                ->with(['items' => function ($query) {
+                    $query->where('status', 'published')->select('vod_contents.id', 'thumbnail_path')->limit(1);
+                }])
                 ->latest()
                 ->paginate(12);
 
