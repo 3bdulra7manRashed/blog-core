@@ -108,6 +108,10 @@ class StoreVodContentRequest extends FormRequest
                     }
                 },
             ],
+
+            // 9. Playlists
+            'playlists' => ['nullable', 'array'],
+            'playlists.*' => ['exists:vod_playlists,id'],
         ];
     }
 
@@ -142,6 +146,7 @@ class StoreVodContentRequest extends FormRequest
             'thumbnail_url' => 'رابط الصورة الخارجية',
             'published_at' => 'تاريخ النشر',
             'status' => 'الحالة',
+            'playlists' => 'قوائم التشغيل',
         ];
     }
 

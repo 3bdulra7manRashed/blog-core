@@ -108,6 +108,24 @@
             </div>
             @endif
 
+            <!-- Playlists -->
+            @if(config('features.vod.playlists') && isset($playlists) && $playlists->count() > 0)
+            <div class="bg-white p-4 rounded shadow">
+                <h3 class="font-bold text-[#1F3A6E] mb-4 border-b pb-2">قوائم التشغيل</h3>
+                <div class="space-y-2 max-h-48 overflow-y-auto">
+                    @foreach($playlists as $playlist)
+                        <label class="flex items-center space-x-2 space-x-reverse cursor-pointer hover:bg-gray-50 p-1 rounded">
+                            <input type="checkbox" name="playlists[]" value="{{ $playlist->id }}" {{ in_array($playlist->id, old('playlists', [])) ? 'checked' : '' }} class="text-brand-accent h-4 w-4 rounded focus:ring-brand-accent border-gray-300">
+                            <span class="text-sm text-gray-700 select-none">{{ $playlist->title }}</span>
+                        </label>
+                    @endforeach
+                </div>
+                @error('playlists')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+            @endif
+
             <!-- Publishing Actions -->
             <x-admin.publish-card 
                 :publishedAt="null" 

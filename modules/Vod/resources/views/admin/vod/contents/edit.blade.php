@@ -105,21 +105,39 @@
             <div class="w-full lg:w-1/3 space-y-6">
 
                 <!-- Type Box -->
+                @php
+                    $videoEnabled = config('features.vod.video');
+                    $audioEnabled = config('features.vod.audio');
+                @endphp
+
+                @if($videoEnabled || $audioEnabled)
                 <div class="bg-white p-4 rounded shadow">
                     <h3 class="font-bold text-[#1F3A6E] mb-4 border-b pb-2">النوع</h3>
-                    <div class="space-y-2">
-                        <label
-                            class="flex items-center space-x-2 space-x-reverse cursor-pointer hover:bg-gray-50 p-1 rounded">
-                            <input type="radio" name="type" value="video" {{ old('type', $content->type) == 'video' ? 'checked' : '' }} class="text-brand-accent h-4 w-4 focus:ring-brand-accent">
-                            <span class="text-sm text-gray-700 select-none">فيديو (Video)</span>
-                        </label>
-                        <label
-                            class="flex items-center space-x-2 space-x-reverse cursor-pointer hover:bg-gray-50 p-1 rounded">
-                            <input type="radio" name="type" value="audio" {{ old('type', $content->type) == 'audio' ? 'checked' : '' }} class="text-brand-accent h-4 w-4 focus:ring-brand-accent">
-                            <span class="text-sm text-gray-700 select-none">صوت (Audio)</span>
-                        </label>
-                    </div>
+
+                    @if($videoEnabled && !$audioEnabled)
+                        <input type="hidden" name="type" value="{{ $content->type }}">
+                        <div class="text-sm text-gray-600 bg-gray-50 p-2 rounded">فيديو (Video)</div>
+                    @elseif($audioEnabled && !$videoEnabled)
+                        <input type="hidden" name="type" value="{{ $content->type }}">
+                        <div class="text-sm text-gray-600 bg-gray-50 p-2 rounded">صوت (Audio)</div>
+                    @else
+                        <div class="space-y-2">
+                            <label class="flex items-center space-x-2 space-x-reverse cursor-pointer hover:bg-gray-50 p-1 rounded">
+                                <input type="radio" name="type" value="video" {{ old('type', $content->type) == 'video' ? 'checked' : '' }} class="text-brand-accent h-4 w-4 focus:ring-brand-accent">
+                                <span class="text-sm text-gray-700 select-none">فيديو (Video)</span>
+                            </label>
+                            <label class="flex items-center space-x-2 space-x-reverse cursor-pointer hover:bg-gray-50 p-1 rounded">
+                                <input type="radio" name="type" value="audio" {{ old('type', $content->type) == 'audio' ? 'checked' : '' }} class="text-brand-accent h-4 w-4 focus:ring-brand-accent">
+                                <span class="text-sm text-gray-700 select-none">صوت (Audio)</span>
+                            </label>
+                        </div>
+                    @endif
+
+                    @error('type')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
+                @endif
 
                 <!-- Thumbnail Box -->
                 @include('theme::partials.thumbnail-field', [
@@ -130,6 +148,27 @@
                     'currentImageUrl' => $content->thumbnail_path ? Storage::url($content->thumbnail_path) : null,
                     'currentImageRaw' => $content->thumbnail_path,
                 ])
+
+                <!-- Playlists -->
+                @if(config('features.vod.playlists') && isset($playlists) && $playlists->count() > 0)
+                <div class="bg-white p-4 rounded shadow">
+                    <h3 class="font-bold text-[#1F3A6E] mb-4 border-b pb-2">قوائم التشغيل</h3>
+                    <div class="space-y-2 max-h-48 overflow-y-auto">
+                        @php
+                            $selectedPlaylists = old('playlists', $content->playlists->pluck('id')->toArray());
+                        @endphp
+                        @foreach($playlists as $playlist)
+                            <label class="flex items-center space-x-2 space-x-reverse cursor-pointer hover:bg-gray-50 p-1 rounded">
+                                <input type="checkbox" name="playlists[]" value="{{ $playlist->id }}" {{ in_array($playlist->id, $selectedPlaylists) ? 'checked' : '' }} class="text-brand-accent h-4 w-4 rounded focus:ring-brand-accent border-gray-300">
+                                <span class="text-sm text-gray-700 select-none">{{ $playlist->title }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                    @error('playlists')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+                @endif
 
                 <!-- Publish Box (Standardized) -->
                 <x-admin.publish-card 

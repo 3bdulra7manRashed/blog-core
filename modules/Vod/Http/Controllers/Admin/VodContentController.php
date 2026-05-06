@@ -4,6 +4,7 @@ namespace Modules\Vod\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Modules\Vod\Models\VodContent;
+use Modules\Vod\Models\VodPlaylist;
 use Modules\Vod\Http\Requests\StoreVodContentRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -41,7 +42,11 @@ class VodContentController extends Controller
 
     public function create()
     {
-        return view('admin.vod.contents.create');
+        $playlists = [];
+        if (config('features.vod.playlists')) {
+            $playlists = VodPlaylist::select('id', 'title')->get();
+        }
+        return view('admin.vod.contents.create', compact('playlists'));
     }
 
     public function store(StoreVodContentRequest $request)
@@ -86,7 +91,11 @@ class VodContentController extends Controller
             $data['slug'] = $slug;
             $data['user_id'] = auth()->id();
 
-            VodContent::create($data);
+            $content = VodContent::create($data);
+
+            if (config('features.vod.playlists') && isset($data['playlists'])) {
+                $content->playlists()->sync($data['playlists']);
+            }
         });
 
         return redirect()->route('admin.vod.contents.index')
@@ -95,7 +104,11 @@ class VodContentController extends Controller
 
     public function edit(VodContent $content)
     {
-        return view('admin.vod.contents.edit', compact('content'));
+        $playlists = [];
+        if (config('features.vod.playlists')) {
+            $playlists = VodPlaylist::select('id', 'title')->get();
+        }
+        return view('admin.vod.contents.edit', compact('content', 'playlists'));
     }
 
     public function update(StoreVodContentRequest $request, VodContent $content)
@@ -130,6 +143,10 @@ class VodContentController extends Controller
         unset($data['slug']);
 
         $content->update($data);
+
+        if (config('features.vod.playlists')) {
+            $content->playlists()->sync($data['playlists'] ?? []);
+        }
 
         return redirect()->route('admin.vod.contents.index')
             ->with('success', 'تم تحديث المحتوى بنجاح');
