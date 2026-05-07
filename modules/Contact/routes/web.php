@@ -15,7 +15,8 @@ use Modules\Contact\Http\Controllers\ContactController;
 
 Route::middleware(['web', 'feature:contact'])->group(function () {
     Route::get('/contact', [ContactController::class, 'show'])->name('contact');
-    Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+    Route::post('/contact', [ContactController::class, 'send'])->name('contact.send')
+        ->middleware('throttle:3,10');
 });
 
 /*

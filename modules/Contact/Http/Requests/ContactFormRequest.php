@@ -13,6 +13,11 @@ class ContactFormRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        // Honeypot: if a bot filled the hidden field, abort immediately
+        if (!empty($this->input('company_website'))) {
+            abort(403);
+        }
+
         // Sanitize input data
         $this->merge([
             'name' => trim($this->name),
@@ -44,6 +49,7 @@ class ContactFormRequest extends FormRequest
                 'string',
                 'min:10',
                 'max:2000',
+                'not_regex:/https?:\/\/|www\./i', // Block SEO spam links
             ],
             'phone' => [
                 'nullable',
@@ -77,6 +83,7 @@ class ContactFormRequest extends FormRequest
             'message.required' => 'نص الرسالة مطلوب',
             'message.min' => 'الرسالة يجب أن تحتوي على 10 أحرف على الأقل',
             'message.max' => 'الرسالة يجب أن لا تتجاوز 2000 حرف',
+            'message.not_regex' => 'عفواً، لا يُسمح بإرسال روابط في نص الرسالة.',
             
             // Phone validation messages
             'phone.max' => 'رقم الهاتف يجب أن لا يتجاوز 20 رقم',
@@ -126,6 +133,7 @@ class ContactFormRequest extends FormRequest
     private function containsSuspiciousContent(string $message): bool
     {
         $spamKeywords = [
+            // English spam
             'click here',
             'buy now',
             'limited time',
@@ -135,6 +143,20 @@ class ContactFormRequest extends FormRequest
             'lottery',
             'prize',
             'winner',
+            'free money',
+            'act now',
+            'seo services',
+            'web traffic',
+            'backlink',
+            // Russian SEO spam (Cyrillic)
+            'продвижение',   // promotion
+            'раскрутка',     // boosting
+            'заработок',     // earnings
+            'казино',        // casino
+            'скидка',        // discount
+            'бесплатно',     // free
+            'реклама',       // advertising
+            'трафик',        // traffic
         ];
 
         $lowerMessage = strtolower($message);

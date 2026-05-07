@@ -13,8 +13,14 @@ class ReCaptcha implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        // Skip validation if reCAPTCHA is not configured
+        // In production, reCAPTCHA MUST be configured — fail hard if missing.
+        // In local/testing, skip validation gracefully for developer convenience.
         if (empty(config('services.recaptcha.secret_key'))) {
+            if (app()->environment('local', 'testing')) {
+                return;
+            }
+
+            $fail('إعداد reCAPTCHA مفقود. لا يمكن إرسال النموذج حالياً.');
             return;
         }
 

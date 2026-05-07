@@ -213,6 +213,12 @@
                     <form action="{{ route('contact.send') }}" method="POST" class="space-y-6" id="contact-form">
                         @csrf
 
+                        {{-- Honeypot: invisible to humans, bots auto-fill it --}}
+                        <div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden;">
+                            <label for="company_website">Website</label>
+                            <input type="text" name="company_website" id="company_website" value="" tabindex="-1" autocomplete="off">
+                        </div>
+
                         {{-- Grid: Name (Full) | Email + Phone (Half each) --}}
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
