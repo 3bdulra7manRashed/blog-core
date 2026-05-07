@@ -31,9 +31,11 @@
                 @foreach($contents as $item)
                     @php
                         $isPlaylist = isset($currentTab) && $currentTab === 'playlists';
-                        $route = $isPlaylist ? route('videos.playlists.show', $item->slug) : $item->route;
+                        $route = $isPlaylist
+                            ? ($type === 'video' ? route('videos.playlists.show', $item->slug) : route('audios.show', $item->slug))
+                            : $item->route;
                         $title = $item->title;
-                        $thumbnail = $isPlaylist ? ($item->items->first()?->thumbnail_path ?? null) : $item->thumbnail_path;
+                        $thumbnail = $isPlaylist ? ($item->first_thumbnail ?? null) : $item->thumbnail_path;
                         $date = $item->created_at->translatedFormat('F Y');
                         $count = $isPlaylist ? $item->items_count : null;
                         $typeLabel = $type === 'video' ? 'فيديوهات' : 'مقاطع';

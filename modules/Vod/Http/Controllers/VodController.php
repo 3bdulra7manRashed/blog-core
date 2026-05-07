@@ -21,12 +21,19 @@ class VodController extends Controller
 
         if ($tab === 'playlists') {
             $contents = VodPlaylist::where('type', 'video')
-                ->withCount('items')
-                ->with(['items' => function ($query) {
-                    $query->where('status', 'published')->select('vod_contents.id', 'thumbnail_path')->limit(1);
+                ->withCount(['items' => function ($query) {
+                    $query->where('status', 'published');
                 }])
                 ->latest()
                 ->paginate(12);
+
+            // Load first published thumbnail per playlist efficiently
+            $contents->getCollection()->each(function ($playlist) {
+                $playlist->first_thumbnail = $playlist->items()
+                    ->where('status', 'published')
+                    ->whereNotNull('thumbnail_path')
+                    ->value('thumbnail_path');
+            });
 
             $contents->appends(['tab' => 'playlists']);
         } else {
@@ -55,12 +62,19 @@ class VodController extends Controller
 
         if ($tab === 'playlists') {
             $contents = VodPlaylist::where('type', 'audio')
-                ->withCount('items')
-                ->with(['items' => function ($query) {
-                    $query->where('status', 'published')->select('vod_contents.id', 'thumbnail_path')->limit(1);
+                ->withCount(['items' => function ($query) {
+                    $query->where('status', 'published');
                 }])
                 ->latest()
                 ->paginate(12);
+
+            // Load first published thumbnail per playlist efficiently
+            $contents->getCollection()->each(function ($playlist) {
+                $playlist->first_thumbnail = $playlist->items()
+                    ->where('status', 'published')
+                    ->whereNotNull('thumbnail_path')
+                    ->value('thumbnail_path');
+            });
 
             $contents->appends(['tab' => 'playlists']);
         } else {
