@@ -7,6 +7,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: ${COMPOSE_PROJECT_NAME:-laravel-blog}:latest
     container_name: ${COMPOSE_PROJECT_NAME:-laravel-blog}-app
     restart: unless-stopped
     working_dir: /var/www/html
@@ -168,9 +169,7 @@ services:
   # QUEUE WORKER
   # =============================================================================
   worker:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ${COMPOSE_PROJECT_NAME:-laravel-blog}:latest
     container_name: ${COMPOSE_PROJECT_NAME:-laravel-blog}-worker
     restart: always
     working_dir: /var/www/html
