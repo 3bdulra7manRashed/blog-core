@@ -46,18 +46,15 @@ RUN npm run build
 # =============================================================================
 FROM unit:1.34.1-php8.3 AS runtime
 
-# Install PHP extensions — build deps are purged after compilation
+# Install PHP extensions and required libraries
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        curl \
-       # Build-time only (will be purged)
        libicu-dev libzip-dev libpng-dev libjpeg-dev libfreetype6-dev libssl-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) pcntl opcache pdo pdo_mysql intl zip gd exif ftp bcmath \
     && pecl install redis \
     && docker-php-ext-enable redis \
-    # Remove build-time headers, keep runtime libraries
-    && apt-get purge -y --auto-remove libicu-dev libzip-dev libpng-dev libjpeg-dev libfreetype6-dev libssl-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
