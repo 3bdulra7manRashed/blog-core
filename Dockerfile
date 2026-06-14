@@ -42,23 +42,28 @@ RUN npm run build
 
 
 # =============================================================================
-# Stage 3: Production runtime
+# Stage 3: PHP extensions (isolated from Coolify ARG injection)
 # =============================================================================
-FROM unit:php8.2 AS runtime
+# This stage has NO COPY from other stages and NO application-specific inputs,
+# so its cache is only invalidated when the base image or extension list changes.
+# Coolify injects ARGs into every stage, but since none of them are referenced
+# here, BuildKit treats them as unused and does NOT bust the cache.
+FROM unit:php8.2 AS php-extensions
 
-# Install PHP extensions and required libraries
-ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-
-# Force sequential execution: wait for node-builder to finish building assets before starting extension install.
-# This prevents parallel compilation CPU/RAM spikes that can crash low-spec VMs (OOM / exit code 255).
-COPY --from=node-builder /build/package.json /tmp/node-builder-trigger
+ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/download/2.7.23/install-php-extensions /usr/local/bin/
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends curl \
     && install-php-extensions pcntl pdo_mysql intl zip gd exif ftp bcmath redis \
     && docker-php-ext-enable opcache \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /tmp/node-builder-trigger
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+
+# =============================================================================
+# Stage 4: Production runtime
+# =============================================================================
+FROM php-extensions AS runtime
 
 # OPCache configuration — production-optimized, no JIT
 # JIT is removed because:
