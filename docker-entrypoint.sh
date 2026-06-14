@@ -77,4 +77,4 @@ if [ "$1" = "unitd" ]; then
 fi
 
 echo "Starting: $@"
-exec "$@"
+exec /usr/local/bin/docker-entrypoint.sh "$@"
