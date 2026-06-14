@@ -103,9 +103,12 @@ RUN composer dump-autoload --optimize --no-interaction \
 RUN chown -R unit:unit storage bootstrap/cache . \
     && chmod -R 775 storage bootstrap/cache
 
-# Copy Nginx Unit configuration
+# Copy Nginx Unit configuration and entrypoint
 COPY unit.json /docker-entrypoint.d/unit.json
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 EXPOSE 8000
 
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["unitd", "--no-daemon"]

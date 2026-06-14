@@ -1,5 +1,4 @@
 services:
-
   # =============================================================================
   # WEB APPLICATION
   # =============================================================================
@@ -33,7 +32,7 @@ services:
       - APP_TIMEZONE=${APP_TIMEZONE:-UTC}
       - APP_LOCALE=${APP_LOCALE:-ar}
       - APP_FALLBACK_LOCALE=${APP_FALLBACK_LOCALE:-en}
-      
+
       # Themes
       - ACTIVE_THEME=${ACTIVE_THEME:-classic}
       - ACTIVE_THEME_ADMIN=${ACTIVE_THEME_ADMIN:-classic}
@@ -117,7 +116,7 @@ services:
       # ==========================================
       # FEATURE FLAGS
       # ==========================================
-      
+
       # --- Core Features ---
       - FEATURE_SEO=${FEATURE_SEO:-true}
       - FEATURE_MEDIA=${FEATURE_MEDIA:-true}
@@ -157,13 +156,16 @@ services:
       - TRUSTED_PROXIES=*
       - TRUST_PROXY=true
 
+      # Entrypoint Controls
+      - RUN_MIGRATIONS=${RUN_MIGRATIONS:-true}
+      - RUN_SEEDER=${RUN_SEEDER:-false}
+
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8000/up || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://127.0.0.1:8000/up || exit 1"]
       interval: 30s
       timeout: 10s
-      retries: 3
-      start_period: 40s
-
+      retries: 5
+      start_period: 60s
 
   # =============================================================================
   # QUEUE WORKER
@@ -171,21 +173,18 @@ services:
   worker:
     image: ${COMPOSE_PROJECT_NAME:-laravel-blog}:latest
     container_name: ${COMPOSE_PROJECT_NAME:-laravel-blog}-worker
-    restart: always
+    restart: unless-stopped
     working_dir: /var/www/html
-    command: php artisan queue:work database --tries=3 --timeout=90 --sleep=3 --max-jobs=1000 --max-time=3600
+    command: php artisan queue:work --tries=3 --timeout=90 --sleep=3 --max-jobs=1000 --max-time=3600
     volumes:
       - storage:/var/www/html/storage
       - bootstrap_cache:/var/www/html/bootstrap/cache
     depends_on:
       mysql:
         condition: service_healthy
-      app:
-        condition: service_healthy
 
     environment:
-      - SERVICE_FQDN_APP
-      - SERVICE_PASSWORD_MYSQLROOT
+      - APP_NAME=${APP_NAME:-Blog Core}
       - APP_ENV=${APP_ENV:-production}
       - APP_KEY=${APP_KEY}
       - DB_CONNECTION=mysql
@@ -194,13 +193,13 @@ services:
       - DB_DATABASE=${DB_DATABASE:-laravel}
       - DB_USERNAME=${DB_USERNAME:-laravel}
       - DB_PASSWORD=${SERVICE_PASSWORD_MYSQLROOT}
-      - QUEUE_CONNECTION=database
+      - QUEUE_CONNECTION=${QUEUE_CONNECTION:-database}
       - CACHE_DRIVER=${CACHE_DRIVER:-file}
       - FILESYSTEM_DISK=${FILESYSTEM_DISK:-public}
-      
+
       # Themes
       - ACTIVE_THEME=${ACTIVE_THEME:-classic}
-      
+
       # Branding & Identity (Crucial for background emails)
       - BRANDING_SITE_NAME=${BRANDING_SITE_NAME}
       - BRANDING_SITE_DOMAIN=${BRANDING_SITE_DOMAIN}
@@ -216,7 +215,7 @@ services:
       - MAIL_USERNAME=${MAIL_USERNAME}
       - MAIL_PASSWORD=${MAIL_PASSWORD}
       - MAIL_ENCRYPTION=${MAIL_ENCRYPTION:-tls}
-      
+
       # Newsletter Mail
       - NEWSLETTER_MAILER=${NEWSLETTER_MAILER:-newsletter}
       - NEWSLETTER_MAIL_HOST=${NEWSLETTER_MAIL_HOST}
@@ -249,7 +248,17 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "127.0.0.1",
+          "-u",
+          "root",
+          "-p$$MYSQL_ROOT_PASSWORD",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
