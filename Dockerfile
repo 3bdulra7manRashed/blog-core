@@ -49,12 +49,16 @@ FROM unit:php8.2 AS runtime
 # Install PHP extensions and required libraries
 ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
+# Force sequential execution: wait for node-builder to finish building assets before starting extension install.
+# This prevents parallel compilation CPU/RAM spikes that can crash low-spec VMs (OOM / exit code 255).
+COPY --from=node-builder /build/package.json /tmp/node-builder-trigger
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends curl \
     && install-php-extensions pcntl pdo_mysql intl zip gd exif ftp bcmath redis \
     && docker-php-ext-enable opcache \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /tmp/node-builder-trigger
 
 # OPCache configuration — production-optimized, no JIT
 # JIT is removed because:
