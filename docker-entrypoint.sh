@@ -2,10 +2,25 @@
 set -e
 
 # Function to wait for database connection
+# Uses a dedicated PHP script to avoid shell-escaping issues with passwords
 wait_for_db() {
     if [ "$DB_CONNECTION" = "mysql" ]; then
-        echo "Waiting for MySQL ($DB_HOST)..."
-        until php -r "try { new PDO('mysql:host=$DB_HOST;port=$DB_PORT;dbname=$DB_DATABASE', '$DB_USERNAME', '$DB_PASSWORD'); exit(0); } catch (Exception \$e) { exit(1); }"; do
+        echo "Waiting for MySQL ($DB_HOST:$DB_PORT)..."
+        # Use environment variables directly in PHP to avoid shell quoting issues
+        # with special characters in passwords
+        until php -r '
+            $host = getenv("DB_HOST");
+            $port = getenv("DB_PORT");
+            $db   = getenv("DB_DATABASE");
+            $user = getenv("DB_USERNAME");
+            $pass = getenv("DB_PASSWORD");
+            try {
+                new PDO("mysql:host=$host;port=$port;dbname=$db", $user, $pass);
+                exit(0);
+            } catch (Exception $e) {
+                exit(1);
+            }
+        '; do
             echo "MySQL is unavailable - sleeping..."
             sleep 2
         done
@@ -15,8 +30,13 @@ wait_for_db() {
 
 # 1. Ensure .env exists for Artisan CLI consistency
 if [ ! -f ".env" ]; then
-    echo "Creating .env from .env.example..."
-    cp .env.example .env
+    if [ -f ".env.example" ]; then
+        echo "Creating .env from .env.example..."
+        cp .env.example .env
+    else
+        echo "WARNING: No .env or .env.example found, creating empty .env"
+        touch .env
+    fi
 fi
 
 # 2. Fix permissions for storage and cache (Crucial for volumes)
@@ -68,7 +88,6 @@ if [ "$1" = "unitd" ]; then
     # Optimize for production
     if [ "${APP_ENV:-production}" = "production" ]; then
         echo "Caching configuration and routes..."
-        # We use --force or similar if needed, but standard commands work
         php artisan config:cache
         php artisan route:cache
         php artisan view:cache
