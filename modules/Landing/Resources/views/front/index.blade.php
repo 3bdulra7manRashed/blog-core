@@ -36,7 +36,7 @@
 {{-- Khutab Section --}}
 @if($khutab['posts']->isNotEmpty())
     @include('landing::front.partials.section-grid', [
-        'title'       => $khutab['category'] ? $khutab['category']->name : 'الخطب',
+        'title'       => $khutab['category'] ? $khutab['category']->name : 'أحدث الخطب',
         'subtitle'    => null,
         'items'       => $khutab['posts'],
         'viewAllUrl'  => Route::has('khutab.index') ? route('khutab.index') : null,
