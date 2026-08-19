@@ -71,14 +71,22 @@ class ThemeServiceProvider extends ServiceProvider
      */
     protected function registerThemeComponents(): void
     {
-        $activeTheme = config('theme.active', 'classic');
         $themeDirectory = config('theme.directory', 'themes');
-        
-        // Basic component registration - can be expanded if needed
+
+        // Register public theme components
+        $activeTheme = config('theme.active', 'classic');
         $componentsPath = resource_path("{$themeDirectory}/{$activeTheme}/views/components");
         
         if (is_dir($componentsPath)) {
             Blade::anonymousComponentPath($componentsPath);
+        }
+
+        // Register admin theme components (required for view:cache and admin panel rendering)
+        $adminTheme = config('theme.admin_active', 'classic');
+        $adminComponentsPath = resource_path("{$themeDirectory}/admin/{$adminTheme}/views/components");
+
+        if (is_dir($adminComponentsPath)) {
+            Blade::anonymousComponentPath($adminComponentsPath);
         }
     }
 }
