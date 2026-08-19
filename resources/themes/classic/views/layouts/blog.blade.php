@@ -109,6 +109,13 @@
                         </a>
                     @endif
 
+                    @if(feature('khutab'))
+                        <a href="{{ route('khutab.index') }}"
+                            class="text-m font-medium {{ request()->routeIs('khutab.*') ? 'text-brand-accent font-bold' : 'text-gray-800' }} hover:text-brand-accent transition-colors">
+                            الخطب
+                        </a>
+                    @endif
+
                     @if(feature('vod.video'))
                         <a href="{{ route('videos.index') }}"
                             class="text-m font-medium {{ request()->routeIs('videos.*') ? 'text-brand-accent font-bold' : 'text-gray-800' }} hover:text-brand-accent transition-colors">
@@ -127,13 +134,6 @@
                         <a href="{{ route('books.index') }}"
                             class="text-m font-medium {{ request()->routeIs('books.*') ? 'text-brand-accent font-bold' : 'text-gray-800' }} hover:text-brand-accent transition-colors">
                             الإصدارات
-                        </a>
-                    @endif
-
-                    @if(feature('khutab'))
-                        <a href="{{ route('khutab.index') }}"
-                            class="text-m font-medium {{ request()->routeIs('khutab.*') ? 'text-brand-accent font-bold' : 'text-gray-800' }} hover:text-brand-accent transition-colors">
-                            الخطب
                         </a>
                     @endif
 
@@ -303,6 +303,15 @@
                         </a>
                     @endif
 
+                    <!-- الخطب (Khutab) -->
+                    @if(feature('khutab'))
+                        <a href="{{ route('khutab.index') }}"
+                            class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('khutab.*') ? 'text-brand-accent bg-gray-50' : '' }}"
+                            @click="mobileMenuOpen = false">
+                            الخطب
+                        </a>
+                    @endif
+
                     <!-- Video Library -->
                     @if(feature('vod.video'))
                         <a href="{{ route('videos.index') }}"
@@ -327,15 +336,6 @@
                             class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('books.*') ? 'text-brand-accent bg-gray-50' : '' }}"
                             @click="mobileMenuOpen = false">
                             الإصدارات
-                        </a>
-                    @endif
-
-                    <!-- الخطب (Khutab) -->
-                    @if(feature('khutab'))
-                        <a href="{{ route('khutab.index') }}"
-                            class="block px-4 py-3 text-right text-base font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-accent transition-colors min-h-[3rem] flex items-center border-b border-gray-100 {{ request()->routeIs('khutab.*') ? 'text-brand-accent bg-gray-50' : '' }}"
-                            @click="mobileMenuOpen = false">
-                            الخطب
                         </a>
                     @endif
 
