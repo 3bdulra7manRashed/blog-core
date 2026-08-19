@@ -11,26 +11,25 @@
 @endif
 
 {{-- Category One Section --}}
-@if($categoryOne['category'] && $categoryOne['posts']->isNotEmpty())
+@if($categoryOne['posts']->isNotEmpty())
     @include('landing::front.partials.section-grid', [
-        'title'       => $categoryOne['category']->name,
-        'subtitle'    => $categoryOne['category']->description,
+        'title'       => $categoryOne['category'] ? $categoryOne['category']->name : 'أحدث المقالات',
+        'subtitle'    => $categoryOne['category'] ? $categoryOne['category']->description : null,
         'items'       => $categoryOne['posts'],
-        'viewAllUrl'  => route('category.show', $categoryOne['category']->slug),
-        'viewAllText' => 'المزيد من ' . $categoryOne['category']->name,
+        'viewAllUrl'  => $categoryOne['category'] ? route('category.show', $categoryOne['category']->slug) : route('posts.index'),
+        'viewAllText' => $categoryOne['category'] ? ('المزيد من ' . $categoryOne['category']->name) : 'جميع المقالات',
         'bgClass'     => 'bg-gray-50',
     ])
 @endif
 
 {{-- Category Two Section --}}
-@if($categoryTwo['category'] && $categoryTwo['posts']->isNotEmpty())
+@if($categoryTwo['posts']->isNotEmpty())
     @include('landing::front.partials.section-grid', [
-        'title'       => $categoryTwo['category']->name,
-        'subtitle'    => $categoryTwo['category']->description,
+        'title'       => $categoryTwo['category'] ? $categoryTwo['category']->name : 'أحدث المقالات',
+        'subtitle'    => $categoryTwo['category'] ? $categoryTwo['category']->description : null,
         'items'       => $categoryTwo['posts'],
-        'viewAllUrl'  => route('category.show', $categoryTwo['category']->slug),
-        'viewAllText' => 'المزيد من ' . $categoryTwo['category']->name,
-        
+        'viewAllUrl'  => $categoryTwo['category'] ? route('category.show', $categoryTwo['category']->slug) : route('posts.index'),
+        'viewAllText' => $categoryTwo['category'] ? ('المزيد من ' . $categoryTwo['category']->name) : 'جميع المقالات',
     ])
 @endif
 

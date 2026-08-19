@@ -365,7 +365,7 @@
                                 class="appearance-none bg-none pr-4 pl-10 searchable-select w-full border border-gray-300 rounded-md py-2 focus:ring-brand-accent focus:border-brand-accent @error('category_one_id') border-red-500 @enderror"
                                 {{ old('show_category_one', $settings->show_category_one) ? '' : 'disabled' }}
                             >
-                                <option value="">-- اختر تصنيف --</option>
+                                <option value="">-- اختر تصنيف (اختياري) --</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}" {{ old('category_one_id', $settings->category_one_id) == $category->id ? 'selected' : '' }}>
                                         {{ $category->name }}
@@ -379,7 +379,7 @@
                         @error('category_one_id')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
-                        <p class="text-xs text-gray-500 mt-1">اختر التصنيف الذي تريد عرض مقالاته في القسم الأول</p>
+                        <p class="text-xs text-gray-500 mt-1">اختياري — إن لم يُحدد تصنيف، ستُعرض أحدث المقالات بدون تصفية</p>
                     </div>
                 </div>
 
@@ -406,7 +406,7 @@
                                 class="appearance-none bg-none pr-4 pl-10 searchable-select w-full border border-gray-300 rounded-md py-2 focus:ring-brand-accent focus:border-brand-accent @error('category_two_id') border-red-500 @enderror"
                                 {{ old('show_category_two', $settings->show_category_two) ? '' : 'disabled' }}
                             >
-                                <option value="">-- اختر تصنيف --</option>
+                                <option value="">-- اختر تصنيف (اختياري) --</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}" {{ old('category_two_id', $settings->category_two_id) == $category->id ? 'selected' : '' }}>
                                         {{ $category->name }}
@@ -420,7 +420,7 @@
                         @error('category_two_id')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
-                        <p class="text-xs text-gray-500 mt-1">اختر التصنيف الذي تريد عرض مقالاته في القسم الثاني</p>
+                        <p class="text-xs text-gray-500 mt-1">اختياري — إن لم يُحدد تصنيف، ستُعرض أحدث المقالات بدون تصفية</p>
                     </div>
                 </div>
 

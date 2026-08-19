@@ -75,15 +75,43 @@ class LandingDataService
     {
         $empty = ['category' => null, 'posts' => collect()];
 
-        if (!$show || !$categoryId) {
+        if (!$show) {
             return $empty;
         }
 
         try {
+            if (!$categoryId) {
+                // No specific category — return latest posts generally
+                $posts = Cache::remember(
+                    'landing.category.latest',
+                    self::CACHE_TTL,
+                    fn () => Post::with(['author', 'categories'])
+                        ->posts()
+                        ->published()
+                        ->latest('published_at')
+                        ->take(3)
+                        ->get()
+                );
+
+                return ['category' => null, 'posts' => $posts instanceof Collection ? $posts : collect($posts)];
+            }
+
             $category = Category::find($categoryId);
 
             if (!$category) {
-                return $empty;
+                // Invalid category ID — fallback to latest 3 posts safely
+                $posts = Cache::remember(
+                    'landing.category.latest',
+                    self::CACHE_TTL,
+                    fn () => Post::with(['author', 'categories'])
+                        ->posts()
+                        ->published()
+                        ->latest('published_at')
+                        ->take(3)
+                        ->get()
+                );
+
+                return ['category' => null, 'posts' => $posts instanceof Collection ? $posts : collect($posts)];
             }
 
             $posts = Cache::remember(

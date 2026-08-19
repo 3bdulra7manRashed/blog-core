@@ -60,6 +60,11 @@ class LandingSettingsController extends Controller
             $data[$field] = $request->has($field);
         }
 
+        $categoryFields = ['category_one_id', 'category_two_id', 'khutab_category_id'];
+        foreach ($categoryFields as $field) {
+            $data[$field] = $request->filled($field) ? (int) $request->input($field) : null;
+        }
+
         $settings->update($data);
 
         // ── Hero Background Settings (theme-isolated, stored in generic settings table) ──
